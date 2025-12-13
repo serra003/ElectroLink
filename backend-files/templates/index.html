@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en" class="transition-colors duration-300" style="height: auto; min-height: 100%;">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ElectroLink - Premium Tech Store</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            // Dark Mode - Navy Blue Theme
+            navyDark: '#0A1628',      // Dark navy background
+            navyBox: '#1A2942',       // Navy for boxes/cards
+            navyAccent: '#2D4263',    // Lighter navy for accents
+            
+            // Light Mode - Blue, White, Orange Theme
+            lightBg: '#F8FAFC',       // Very light blue-gray
+            lightBox: '#FFFFFF',      // White for boxes
+            lightAccent: '#E0F2FE',   // Light blue accent
+            
+            // Brand Colors
+            primary: '#0066FF',       // Electric Blue
+            accent: '#FF6B35',        // Vibrant Orange
+            accentHover: '#FF8C5A',   // Lighter orange for hover
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    
+    * { 
+      font-family: 'Inter', sans-serif; 
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    /* Glass effect for dark mode */
+    .dark .glass { 
+      background: rgba(26, 41, 66, 0.7); 
+      backdrop-filter: blur(10px); 
+      border: 1px solid rgba(255,255,255,0.08); 
+    }
+    
+    /* Glass effect for light mode */
+    .light .glass { 
+      background: rgba(255, 255, 255, 0.8); 
+      backdrop-filter: blur(10px); 
+      border: 1px solid rgba(0, 102, 255, 0.1); 
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+    
+    .glow-hover:hover { 
+      box-shadow: 0 0 30px rgba(0, 102, 255, 0.4); 
+    }
+    
+    .product-card { 
+      transition: transform .3s ease, box-shadow .3s ease; 
+    }
+    
+    .product-card:hover { 
+      transform: translateY(-8px); 
+    }
+    
+    .dark .product-card:hover {
+      box-shadow: 0 10px 30px rgba(0, 102, 255, 0.3);
+    }
+    
+    .light .product-card:hover {
+      box-shadow: 0 10px 30px rgba(0, 102, 255, 0.2);
+    }
+    
+    .modal { 
+      display:none; 
+      position:fixed; 
+      inset:0; 
+      z-index:1000; 
+      background: rgba(0,0,0,0.75); 
+      align-items:center; 
+      justify-content:center; 
+    }
+    
+    .modal.active { 
+      display:flex; 
+    }
+    
+    .lang-picker { 
+      min-width: 160px; 
+    }
+    
+    .lang-option:hover { 
+      background: rgba(0, 102, 255, 0.1); 
+    }
+    
+    .gradient-text { 
+      background: linear-gradient(135deg, #0066FF 0%, #FF6B35 100%); 
+      -webkit-background-clip: text; 
+      -webkit-text-fill-color: transparent; 
+      background-clip: text; 
+    }
+    
+    /* Logo hover effect */
+    .logo-hover {
+      transition: transform 0.3s ease;
+    }
+    
+    .logo-hover:hover {
+      transform: scale(1.05);
+    }
+    
+    /* Orange accent buttons for light mode */
+    .light .btn-accent {
+      background: linear-gradient(135deg, #0066FF 0%, #FF6B35 100%);
+    }
+    
+    .light .btn-accent:hover {
+      background: linear-gradient(135deg, #0052CC 0%, #FF8C5A 100%);
+    }
+  </style>
+</head>
+
+<body id="pageBody" class="bg-lightBg dark:bg-navyDark text-gray-900 dark:text-gray-100 min-h-screen transition-colors duration-300">
+
+  <!-- Navbar -->
+  <nav class="glass fixed w-full top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between items-center h-16 md:h-20">
+        
+        <!-- Logo Section -->
+        <div class="flex items-center space-x-3">
+         <a href="/" class="flex items-center logo-hover">
+  <img id="logoImage"
+       src="/static/images/actual logo"
+       alt="ElectroLink"
+       class="h-16 md:h-20 w-auto transition-all duration-300">
+</a>
+
+        </div>
+
+        <!-- Desktop Navigation -->
+        <div class="hidden md:flex items-right space-x-8 ml-20" id="navLinks">
+          <a href="/" data-i18n="nav_home" class="text-gray-700 dark:text-gray-300 hover:text-primary transition font-medium">Home</a>
+          <a href="/products" data-i18n="nav_products" class="text-gray-700 dark:text-gray-300 hover:text-primary transition font-medium">Products</a>
+          <a href="#contact" data-i18n="nav_contact" class="text-gray-700 dark:text-gray-300 hover:text-primary transition font-medium">Contact</a>
+        </div>
+
+        <div class="flex items-center space-x-3">
+          <!-- Theme toggle -->
+          <button id="themeToggle" class="glass p-2 rounded-lg flex items-center justify-center hover:scale-105 transition" aria-label="Toggle theme">
+            <i id="themeIcon" class="fas fa-moon text-gray-700 dark:text-gray-300"></i>
+          </button>
+
+          <!-- Language picker -->
+          <div class="relative">
+            <button id="langBtn" class="glass px-3 py-2 rounded-lg flex items-center gap-2 lang-picker focus:outline-none">
+              <span id="langFlag">🇬🇧</span>
+              <span id="langLabel" class="text-sm text-gray-700 dark:text-gray-300">English</span>
+              <i class="fas fa-chevron-down text-gray-600 dark:text-gray-400 text-xs"></i>
+            </button>
+
+            <div id="langDropdown" class="absolute right-0 mt-2 w-44 glass rounded-lg py-2 hidden">
+              <button class="w-full text-left px-4 py-2 flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300 lang-option" data-lang="en"><span>🇬🇧</span><span>English</span></button>
+              <button class="w-full text-left px-4 py-2 flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300 lang-option" data-lang="tr"><span>🇹🇷</span><span>Türkçe</span></button>
+              <button class="w-full text-left px-4 py-2 flex items-center gap-2 text-sm text-gray-700 dark:text-gray-300 lang-option" data-lang="az"><span>🇦🇿</span><span>Azərbaycan</span></button>
+            </div>
+          </div>
+
+          <button id="mobileMenuBtn" class="md:hidden text-gray-700 dark:text-gray-300 ml-2">
+            <i class="fas fa-bars text-xl"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden md:hidden glass border-t border-gray-300 dark:border-gray-700">
+      <div class="px-4 py-4 space-y-3">
+        <a href="/" data-i18n="nav_home" class="block text-gray-700 dark:text-gray-300 hover:text-primary transition font-medium">Home</a>
+        <a href="/products" data-i18n="nav_products" class="block text-gray-700 dark:text-gray-300 hover:text-primary transition font-medium">Products</a>
+        <a href="#contact" data-i18n="nav_contact" class="block text-gray-700 dark:text-gray-300 hover:text-primary transition font-medium">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section id="home" class="pt-24 pb-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-accent/10"></div>
+    <div class="max-w-7xl mx-auto relative z-10 text-center space-y-6">
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold">
+        <span class="gradient-text" data-i18n="hero_title_line1">Premium Tech</span><br>
+        <span class="text-gray-800 dark:text-gray-100" data-i18n="hero_title_line2">For Modern Innovators</span>
+      </h1>
+      <p class="text-gray-600 dark:text-gray-400 text-lg max-w-2xl mx-auto" data-i18n="hero_sub">Discover cutting-edge technology and premium devices curated for professionals and enthusiasts.</p>
+      <a href="/products" class="inline-block px-8 py-4 bg-gradient-to-r from-primary to-accent rounded-lg text-white font-semibold glow-hover transition transform hover:scale-105" data-i18n="hero_cta">Explore Products</a>
+    </div>
+  </section>
+
+  <!-- Flash Sale Products -->
+  <section class="py-16 px-4 sm:px-6 lg:px-8 bg-white dark:bg-navyDark">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="text-3xl sm:text-4xl font-bold text-center mb-12">
+        <span class="gradient-text" data-i18n="featured_label">Flash Sale</span> 
+        <span class="text-gray-800 dark:text-gray-100" data-i18n="featured_products">Products</span>
+      </h2>
+      <div id="featuredProducts" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+      
+      <!-- View All Products Button -->
+      <div class="text-center mt-12">
+        <a href="/products" class="inline-block px-8 py-4 bg-gradient-to-r from-primary to-accent rounded-lg text-white font-semibold glow-hover transition transform hover:scale-105" data-i18n="view_all">
+          View All Products
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="py-16 px-4 sm:px-6 lg:px-8 bg-lightAccent dark:bg-navyBox">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl sm:text-4xl font-bold mb-12">
+        <span class="gradient-text" data-i18n="contact_title">Get in Touch</span>
+      </h2>
+      <div class="glass rounded-2xl p-10 grid md:grid-cols-2 gap-8">
+        <div class="flex items-center justify-center space-x-4">
+          <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+            <i class="fas fa-phone text-2xl text-primary"></i>
+          </div>
+          <div class="text-left">
+            <p class="text-gray-600 dark:text-gray-400 text-sm" data-i18n="contact_callus">Call Us</p>
+            <p class="text-xl font-semibold text-gray-800 dark:text-gray-100">+1 (555) 123-4567</p>
+          </div>
+        </div>
+        <div class="flex items-center justify-center space-x-4">
+          <div class="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center">
+            <i class="fas fa-envelope text-2xl text-accent"></i>
+          </div>
+          <div class="text-left">
+            <p class="text-gray-600 dark:text-gray-400 text-sm" data-i18n="contact_emailus">Email Us</p>
+            <p class="text-xl font-semibold text-gray-800 dark:text-gray-100">electrolink.az@gmail.com</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="glass border-t border-gray-300 dark:border-gray-700 py-8 text-center">
+    <div class="max-w-7xl mx-auto px-4">
+      <p class="text-gray-600 dark:text-gray-400 text-sm" data-i18n="footer_copy">© 2024 ElectroLink. Premium tech for modern innovators.</p>
+    </div>
+  </footer>
+
+  <!-- Modal -->
+  <div id="productModal" class="modal">
+    <div class="glass rounded-2xl max-w-4xl w-full mx-4 p-6 sm:p-8 relative">
+      <button onclick="closeModal()" class="absolute top-4 right-4 w-10 h-10 bg-gray-200 dark:bg-navyBox rounded-lg flex items-center justify-center hover:bg-primary transition">
+        <i class="fas fa-times text-gray-700 dark:text-white"></i>
+      </button>
+      <div class="grid md:grid-cols-2 gap-8">
+        <img id="modalImage" class="rounded-xl object-cover w-full h-full" alt="product image"/>
+        <div>
+          <span id="modalCategory" class="text-xs text-gray-500 uppercase tracking-wide"></span>
+          <h3 id="modalTitle" class="text-3xl font-bold mb-4 text-gray-800 dark:text-gray-100"></h3>
+          <p id="modalDescription" class="text-gray-600 dark:text-gray-400 mb-6"></p>
+          <div class="flex items-center justify-between mb-6 p-4 bg-lightAccent dark:bg-navyDark rounded-lg">
+            <span class="text-gray-600 dark:text-gray-400 font-medium" data-i18n="modal_price_label">Price</span>
+            <span id="modalPrice" class="text-3xl font-bold text-primary"></span>
+          </div>
+          <button class="w-full px-6 py-4 bg-gradient-to-r from-primary to-accent rounded-lg text-white font-semibold glow-hover transition transform hover:scale-105">
+            <i class="fas fa-envelope mr-2"></i><span data-i18n="modal_contact">Contact to Inquire</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPT -->
+  <script>
+    // ---------- Translations ----------
+    const translations = {
+      en: {
+        nav_home: "Home",
+        nav_products: "Products",
+        nav_contact: "Contact",
+        hero_title_line1: "Premium Tech",
+        hero_title_line2: "For Modern Innovators",
+        hero_sub: "Discover cutting-edge technology and premium devices curated for professionals and enthusiasts.",
+        hero_cta: "Explore Products",
+        featured_label: "Flash Sale",
+        featured_products: "Products",
+        view_all: "View All Products",
+        contact_title: "Get in Touch",
+        contact_callus: "Call Us",
+        contact_emailus: "Email Us",
+        footer_copy: "© 2024 ElectroLink. Premium tech for modern innovators.",
+        modal_price_label: "Price",
+        modal_contact: "Contact to Inquire"
+      },
+      tr: {
+        nav_home: "Ana Sayfa",
+        nav_products: "Ürünler",
+        nav_contact: "İletişim",
+        hero_title_line1: "Premium Teknoloji",
+        hero_title_line2: "Modern Yenilikçiler İçin",
+        hero_sub: "Profesyoneller ve meraklılar için özenle seçilmiş son teknoloji cihazları keşfedin.",
+        hero_cta: "Ürünleri Keşfet",
+        featured_label: "Flaş İndirim",
+        featured_products: "Ürünler",
+        view_all: "Tüm Ürünleri Görüntüle",
+        contact_title: "İletişime Geçin",
+        contact_callus: "Bizi Arayın",
+        contact_emailus: "E-posta Gönderin",
+        footer_copy: "© 2024 ElectroLink. Modern yenilikçiler için premium teknoloji.",
+        modal_price_label: "Fiyat",
+        modal_contact: "İncelemek İçin İletişime Geçin"
+      },
+      az: {
+        nav_home: "Ana Səhifə",
+        nav_products: "Məhsullar",
+        nav_contact: "Əlaqə",
+        hero_title_line1: "Premium Texnologiya",
+        hero_title_line2: "Müasir Yenilikçilər üçün",
+        hero_sub: "Peşəkarlar və həvəskarlar üçün seçilmiş ən yeni texnologiyaları kəşf edin.",
+        hero_cta: "Məhsulları Kəşf Et",
+        featured_label: "Flaş Endirim",
+        featured_products: "Məhsullar",
+        view_all: "Bütün Məhsullara Bax",
+        contact_title: "Əlaqə Saxlayın",
+        contact_callus: "Zəng Edin",
+        contact_emailus: "Bizə Mail Göndərin",
+        footer_copy: "© 2024 ElectroLink. Müasir yenilikçilər üçün premium texnologiya.",
+        modal_price_label: "Qiymət",
+        modal_contact: "Soruşmaq üçün Əlaqə"
+      }
+    };
+
+    // ---------- Product dataset ----------
+    const products = [
+      { id:1, name: 'iPhone 15 Pro Max', category: 'phones', price: 1199, image: 'https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=600', description_en: 'Latest flagship with A17 Pro chip, titanium design, and advanced camera system', description_tr: 'A17 Pro çipli, titanyum tasarımlı ve gelişmiş kamera sistemi ile son amiral gemisi', description_az: 'A17 Pro çipli, titan dizayn və təkmilləşdirilmiş kamera sistemi ilə ən son flaqman' },
+      { id:2, name: 'Samsung Galaxy S24 Ultra', category: 'phones', price: 1299, image: 'https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=600', description_en: 'Premium Android flagship with S Pen, 200MP camera, and AI features', description_tr: 'S Pen, 200MP kamera ve yapay zeka özellikleri ile premium Android amiral gemisi', description_az: 'S Pen, 200MP kamera və süni intellekt xüsusiyyətləri ilə premium Android flaqman' },
+      { id:5, name: 'MacBook Pro 16\"', category: 'laptops', price: 2499, image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=600', description_en: 'M3 Max chip, 16-inch Liquid Retina XDR display, up to 128GB unified memory', description_tr: 'M3 Max çip, 16 inç Liquid Retina XDR ekran, 128GB\'a kadar birleşik bellek', description_az: 'M3 Max çip, 16 düym Liquid Retina XDR ekran, 128GB-a qədər vahid yaddaş' }
+    ];
+
+    let currentLang = localStorage.getItem('lang') || 'en';
+
+    // ---------- Language ----------
+    function tAll(lang) {
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang] && translations[lang][key]) {
+          el.textContent = translations[lang][key];
+        }
+      });
+      const flag = lang === 'en' ? '🇬🇧' : lang === 'tr' ? '🇹🇷' : '🇦🇿';
+      const label = lang === 'en' ? 'English' : lang === 'tr' ? 'Türkçe' : 'Azərbaycan';
+      document.getElementById('langFlag').textContent = flag;
+      document.getElementById('langLabel').textContent = label;
+      renderFeatured();
+    }
+
+    // ---------- Render products ----------
+    function renderFeatured() {
+      const el = document.getElementById('featuredProducts');
+      el.innerHTML = products.map(p => {
+        const desc = currentLang === 'tr' ? p.description_tr : currentLang === 'az' ? p.description_az : p.description_en;
+        return `
+          <div class="glass rounded-2xl p-6 product-card cursor-pointer bg-lightBox dark:bg-navyBox">
+            <div class="aspect-square rounded-xl overflow-hidden mb-4 bg-gray-200 dark:bg-navyDark">
+              <img src="${p.image}" class="w-full h-full object-cover" alt="${p.name}">
+            </div>
+            <h3 class="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-100">${p.name}</h3>
+            <p class="text-gray-600 dark:text-gray-400 text-sm mb-3 line-clamp-2">${desc}</p>
+            <div class="flex justify-between items-center">
+              <span class="text-2xl font-bold text-primary">$${p.price}</span>
+              <span class="text-xs text-accent font-semibold uppercase tracking-wide">${p.category}</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ---------- Modal ----------
+    function openModal(id) {
+      const p = products.find(x => x.id === id);
+      if (!p) return;
+      const desc = currentLang === 'tr' ? p.description_tr : currentLang === 'az' ? p.description_az : p.description_en;
+      document.getElementById('modalTitle').innerText = p.name;
+      document.getElementById('modalImage').src = p.image;
+      document.getElementById('modalDescription').innerText = desc;
+      document.getElementById('modalPrice').innerText = '$' + p.price;
+      document.getElementById('modalCategory').innerText = p.category;
+      document.getElementById('productModal').classList.add('active');
+    }
+    
+    function closeModal() { 
+      document.getElementById('productModal').classList.remove('active'); 
+    }
+    
+    document.getElementById('productModal').addEventListener('click', (e) => {
+      if (e.target.id === 'productModal') closeModal();
+    });
+
+    // ---------- Theme toggle with logo switching ----------
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const logoImage = document.getElementById('logoImage');
+    const root = document.documentElement;
+    
+    function applyTheme(theme) {
+      if (theme === 'dark') {
+        root.classList.add('dark');
+        root.classList.remove('light');
+        themeIcon.className = 'fas fa-sun text-yellow-400';
+        logoImage.src = '/static/images/actual logo.png'; // Blue background logo
+      } else {
+        root.classList.remove('dark');
+        root.classList.add('light');
+        themeIcon.className = 'fas fa-moon text-gray-700';
+        logoImage.src = '/static/images/Screenshot 2025-12-12 200551.png'; // White background logo
+      }
+      localStorage.setItem('theme', theme);
+    }
+    
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    applyTheme(savedTheme);
+    
+    themeToggle.addEventListener('click', () => {
+      const next = root.classList.contains('dark') ? 'light' : 'dark';
+      applyTheme(next);
+    });
+
+    // ---------- Language picker ----------
+    const langBtn = document.getElementById('langBtn');
+    const langDropdown = document.getElementById('langDropdown');
+    
+    langBtn.addEventListener('click', () => {
+      langDropdown.classList.toggle('hidden');
+    });
+    
+    document.addEventListener('click', (e) => {
+      if (!langBtn.contains(e.target) && !langDropdown.contains(e.target)) 
+        langDropdown.classList.add('hidden');
+    });
+
+    document.querySelectorAll('.lang-option').forEach(btn => {
+      btn.addEventListener('click', (ev) => {
+        const lang = ev.currentTarget.dataset.lang;
+        currentLang = lang;
+        localStorage.setItem('lang', lang);
+        tAll(lang);
+        langDropdown.classList.add('hidden');
+      });
+    });
+
+    // ---------- Mobile menu ----------
+    document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+      document.getElementById('mobileMenu').classList.toggle('hidden');
+    });
+
+    // ---------- Init ----------
+    currentLang = localStorage.getItem('lang') || currentLang;
+    tAll(currentLang);
+    renderFeatured();
+
+    // ---------- Smooth scroll ----------
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  </script>
+</body>
+</html>
