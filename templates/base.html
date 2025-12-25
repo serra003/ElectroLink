@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}ElectroLink.az{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="/">ElectroLink<span>.az</span></a>
+                </div>
+                
+                <nav class="nav">
+                    <a href="/products" data-i18n="nav_products">Məhsullar</a>
+                    <a href="/about" data-i18n="nav_about">Haqqımızda</a>
+                    <a href="/contact" data-i18n="nav_contact">Əlaqə</a>
+                </nav>
+
+                <div class="header-actions">
+                    <!-- Language Switcher -->
+                    <div class="language-switcher">
+                        <button class="lang-btn" id="langBtn">
+                            <i class="fas fa-globe"></i>
+                            <span id="currentLang">AZ</span>
+                        </button>
+                        <div class="lang-dropdown" id="langDropdown">
+                            <button data-lang="az">AZ</button>
+                            <button data-lang="tr">TR</button>
+                            <button data-lang="ru">RU</button>
+                        </div>
+                    </div>
+
+                    <!-- Theme Toggle -->
+                    <button class="theme-toggle" id="themeToggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+
+                    <!-- Cart -->
+                    <a href="/cart" class="cart-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-badge" id="cartBadge">0</span>
+                    </a>
+
+                    <!-- Mobile Menu Toggle -->
+                    <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div class="mobile-menu" id="mobileMenu">
+                <a href="/products" data-i18n="nav_products">Məhsullar</a>
+                <a href="/about" data-i18n="nav_about">Haqqımızda</a>
+                <a href="/contact" data-i18n="nav_contact">Əlaqə</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-col">
+                    <h3>ElectroLink.az</h3>
+                    <p data-i18n="footer_desc">Premium texnologiya məhsulları</p>
+                </div>
+                <div class="footer-col">
+                    <h4 data-i18n="footer_contact">Əlaqə</h4>
+                    <p><i class="fas fa-phone"></i> +994 10 505 16 15</p>
+                    <p><i class="fas fa-envelope"></i> info@electrolink.az</p>
+                </div>
+                <div class="footer-col">
+                    <h4 data-i18n="footer_links">Keçidlər</h4>
+                    <a href="/about" data-i18n="nav_about">Haqqımızda</a>
+                    <a href="/warranty" data-i18n="nav_warranty">Zəmanət</a>
+                    <a href="/faq" data-i18n="nav_faq">FAQ</a>
+                </div>
+                <div class="footer-col">
+                    <h4 data-i18n="footer_social">Sosial Media</h4>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/electrolink.az/" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.tiktok.com/@electrolink.az" target="_blank"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2024 ElectroLink.az - <span data-i18n="footer_rights">Bütün hüquqlar qorunur</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/994105051615" target="_blank" class="whatsapp-float">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <script src="/static/js/main.js"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Product Details - ElectroLink.az</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f9f9f9;
+    color: #222;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 20px;
+  }
+
+  .product-box {
+    display: flex;
+    gap: 40px;
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+  }
+
+  /* Left: Images */
+  .product-images {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .main-image {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 12px;
+    cursor: pointer;
+  }
+
+  .thumbnails {
+    display: flex;
+    gap: 10px;
+  }
+
+  .thumbnails img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    transition: all 0.2s;
+  }
+
+  .thumbnails img.active {
+    border-color: #0066FF;
+  }
+
+  /* Right: Product Info */
+  .product-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .product-info h1 {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+
+  .product-info .code {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 20px;
+  }
+
+  .product-info .price {
+    font-size: 26px;
+    color: #0066FF;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .product-info .stock {
+    font-size: 14px;
+    margin-bottom: 20px;
+    color: green;
+  }
+
+  .product-info .description {
+    font-size: 15px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+
+  .product-info .highlights {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+  }
+
+  .product-info .highlights li {
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .quantity {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .quantity input {
+    width: 50px;
+    text-align: center;
+    font-size: 16px;
+  }
+
+  .quantity button {
+    padding: 5px 10px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .product-info button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+
+  .btn-cart {
+    background: #eee;
+    color: #222;
+  }
+
+  .btn-order {
+    background: #0066FF;
+    color: #fff;
+  }
+
+  /* Lightbox */
+  .lightbox {
+    display: none;
+    position: fixed;
+    top:0; left:0; right:0; bottom:0;
+    background: rgba(0,0,0,0.9);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }
+
+  .lightbox.active { display:flex; }
+
+  .lightbox img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    border-radius: 12px;
+  }
+
+  .lightbox .prev, .lightbox .next, .lightbox .close {
+    position: absolute;
+    color: white;
+    font-size: 36px;
+    cursor: pointer;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.3);
+    padding: 10px;
+    border-radius: 50%;
+  }
+
+  .lightbox .prev { left: 20px; }
+  .lightbox .next { right: 20px; }
+  .lightbox .close { top: 20px; right: 20px; transform: none; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="product-box">
+    <!-- Images -->
+    <div class="product-images">
+      <img id="mainImage" class="main-image" src="/static/images/RAF qizdirici main.png" alt="Product">
+      <div class="thumbnails" id="thumbnails">
+        <img src="/static/images/RAF qizdirici main.png" class="active">
+        <img src="/static/images/raf fan dayan.png">
+        <img src="/static/images/raf fan guc.png">
+        <img src="/static/images/Raf fan ust.png">
+      </div>
+    </div>
+
+    <!-- Info -->
+    <div class="product-info">
+      <h1 id="productName">RAF Fan qızdırıcı 3000W — Model R.1407</h1>
+      <div class="code" id="productCode">Kod: EL-HT001</div>
+      <div class="price" id="productPrice">49.99 AZN</div>
+      <div class="stock" id="stockStatus">Stokda mövcuddur</div>
+      <div class="description" id="description">RAF R.1407 3000W fan qızdırıcı geniş məkanların daha sürətli isidilməsi üçün nəzərdə tutulmuşdur.</div>
+      <ul class="highlights" id="highlights">
+        <li><i class="fas fa-check"></i> 3000W güclü fan qızdırıcı</li>
+        <li><i class="fas fa-check"></i> Adjustable termostat ilə temperatur tənzimlənməsi</li>
+        <li><i class="fas fa-check"></i> Qızmadan qorunma sistemi</li>
+        <li><i class="fas fa-check"></i> Aşağı səs səviyyəsi</li>
+      </ul>
+
+      <div class="quantity">
+        <button onclick="decreaseQty()">−</button>
+        <input type="number" id="quantity" value="1" min="1">
+        <button onclick="increaseQty()">+</button>
+      </div>
+
+      <div>
+        <button class="btn-order" onclick="orderNow()">İndi Sifariş Et</button>
+        <button class="btn-cart" onclick="addToCart()">Səbətə At</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Lightbox -->
+<div id="lightbox" class="lightbox">
+  <span class="close" onclick="closeLightbox()">&times;</span>
+  <span class="prev" onclick="navigateLightbox(-1)"><i class="fas fa-chevron-left"></i></span>
+  <img id="lightboxImage" src="">
+  <span class="next" onclick="navigateLightbox(1)"><i class="fas fa-chevron-right"></i></span>
+</div>
+
+<script>
+let product = {
+  name: "RAF Fan qızdırıcı 3000W — Model R.1407",
+  code: "EL-HT001",
+  price: 49.99,
+  stock: 3,
+  images: [
+    "/static/images/RAF qizdirici main.png",
+    "/static/images/raf fan dayan.png",
+    "/static/images/raf fan guc.png",
+    "/static/images/Raf fan ust.png"
+  ],
+  description: "RAF R.1407 3000W fan qızdırıcı geniş məkanların daha sürətli isidilməsi üçün nəzərdə tutulmuşdur.",
+  highlights: [
+    "3000W güclü fan qızdırıcı",
+    "Adjustable termostat ilə temperatur tənzimlənməsi",
+    "Qızmadan qorunma sistemi",
+    "Aşağı səs səviyyəsi"
+  ]
+};
+
+const mainImage = document.getElementById('mainImage');
+const thumbnails = document.getElementById('thumbnails').children;
+let currentIndex = 0;
+
+for(let i=0; i<thumbnails.length; i++){
+  thumbnails[i].onclick = () => {
+    mainImage.src = product.images[i];
+    currentIndex = i;
+    for(let t of thumbnails) t.classList.remove('active');
+    thumbnails[i].classList.add('active');
+  }
+}
+
+mainImage.onclick = () => {
+  document.getElementById('lightbox').classList.add('active');
+  document.getElementById('lightboxImage').src = product.images[currentIndex];
+}
+
+function closeLightbox(){
+  document.getElementById('lightbox').classList.remove('active');
+}
+
+function navigateLightbox(dir){
+  currentIndex += dir;
+  if(currentIndex < 0) currentIndex = product.images.length -1;
+  if(currentIndex >= product.images.length) currentIndex = 0;
+  document.getElementById('lightboxImage').src = product.images[currentIndex];
+  mainImage.src = product.images[currentIndex];
+  for(let t of thumbnails) t.classList.remove('active');
+  thumbnails[currentIndex].classList.add('active');
+}
+
+function increaseQty(){
+  let qty = document.getElementById('quantity');
+  qty.value = parseInt(qty.value)+1;
+}
+function decreaseQty(){
+  let qty = document.getElementById('quantity');
+  if(parseInt(qty.value)>1) qty.value = parseInt(qty.value)-1;
+}
+
+function orderNow(){
+  let qty = document.getElementById('quantity').value;
+  let message = `Salam! Aşağıdakı məhsulu sifariş etmək istəyirəm:\n\n${product.name}\nKod: ${product.code}\nQiymət: ${product.price} AZN\nMiqdar: ${qty}\nToplam: ${product.price*qty} AZN`;
+  window.open('https://wa.me/994105051615?text='+encodeURIComponent(message));
+}
+
+function addToCart(){
+  alert('Səbətə əlavə edildi!');
+}
+</script>
+</body>
+</html>

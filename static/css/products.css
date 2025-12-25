@@ -1,0 +1,359 @@
+:root {
+    --primary: #333333; /* headings & main accents */
+    --secondary: #ff6b35; /* highlight/secondary buttons */
+    --bg: #ffffff; 
+    --text: #333333; 
+    --text-light: #666666;
+    --border: #e0e0e0;
+    --shadow: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] {
+    --bg: #1a1a1a;
+    --text: #ffffff;
+    --text-light: #cccccc;
+    --border: #333333;
+    --shadow: rgba(0, 0, 0, 0.3);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    transition: background 0.3s, color 0.3s;
+}
+
+/* Container */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Header */
+.header {
+    background: var(--bg);
+    color: var(--text);
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 10px var(--shadow);
+}
+
+.header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo a {
+    color: var(--text);
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.logo span {
+    color: var(--primary);
+}
+
+.nav {
+    display: flex;
+    gap: 1rem;
+}
+
+.nav a {
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.nav a:hover {
+    color: var(--primary);
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+#themeToggle {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 1.2rem;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.language-switcher {
+    position: relative;
+}
+
+#langDropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    z-index: 10;
+}
+
+#langDropdown button {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 1rem;
+    border: none;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+    color: var(--text);
+}
+
+#langDropdown button:hover {
+    background: var(--primary);
+    color: #fff;
+}
+
+/* Products Grid */
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.product-card {
+    background: var(--bg);
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px var(--shadow);
+}
+
+.product-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+}
+
+.product-card h3 {
+    font-size: 16px;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+}
+
+.product-price {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--primary);
+}
+
+/* Footer */
+.footer {
+    background: var(--bg);
+    color: var(--text-light);
+    padding: 2rem 0;
+    border-top: 1px solid var(--border);
+}
+
+.footer .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.footer p {
+    margin: 0;
+    color: var(--text-light);
+}
+
+/* WhatsApp Float */
+.whatsapp-float {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background: #25d366;
+    color: #fff;
+    font-size: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    text-decoration: none;
+    z-index: 100;
+    transition: all 0.3s;
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.1);
+}
+
+/* Dark Mode Support */
+body.dark {
+    background: var(--bg);
+    color: var(--text);
+}
+
+/* Product Modal */
+.product-modal {
+    display: none;
+    position: fixed;
+    top:0; left:0; right:0; bottom:0;
+    background: rgba(0,0,0,0.7);
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.product-modal.active {
+    display: flex;
+}
+
+.product-modal .modal-content {
+    background: var(--bg);
+    width: 90%;
+    max-width: 900px;
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-modal .close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+/* Modal Body */
+.modal-body {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.modal-images {
+    flex: 1 1 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.modal-images img#modalMainImage {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.modal-thumbnails {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.modal-thumbnails img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.modal-thumbnails img.active {
+    border-color: var(--primary);
+}
+
+.modal-info {
+    flex: 1 1 300px;
+}
+
+.modal-info h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.modal-info .code, 
+.modal-info .price, 
+.modal-info .stock, 
+.modal-info .description {
+    margin-bottom: 10px;
+}
+
+.modal-info ul {
+    list-style:none;
+    padding:0;
+    margin-bottom: 10px;
+}
+
+.modal-info ul li {
+    margin-bottom:5px;
+    display:flex;
+    align-items:center;
+    gap:5px;
+}
+
+.quantity {
+    display:flex;
+    gap:5px;
+    align-items:center;
+    margin-bottom:10px;
+}
+
+.quantity input {
+    width:50px;
+    text-align:center;
+}
+
+.quantity button {
+    cursor:pointer;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .nav { display: none; }
+    .header .container { flex-direction: column; text-align: center; }
+    .products-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+    .modal-body { flex-direction: column; gap: 20px; }
+    .modal-images img#modalMainImage { height: 300px; }
+}
+
+@media (max-width: 480px) {
+    .products-grid { grid-template-columns: 1fr; }
+    .modal-images img#modalMainImage { height: 250px; }
+    .modal-thumbnails img { width: 50px; height: 50px; }
+}

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Haqqımızda - ElectroLink.az</title>
+
+  <!-- Tailwind & Font Awesome -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+
+  <!-- Tailwind Custom Config -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#0066FF',
+            secondary: '#FF6B35',
+            navyDark: '#0A1628',
+            navyBox: '#1A2942',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts & Custom CSS -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    * { font-family: 'Inter', sans-serif; }
+
+    .stat-card { transition: transform 0.3s ease; }
+    .stat-card:hover { transform: translateY(-8px); }
+
+    .cart-badge {
+      position: absolute;
+      top: -8px; right: -8px;
+      background: #FF6B35; color: white;
+      border-radius: 50%; width: 22px; height: 22px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: bold;
+    }
+
+    .whatsapp-float {
+      position: fixed; bottom: 25px; right: 25px;
+      z-index: 1000; animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .team-member { transition: all 0.3s ease; }
+    .team-member:hover { transform: translateY(-10px); }
+  </style>
+</head>
+
+<body class="bg-white dark:bg-navyDark text-gray-900 dark:text-gray-100 transition-colors duration-300">
+
+  <!-- Header/Navbar -->
+  <nav class="bg-white dark:bg-navyBox shadow-md sticky top-0 z-50 transition-colors">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-20">
+        <!-- Logo -->
+        <div class="flex items-center">
+          <a href="/">
+            <img id="logoImage" src="/static/images/logo.png" alt="ElectroLink" class="h-16 w-auto">
+          </a>
+        </div>
+
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex space-x-8 text-lg">
+          <a href="/products" class="text-gray-700 dark:text-gray-300 hover:text-primary font-medium transition">Məhsullar</a>
+          <a href="/about" class="text-primary font-bold transition">Haqqımızda</a>
+          <a href="/contact" class="text-gray-700 dark:text-gray-300 hover:text-primary font-medium transition">Əlaqə</a>
+        </div>
+
+        <!-- Icons -->
+        <div class="flex items-center space-x-4">
+          <button id="themeToggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+            <i id="themeIcon" class="fas fa-moon text-2xl text-gray-700 dark:text-gray-300"></i>
+          </button>
+          <a href="/cart" class="relative">
+            <i class="fas fa-shopping-cart text-3xl text-gray-700 dark:text-gray-300 hover:text-primary transition"></i>
+            <span id="cartCount" class="cart-badge">0</span>
+          </a>
+          <button id="mobileMenuBtn" class="md:hidden text-gray-700 dark:text-gray-300">
+            <i class="fas fa-bars text-2xl"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="hidden md:hidden border-t bg-white dark:bg-navyBox border-gray-200 dark:border-gray-700">
+      <div class="px-4 py-4 space-y-3">
+        <a href="/products" class="block text-gray-700 dark:text-gray-300 hover:text-primary font-medium text-lg py-2">Məhsullar</a>
+        <a href="/about" class="block text-primary font-bold text-lg py-2">Haqqımızda</a>
+        <a href="/contact" class="block text-gray-700 dark:text-gray-300 hover:text-primary font-medium text-lg py-2">Əlaqə</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="py-20 px-4 bg-gradient-to-br from-blue-50 to-white dark:from-navyDark dark:to-navyBox">
+    <div class="max-w-7xl mx-auto text-center">
+      <h1 class="text-5xl md:text-6xl font-bold mb-6 text-gray-900 dark:text-white">Biz Kimik?</h1>
+      <p class="text-2xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
+        ElectroLink.az - Azərbaycanda premium keyfiyyətli elektronika məhsulları və peşəkar xidmətlər təklif edən etibarlı şirkət
+      </p>
+    </div>
+  </section>
+
+  <!-- Our Story Section -->
+  <section class="py-16 px-4 bg-white dark:bg-navyBox">
+    <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+      <div>
+        <h2 class="text-4xl font-bold mb-6 text-gray-900 dark:text-white">Bizim Hekayət</h2>
+        <div class="space-y-4 text-lg text-gray-700 dark:text-gray-300">
+          <p>ElectroLink.az 2020-ci ildə kiçik bir elektronika mağazası olaraq fəaliyyətə başladı. Məqsədimiz sadə idi - müştərilərimizə keyfiyyətli məhsullar və əla xidmət təqdim etmək.</p>
+          <p>Bu gün biz Azərbaycanın ən etibarlı elektronika təchizatçılarından biri olaraq minlərlə məmnun müştəriyə xidmət göstəririk. Məhsul çeşidimiz daim genişlənir və texnologiyanın ən son yeniliklərini sizə təqdim edirik.</p>
+          <p>Komandamız hər bir müştərinin ehtiyaclarını başa düşməyə və ona uyğun həll yolları təklif etməyə çalışır. Bizim üçün müştəri məmnuniyyəti hər şeydən vacibdir.</p>
+        </div>
+      </div>
+      <div class="relative">
+        <div class="aspect-video bg-gradient-to-br from-primary to-blue-600 rounded-3xl shadow-2xl flex items-center justify-center">
+          <i class="fas fa-building text-white text-9xl opacity-20"></i>
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="text-center text-white">
+              <i class="fas fa-store text-6xl mb-4"></i>
+              <p class="text-2xl font-bold">ElectroLink.az</p>
+              <p class="text-lg">2020-ci ildən bəri</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Statistics Section -->
+  <section class="py-16 px-4 bg-gradient-to-br from-primary to-blue-600">
+    <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-8 text-center text-white">
+      <div class="stat-card">
+        <i class="fas fa-users text-6xl mb-4 opacity-80"></i>
+        <p class="text-5xl font-bold mb-2">5000+</p>
+        <p class="text-xl">Məmnun Müştəri</p>
+      </div>
+      <div class="stat-card">
+        <i class="fas fa-box text-6xl mb-4 opacity-80"></i>
+        <p class="text-5xl font-bold mb-2">500+</p>
+        <p class="text-xl">Məhsul Çeşidi</p>
+      </div>
+      <div class="stat-card">
+        <i class="fas fa-clock text-6xl mb-4 opacity-80"></i>
+        <p class="text-5xl font-bold mb-2">4+</p>
+        <p class="text-xl">İllik Təcrübə</p>
+      </div>
+      <div class="stat-card">
+        <i class="fas fa-star text-6xl mb-4 opacity-80"></i>
+        <p class="text-5xl font-bold mb-2">4.9/5</p>
+        <p class="text-xl">Müştəri Reytinqi</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-12 px-4">
+    <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-8 mb-8">
+      <!-- Contact -->
+      <div>
+        <h3 class="text-xl font-bold mb-4">Əlaqə</h3>
+        <p class="mb-2"><i class="fas fa-phone mr-2"></i> +994 10 505 16 15</p>
+        <p class="mb-2"><i class="fas fa-map-marker-alt mr-2"></i> Bakı, Azərbaycan</p>
+      </div>
+      <!-- Hours -->
+      <div>
+        <h3 class="text-xl font-bold mb-4">İş Saatları</h3>
+        <p>B.e - Cümə: 09:00 - 18:00</p>
+        <p>Şənbə: 10:00 - 16:00</p>
+        <p>Bazar: Bağlı</p>
+      </div>
+      <!-- Menus -->
+      <div>
+        <h3 class="text-xl font-bold mb-4">Menyular</h3>
+        <ul class="space-y-2">
+          <li><a href="/warranty" class="hover:text-primary">Zəmanət və Qaytarma</a></li>
+          <li><a href="/faq" class="hover:text-primary">Tez-tez Verilən Suallar</a></li>
+          <li><a href="/about" class="hover:text-primary">Haqqımızda</a></li>
+        </ul>
+      </div>
+      <!-- Social -->
+      <div class="flex space-x-4 text-3xl items-center">
+        <a href="https://www.instagram.com/electrolink.az/" class="hover:text-primary"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.tiktok.com/@electrolink.az" class="hover:text-primary"><i class="fab fa-tiktok"></i></a>
+        <a href="https://wa.me/994105051615" class="hover:text-primary"><i class="fab fa-whatsapp"></i></a>
+      </div>
+    </div>
+    <div class="border-t border-gray-700 pt-8 text-center">
+      <p class="mb-2">© 2024 ElectroLink.az - Bütün hüquqlar qorunur</p>
+      <p class="text-sm text-gray-400">VÖEN: 1234567890</p>
+    </div>
+  </footer>
+
+  <!-- Floating WhatsApp Button -->
+  <a href="https://wa.me/994105051615" target="_blank" class="whatsapp-float">
+    <div class="bg-green-500 text-white w-16 h-16 rounded-full flex items-center justify-center shadow-2xl hover:bg-green-600 transition">
+      <i class="fab fa-whatsapp text-4xl"></i>
+    </div>
+  </a>
+
+  <!-- JS -->
+  <script>
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const logoImage = document.getElementById('logoImage');
+    const root = document.documentElement;
+
+    function applyTheme(theme) {
+      if(theme === 'dark'){
+        root.classList.add('dark');
+        themeIcon.className='fas fa-sun text-2xl text-yellow-400';
+      } else {
+        root.classList.remove('dark');
+        themeIcon.className='fas fa-moon text-2xl text-gray-700';
+      }
+      localStorage.setItem('theme', theme);
+    }
+
+    applyTheme(localStorage.getItem('theme') || 'light');
+
+    themeToggle.addEventListener('click', ()=>{
+      const next=root.classList.contains('dark')?'light':'dark';
+      applyTheme(next);
+    });
+
+    // Cart count
+    const cart=JSON.parse(localStorage.getItem('cart'))||[];
+    document.getElementById('cartCount').textContent=cart.length;
+
+    // Mobile menu
+    document.getElementById('mobileMenuBtn').addEventListener('click',()=>{
+      document.getElementById('mobileMenu').classList.toggle('hidden');
+    });
+  </script>
+
+</body>
+</html>
