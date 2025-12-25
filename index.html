@@ -53,7 +53,7 @@
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center h-20">
       <div class="flex items-center">
-        <a href="index.html"><img id="logoImage" src="static/images/Screenshot 2025-12-12 200551.png" alt="ElectroLink" class="h-16 w-auto"></a>
+        <a href="/"><img id="logoImage" src="static/images/logo-light.png" alt="ElectroLink" class="h-16 w-auto"></a>
       </div>
 
       <div class="hidden md:flex space-x-8 text-lg">
@@ -221,7 +221,7 @@
     } else {
       root.classList.remove('dark');
       themeIcon.className = 'fas fa-moon text-2xl text-gray-700';
-      logoImage.src = 'static/images/Screenshot 2025-12-12 200551.png';
+      logoImage.src = 'static/images/logo-light.png';
     }
     localStorage.setItem('theme', theme);
   }
@@ -277,9 +277,9 @@
       if(data.success) renderProducts(data.products);
     } catch {
       renderProducts([
-        {id:1,name:'TV Box X100',code:'TVX100',price:120,image:'static/images/xiaotv0.png'},
-        {id:2,name:'Qızdırıcı H200',code:'QZH200',price:90,image:'static/images/RAF qizdirici main.png'},
-        {id:4,name:'Keyboard',code:'BTB400',price:50,image:'static/images/kb0.png'}
+        {id:1,name:'TV Box X100',code:'TVX100',price:149.99,image:'static/images/xiaotv0.png'},
+        {id:2,name:'Qızdırıcı H200',code:'QZH200',price:49.99,image:'static/images/RAF qizdirici main.png'},
+        {id:4,name:'Keyboard',code:'BTB400',price:13.99,image:'static/images/kb0.png'}
       ]);
     }
   }

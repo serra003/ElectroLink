@@ -67,7 +67,7 @@
         <!-- Logo -->
         <div class="flex items-center">
           <a href="/">
-            <img id="logoImage" src="/static/images/logo.png" alt="ElectroLink" class="h-16 w-auto">
+            <img id="logoImage" src="/static/images/logo-light.png" alt="ElectroLink" class="h-16 w-auto">
           </a>
         </div>
 
@@ -132,7 +132,7 @@
             <div class="text-center text-white">
               <i class="fas fa-store text-6xl mb-4"></i>
               <p class="text-2xl font-bold">ElectroLink.az</p>
-              <p class="text-lg">2020-ci ildən bəri</p>
+              <p class="text-lg">2025-ci ildən bəri</p>
             </div>
           </div>
         </div>
@@ -145,22 +145,22 @@
     <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-8 text-center text-white">
       <div class="stat-card">
         <i class="fas fa-users text-6xl mb-4 opacity-80"></i>
-        <p class="text-5xl font-bold mb-2">5000+</p>
+        <p class="text-5xl font-bold mb-2">50+</p>
         <p class="text-xl">Məmnun Müştəri</p>
       </div>
       <div class="stat-card">
         <i class="fas fa-box text-6xl mb-4 opacity-80"></i>
-        <p class="text-5xl font-bold mb-2">500+</p>
+        <p class="text-5xl font-bold mb-2">50+</p>
         <p class="text-xl">Məhsul Çeşidi</p>
       </div>
       <div class="stat-card">
         <i class="fas fa-clock text-6xl mb-4 opacity-80"></i>
-        <p class="text-5xl font-bold mb-2">4+</p>
+        <p class="text-5xl font-bold mb-2">1+</p>
         <p class="text-xl">İllik Təcrübə</p>
       </div>
       <div class="stat-card">
         <i class="fas fa-star text-6xl mb-4 opacity-80"></i>
-        <p class="text-5xl font-bold mb-2">4.9/5</p>
+        <p class="text-5xl font-bold mb-2">4.6/5</p>
         <p class="text-xl">Müştəri Reytinqi</p>
       </div>
     </div>
@@ -199,7 +199,7 @@
       </div>
     </div>
     <div class="border-t border-gray-700 pt-8 text-center">
-      <p class="mb-2">© 2024 ElectroLink.az - Bütün hüquqlar qorunur</p>
+      <p class="mb-2">© 2025 ElectroLink.az - Bütün hüquqlar qorunur</p>
       <p class="text-sm text-gray-400">VÖEN: 1234567890</p>
     </div>
   </footer>
@@ -218,13 +218,15 @@
     const logoImage = document.getElementById('logoImage');
     const root = document.documentElement;
 
-    function applyTheme(theme) {
-      if(theme === 'dark'){
+   function applyTheme(theme) {
+      if (theme === 'dark') {
         root.classList.add('dark');
-        themeIcon.className='fas fa-sun text-2xl text-yellow-400';
+        themeIcon.className = 'fas fa-sun text-2xl text-yellow-400';
+        logoImage.src = '/static/images/actual logo.png';
       } else {
         root.classList.remove('dark');
-        themeIcon.className='fas fa-moon text-2xl text-gray-700';
+        themeIcon.className = 'fas fa-moon text-2xl text-gray-700';
+        logoImage.src = '/static/images/logo-light.png';
       }
       localStorage.setItem('theme', theme);
     }
