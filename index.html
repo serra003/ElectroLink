@@ -16,7 +16,7 @@
           colors: {
             primary: '#0066FF',
             secondary: '#FF6B35',
-            navyDark: '#3869b3ff',
+            navyDark: '#0A1628',
             navyBox: '#1A2942',
           }
         }
@@ -31,8 +31,8 @@
     .hero-animate { animation: slideIn 0.8s ease-out; }
     @keyframes slideIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-    .category-card, .product-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
-    .category-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0, 102, 255, 0.15); }
+    .category-card, .product-card { transition: all 0.3s ease; }
+    .category-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0, 102, 255, 0.2); }
     .product-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); }
 
     .whatsapp-float { position: fixed; bottom: 25px; right: 25px; z-index: 1000; animation: pulse 2s infinite; }
@@ -40,10 +40,52 @@
 
     .cart-badge { position: absolute; top: -8px; right: -8px; background: #FF6B35; color: white; border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: bold; }
 
-    .notification { position: fixed; top: 100px; right: 20px; background: #10B981; color: white; padding: 16px 24px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); z-index: 9999; animation: slideInRight 0.4s ease-out; }
-    @keyframes slideInRight { from { transform: translateX(400px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    .notification { 
+      position: fixed; 
+      bottom: 20px; 
+      left: 50%; 
+      transform: translateX(-50%);
+      background: #10B981; 
+      color: white; 
+      padding: 12px 24px; 
+      border-radius: 8px; 
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); 
+      z-index: 9999; 
+      animation: slideUp 0.3s ease-out;
+      font-size: 14px;
+    }
+    @keyframes slideUp { from { transform: translateX(-50%) translateY(100px); opacity: 0; } to { transform: translateX(-50%) translateY(0); opacity: 1; } }
 
     .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+    .promo-badge { 
+      position: absolute; 
+      top: 12px; 
+      left: 12px; 
+      background: #0066FF; 
+      color: white; 
+      padding: 4px 12px; 
+      border-radius: 6px; 
+      font-size: 11px; 
+      font-weight: 600; 
+      z-index: 10;
+    }
+
+    .step-number {
+      position: absolute;
+      top: -12px;
+      right: -12px;
+      background: #FF6B35;
+      color: white;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 16px;
+    }
   </style>
 </head>
 <body class="bg-white dark:bg-navyDark text-gray-900 dark:text-gray-100 transition-colors duration-300">
@@ -56,7 +98,7 @@
         <a href="/"><img id="logoImage" src="static/images/logo-light.png" alt="ElectroLink" class="h-16 w-auto"></a>
       </div>
 
-      <div class="hidden md:flex space-x-8 text-lg">
+      <div class="hidden md:flex space-x-8 text-base">
         <a href="/products" class="text-gray-700 dark:text-gray-300 hover:text-primary font-medium transition">Məhsullar</a>
         <a href="/about" class="text-gray-700 dark:text-gray-300 hover:text-primary font-medium transition">Haqqımızda</a>
         <a href="/contact" class="text-gray-700 dark:text-gray-300 hover:text-primary font-medium transition">Əlaqə</a>
@@ -64,85 +106,100 @@
 
       <div class="flex items-center space-x-4">
         <button id="themeToggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition">
-          <i id="themeIcon" class="fas fa-moon text-2xl text-gray-700 dark:text-gray-300"></i>
+          <i id="themeIcon" class="fas fa-moon text-xl text-gray-700 dark:text-gray-300"></i>
         </button>
         <a href="/cart" class="relative">
-          <i class="fas fa-shopping-cart text-3xl text-gray-700 dark:text-gray-300 hover:text-primary transition"></i>
+          <i class="fas fa-shopping-cart text-2xl text-gray-700 dark:text-gray-300 hover:text-primary transition"></i>
           <span id="cartCount" class="cart-badge">0</span>
         </a>
-        <button id="mobileMenuBtn" class="md:hidden text-gray-700 dark:text-gray-300"><i class="fas fa-bars text-2xl"></i></button>
+        <button id="mobileMenuBtn" class="md:hidden text-gray-700 dark:text-gray-300"><i class="fas fa-bars text-xl"></i></button>
       </div>
     </div>
   </div>
 
   <div id="mobileMenu" class="hidden md:hidden border-t bg-white dark:bg-navyBox border-gray-200 dark:border-gray-700">
     <div class="px-4 py-4 space-y-3">
-      <a href="/products" class="block text-gray-700 dark:text-gray-300 hover:text-primary font-medium text-lg py-2">Məhsullar</a>
-      <a href="/about" class="block text-gray-700 dark:text-gray-300 hover:text-primary font-medium text-lg py-2">Haqqımızda</a>
-      <a href="/contact" class="block text-gray-700 dark:text-gray-300 hover:text-primary font-medium text-lg py-2">Əlaqə</a>
+      <a href="/products" class="block text-gray-700 dark:text-gray-300 hover:text-primary font-medium py-2">Məhsullar</a>
+      <a href="/blog" class="block text-gray-700 dark:text-gray-300 hover:text-primary font-medium py-2">Blog</a>
+      <a href="/about" class="block text-gray-700 dark:text-gray-300 hover:text-primary font-medium py-2">Haqqımızda</a>
+      <a href="/contact" class="block text-gray-700 dark:text-gray-300 hover:text-primary font-medium py-2">Əlaqə</a>
     </div>
   </div>
 </nav>
 
 <!-- Hero Section -->
 <section class="py-16 px-4 bg-gradient-to-br from-blue-50 to-white dark:from-navyDark dark:to-navyBox hero-animate transition-colors">
-  <div class="max-w-7xl mx-auto text-center">
-    <div class="grid md:grid-cols-3 gap-6 mb-12">
-      <div class="bg-gradient-to-br from-primary to-blue-600 text-white p-8 rounded-3xl shadow-xl transform hover:scale-105 transition">
-        <h3 class="text-2xl font-bold mb-2">Yeni Gəlişlər!</h3>
-        <p class="text-lg">Son model TV Box-lar</p>
+  <div class="max-w-7xl mx-auto">
+    <div class="grid md:grid-cols-2 gap-8 items-center mb-12">
+      <div>
+        <h1 class="text-5xl md:text-6xl font-bold mb-6 text-gray-900 dark:text-white leading-tight">
+          Keyfiyyətli Elektronika<br>
+          <span class="text-primary">Sərfəli Qiymətə</span>
+        </h1>
+        <p class="text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
+          TV Box, Qızdırıcı və daha çoxu. Bakı üzrə pulsuz çatdırılma.
+        </p>
+        <a href="/products" class="inline-block bg-primary text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-700 shadow-lg hover:shadow-xl transition">
+          Bütün Çeşidlər
+        </a>
       </div>
-      <div class="bg-gradient-to-br from-secondary to-orange-600 text-white p-8 rounded-3xl shadow-xl transform hover:scale-105 transition">
-        <h3 class="text-2xl font-bold mb-2">Xüsusi Təklif</h3>
-        <p class="text-lg">Qış mövsümü üçün qızdırıcılar</p>
-      </div>
-      <div class="bg-gradient-to-br from-green-500 to-teal-600 text-white p-8 rounded-3xl shadow-xl transform hover:scale-105 transition">
-        <h3 class="text-2xl font-bold mb-2">Pulsuz Quraşdırma</h3>
-        <p class="text-lg">TV Box kanalları</p>
+
+      <div class="grid grid-cols-2 gap-4">
+        <div class="bg-white dark:bg-navyBox border-2 border-primary p-6 rounded-2xl text-center shadow-lg hover:shadow-xl transition transform hover:-translate-y-1">
+          <h3 class="text-lg font-bold text-primary mb-2">50% Endirim</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400">TV Box seriyasında</p>
+        </div>
+        <div class="bg-white dark:bg-navyBox border-2 border-secondary p-6 rounded-2xl text-center shadow-lg hover:shadow-xl transition transform hover:-translate-y-1">
+          <h3 class="text-lg font-bold text-secondary mb-2">Yeni Kolleksiya</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400">Smart ev cihazları</p>
+        </div>
+        <div class="bg-white dark:bg-navyBox border-2 border-green-500 p-6 rounded-2xl text-center shadow-lg hover:shadow-xl transition transform hover:-translate-y-1">
+          <h3 class="text-lg font-bold text-green-600 dark:text-green-500 mb-2">Pulsuz Çatdırılma</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400">Bakı üzrə</p>
+        </div>
+        <div class="bg-white dark:bg-navyBox border-2 border-purple-500 p-6 rounded-2xl text-center shadow-lg hover:shadow-xl transition transform hover:-translate-y-1">
+          <h3 class="text-lg font-bold text-purple-600 dark:text-purple-500 mb-2">100+ Məhsul</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400">Sizin üçün</p>
+        </div>
       </div>
     </div>
-
-    <h1 class="text-5xl md:text-6xl font-bold mb-6 text-gray-900 dark:text-white">
-      Premium Elektronika<br>
-      <span class="text-primary">ElectroLink.az</span>
-    </h1>
-    <p class="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
-      Keyfiyyətli məhsullar, sərfəli qiymətlər və peşəkar xidmət
-    </p>
-    <a href="/products" class="inline-block bg-gradient-to-r from-primary to-blue-600 text-white px-10 py-5 rounded-full text-xl font-bold hover:shadow-2xl transform hover:scale-105 transition">
-      Bütün Məhsulları Gör
-    </a>
   </div>
 </section>
 
 <!-- Categories Section -->
 <section class="py-16 px-4 bg-gray-50 dark:bg-navyDark transition-colors">
   <div class="max-w-7xl mx-auto">
-    <h2 class="text-4xl font-bold text-center mb-12 text-gray-900 dark:text-white">Kateqoriyalar</h2>
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 text-center">
-      <div class="category-card bg-white dark:bg-navyBox p-6 rounded-2xl shadow-lg cursor-pointer transition-colors">
-        <div class="text-primary text-5xl mb-4"><i class="fas fa-tv"></i></div>
-        <h3 class="text-lg font-bold text-gray-800 dark:text-white">TV Box</h3>
+    <h2 class="text-3xl font-bold text-center mb-3 text-gray-900 dark:text-white">Məhsul Kateqoriyaları</h2>
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 text-center">
+      <div class="category-card bg-white dark:bg-navyBox p-6 rounded-xl shadow-md cursor-pointer transition-colors">
+        <div class="text-primary text-4xl mb-3"><i class="fas fa-tv"></i></div>
+        <h3 class="text-base font-bold text-gray-800 dark:text-white">TV Box</h3>
+        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">3 məhsul</p>
       </div>
-      <div class="category-card bg-white dark:bg-navyBox p-6 rounded-2xl shadow-lg cursor-pointer transition-colors">
-        <div class="text-secondary text-5xl mb-4"><i class="fas fa-fire"></i></div>
-        <h3 class="text-lg font-bold text-gray-800 dark:text-white">Qızdırıcılar</h3>
+      <div class="category-card bg-white dark:bg-navyBox p-6 rounded-xl shadow-md cursor-pointer transition-colors">
+        <div class="text-secondary text-4xl mb-3"><i class="fas fa-fire"></i></div>
+        <h3 class="text-base font-bold text-gray-800 dark:text-white">Qızdırıcılar</h3>
+        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">3 məhsul</p>
       </div>
-      <div class="category-card bg-white dark:bg-navyBox p-6 rounded-2xl shadow-lg cursor-pointer transition-colors">
-        <div class="text-primary text-5xl mb-4"><i class="fas fa-camera"></i></div>
-        <h3 class="text-lg font-bold text-gray-800 dark:text-white">Kameralar</h3>
+      <div class="category-card bg-white dark:bg-navyBox p-6 rounded-xl shadow-md cursor-pointer transition-colors">
+        <div class="text-primary text-4xl mb-3"><i class="fas fa-plug"></i></div>
+        <h3 class="text-base font-bold text-gray-800 dark:text-white">Aksesuarlar</h3>
+        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">1 məhsul</p>
       </div>
-      <div class="category-card bg-white dark:bg-navyBox p-6 rounded-2xl shadow-lg cursor-pointer transition-colors">
-        <div class="text-secondary text-5xl mb-4"><i class="fas fa-battery-full"></i></div>
-        <h3 class="text-lg font-bold text-gray-800 dark:text-white">Batareyalar</h3>
+      <div class="category-card bg-white dark:bg-navyBox p-6 rounded-xl shadow-md cursor-pointer transition-colors">
+        <div class="text-secondary text-4xl mb-3"><i class="fas fa-camera"></i></div>
+        <h3 class="text-base font-bold text-gray-800 dark:text-white">Kameralar</h3>
+        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Tezliklə</p>
       </div>
-      <div class="category-card bg-white dark:bg-navyBox p-6 rounded-2xl shadow-lg cursor-pointer transition-colors">
-        <div class="text-primary text-5xl mb-4"><i class="fas fa-plug"></i></div>
-        <h3 class="text-lg font-bold text-gray-800 dark:text-white">Aksessuarlar</h3>
+      <div class="category-card bg-white dark:bg-navyBox p-6 rounded-xl shadow-md cursor-pointer transition-colors">
+        <div class="text-primary text-4xl mb-3"><i class="fas fa-battery-full"></i></div>
+        <h3 class="text-base font-bold text-gray-800 dark:text-white">Batareyalar</h3>
+        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Tezliklə</p>
       </div>
-      <div class="category-card bg-white dark:bg-navyBox p-6 rounded-2xl shadow-lg cursor-pointer transition-colors">
-        <div class="text-secondary text-5xl mb-4"><i class="fas fa-tools"></i></div>
-        <h3 class="text-lg font-bold text-gray-800 dark:text-white">Xidmətlər</h3>
+      <div class="category-card bg-white dark:bg-navyBox p-6 rounded-xl shadow-md cursor-pointer transition-colors">
+        <div class="text-secondary text-4xl mb-3"><i class="fas fa-tools"></i></div>
+        <h3 class="text-base font-bold text-gray-800 dark:text-white">Xidmətlər</h3>
+        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Əlaqə</p>
       </div>
     </div>
   </div>
@@ -151,8 +208,113 @@
 <!-- Featured Products Section -->
 <section class="py-16 px-4 bg-white dark:bg-navyBox transition-colors">
   <div class="max-w-7xl mx-auto">
-    <h2 class="text-4xl font-bold text-center mb-12 text-gray-900 dark:text-white">Populyar Məhsullar</h2>
+    <h2 class="text-3xl font-bold text-center mb-3 text-gray-900 dark:text-white">Seçilmiş Məhsullar</h2>
+    <p class="text-center text-gray-600 dark:text-gray-400 mb-10">Ən çox satılan və yeni məhsullarımız</p>
     <div id="featuredProducts" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+  </div>
+</section>
+
+<!-- Services Section -->
+<section class="py-16 px-4 bg-gray-50 dark:bg-navyDark transition-colors">
+  <div class="max-w-7xl mx-auto">
+    <h2 class="text-3xl font-bold text-center mb-3 text-gray-900 dark:text-white">Xidmətlərimiz</h2>
+    <div class="grid md:grid-cols-3 gap-6 mt-10">
+      <div class="bg-white dark:bg-navyBox p-6 rounded-xl shadow-md hover:shadow-lg transition">
+        <div class="bg-primary/10 dark:bg-primary/20 w-14 h-14 rounded-lg flex items-center justify-center mb-4">
+          <i class="fas fa-wrench text-2xl text-primary"></i>
+        </div>
+        <h3 class="text-lg font-bold mb-2 text-gray-900 dark:text-white">Kanal Yüklənməsi</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">TV Box-a pulsuz kanal yükləmə xidməti</p>
+        <button onclick='orderService("Kanal Yüklənməsi")' class="text-primary hover:text-blue-700 font-semibold text-sm">Ətraflı <i class="fas fa-arrow-right ml-1"></i></button>
+      </div>
+      <div class="bg-white dark:bg-navyBox p-6 rounded-xl shadow-md hover:shadow-lg transition">
+        <div class="bg-secondary/10 dark:bg-secondary/20 w-14 h-14 rounded-lg flex items-center justify-center mb-4">
+          <i class="fas fa-camera text-2xl text-secondary"></i>
+        </div>
+        <h3 class="text-lg font-bold mb-2 text-gray-900 dark:text-white">Kamera Quraşdırılması</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">Peşəkar kamera sistemləri quraşdırılması</p>
+        <button onclick='orderService("Kamera Quraşdırılması")' class="text-secondary hover:text-orange-700 font-semibold text-sm">Ətraflı <i class="fas fa-arrow-right ml-1"></i></button>
+      </div>
+      <div class="bg-white dark:bg-navyBox p-6 rounded-xl shadow-md hover:shadow-lg transition">
+        <div class="bg-primary/10 dark:bg-primary/20 w-14 h-14 rounded-lg flex items-center justify-center mb-4">
+          <i class="fas fa-battery-full text-2xl text-primary"></i>
+        </div>
+        <h3 class="text-lg font-bold mb-2 text-gray-900 dark:text-white">Batareya Yığılması</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">Fərdi batareya yığma xidməti</p>
+        <button onclick='orderService("Batareya Yığılması")' class="text-primary hover:text-blue-700 font-semibold text-sm">Ətraflı <i class="fas fa-arrow-right ml-1"></i></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How to Order Section -->
+<section class="py-16 px-4 bg-white dark:bg-navyBox transition-colors">
+  <div class="max-w-7xl mx-auto">
+    <h2 class="text-3xl font-bold text-center mb-3 text-gray-900 dark:text-white">Necə sifariş edim?</h2>
+    <p class="text-center text-gray-600 dark:text-gray-400 mb-10">Üç sadə addımda sifarişinizi verin</p>
+    
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="bg-gray-50 dark:bg-navyDark p-8 rounded-xl text-center relative">
+        <div class="step-number">1</div>
+        <div class="bg-primary/10 dark:bg-primary/20 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+          <i class="fas fa-search text-3xl text-primary"></i>
+        </div>
+        <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white">Məhsul seçin</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-300">Kataloqmuzdakı məhsullara baxın və istədiyinizi seçin</p>
+      </div>
+
+      <div class="bg-gray-50 dark:bg-navyDark p-8 rounded-xl text-center relative">
+        <div class="step-number">2</div>
+        <div class="bg-secondary/10 dark:bg-secondary/20 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+          <i class="fas fa-shopping-cart text-3xl text-secondary"></i>
+        </div>
+        <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white">Səbətə əlavə edin</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-300">İstədiyiniz məhsulları səbətə yığın və ya dərhal sifariş verin</p>
+      </div>
+
+      <div class="bg-gray-50 dark:bg-navyDark p-8 rounded-xl text-center relative">
+        <div class="step-number">3</div>
+        <div class="bg-green-500/10 dark:bg-green-500/20 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+          <i class="fab fa-whatsapp text-3xl text-green-600"></i>
+        </div>
+        <h3 class="text-xl font-bold mb-2 text-gray-900 dark:text-white">WhatsApp ilə sifariş</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-300">WhatsApp vasitəsilə sifarişinizi tamamlayın</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Customer Reviews Section -->
+<section class="py-16 px-4 bg-gray-50 dark:bg-navyDark transition-colors">
+  <div class="max-w-7xl mx-auto">
+    <h2 class="text-3xl font-bold text-center mb-3 text-gray-900 dark:text-white">Müştəri Rəyləri</h2>
+    <p class="text-center text-gray-600 dark:text-gray-400 mb-10">Minlərlə razı müştərimiz var</p>
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="bg-white dark:bg-navyBox p-6 rounded-xl shadow-md">
+        <div class="flex items-center mb-3">
+          <div class="text-yellow-400 text-lg">★★★★★</div>
+        </div>
+        <p class="text-gray-700 dark:text-gray-300 text-sm mb-3 italic">"TV Box çox keyfiyyətli çıxdı, kanal yükləmə xidməti də pulsuz idi. Çox razıyam!"</p>
+        <p class="text-xs text-gray-500 dark:text-gray-400 font-semibold">Anar M.</p>
+        <p class="text-xs text-gray-400 dark:text-gray-500">2 gün əvvəl</p>
+      </div>
+      <div class="bg-white dark:bg-navyBox p-6 rounded-xl shadow-md">
+        <div class="flex items-center mb-3">
+          <div class="text-yellow-400 text-lg">★★★★★</div>
+        </div>
+        <p class="text-gray-700 dark:text-gray-300 text-sm mb-3 italic">"Qızdırıcı mükəmməldir, çox tez qızdırır və enerji qənaatlıdır. Tövsiyə edirəm!"</p>
+        <p class="text-xs text-gray-500 dark:text-gray-400 font-semibold">Nigar K.</p>
+        <p class="text-xs text-gray-400 dark:text-gray-500">1 həftə əvvəl</p>
+      </div>
+      <div class="bg-white dark:bg-navyBox p-6 rounded-xl shadow-md">
+        <div class="flex items-center mb-3">
+          <div class="text-yellow-400 text-lg">★★★★★</div>
+        </div>
+        <p class="text-gray-700 dark:text-gray-300 text-sm mb-3 italic">"Çatdırılma çox sürətli oldu, məhsul əla vəziyyətdə gəldi. Təşəkkür edirəm!"</p>
+        <p class="text-xs text-gray-500 dark:text-gray-400 font-semibold">Elvin R.</p>
+        <p class="text-xs text-gray-400 dark:text-gray-500">3 gün əvvəl</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -160,51 +322,49 @@
 <footer class="bg-gray-900 text-white py-12 px-4">
   <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-8 mb-8">
     <div>
-      <h3 class="text-xl font-bold mb-4">Əlaqə</h3>
-      <p class="mb-2"><i class="fas fa-phone mr-2"></i> +994 10 505 16 15</p>
-      <p class="mb-2"><i class="fas fa-map-marker-alt mr-2"></i> Bakı, Azərbaycan</p>
+      <h3 class="text-lg font-bold mb-4">Əlaqə</h3>
+      <p class="mb-2 text-sm"><i class="fas fa-phone mr-2"></i> +994 10 505 16 15</p>
+      <p class="mb-2 text-sm"><i class="fas fa-map-marker-alt mr-2"></i> Bakı, Azərbaycan</p>
     </div>
     <div>
-      <h3 class="text-xl font-bold mb-4">İş Saatları</h3>
-      <p>B.e - Cümə: 09:00 - 18:00</p>
-      <p>Şənbə: 10:00 - 16:00</p>
-      <p>Bazar: Bağlı</p>
+      <h3 class="text-lg font-bold mb-4">İş Saatları</h3>
+      <p class="text-sm">B.e - Cümə: 09:00 - 18:00</p>
+      <p class="text-sm">Şənbə: 10:00 - 16:00</p>
+      <p class="text-sm">Bazar: Bağlı</p>
     </div>
     <div>
-      <h3 class="text-xl font-bold mb-4">Menyular</h3>
-      <ul class="space-y-2">
-        <li><a href="/warranty" class="hover:text-primary">Zəmanət və Qaytarma</a></li>
-        <li><a href="/faq" class="hover:text-primary">Tez-tez Verilən Suallar</a></li>
+      <h3 class="text-lg font-bold mb-4">Keçidlər</h3>
+      <ul class="space-y-2 text-sm">
+        <li><a href="/warranty" class="hover:text-primary transition">Zəmanət və Qaytarma</a></li>
+        <li><a href="/faq" class="hover:text-primary transition">Tez-tez Verilən Suallar</a></li>
       </ul>
     </div>
     <div>
-      <h3 class="text-xl font-bold mb-4">Sosial Şəbəkələr</h3>
-      <div class="flex space-x-4 text-3xl">
-        <a href="https://www.instagram.com/electrolink.az/" target="_blank" class="hover:text-primary"><i class="fab fa-instagram"></i></a>
-        <a href="https://www.tiktok.com/@electrolink.az" target="_blank" class="hover:text-primary"><i class="fab fa-tiktok"></i></a>
-        <a href="https://wa.me/994105051615" target="_blank" class="hover:text-primary"><i class="fab fa-whatsapp"></i></a>
+      <h3 class="text-lg font-bold mb-4">Sosial Şəbəkələr</h3>
+      <div class="flex space-x-4 text-2xl">
+        <a href="https://www.instagram.com/electrolink.az/" target="_blank" class="hover:text-primary transition"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.tiktok.com/@electrolink.az" target="_blank" class="hover:text-primary transition"><i class="fab fa-tiktok"></i></a>
+        <a href="https://wa.me/994105051615" target="_blank" class="hover:text-primary transition"><i class="fab fa-whatsapp"></i></a>
       </div>
     </div>
   </div>
   <div class="border-t border-gray-700 pt-8 text-center">
-    <p>© 2025 ElectroLink.az - Bütün hüquqlar qorunur</p>
-    <p class="text-sm text-gray-400">VÖEN: 1234567890</p>
+    <p class="text-sm">© 2025 ElectroLink.az - Bütün hüquqlar qorunur</p>
+    <p class="text-xs text-gray-400 mt-1">VÖEN: 1234567890</p>
   </div>
 </footer>
 
 <!-- WhatsApp Floating Button -->
 <a href="https://wa.me/994105051615" target="_blank" class="whatsapp-float">
   <div class="bg-green-500 text-white w-16 h-16 rounded-full flex items-center justify-center shadow-2xl hover:bg-green-600 transition">
-    <i class="fab fa-whatsapp text-4xl"></i>
+    <i class="fab fa-whatsapp text-3xl"></i>
   </div>
 </a>
 
 <!-- Notification -->
 <div id="notification" class="notification hidden">
-  <div class="flex items-center">
-    <i class="fas fa-check-circle text-2xl mr-3"></i>
-    <span class="text-lg font-semibold">Səbətə əlavə edildi ✅</span>
-  </div>
+  <i class="fas fa-check-circle mr-2"></i>
+  <span class="font-semibold">Səbətə əlavə olundu</span>
 </div>
 
 <script>
@@ -216,11 +376,11 @@
   function applyTheme(theme) {
     if(theme === 'dark') {
       root.classList.add('dark');
-      themeIcon.className = 'fas fa-sun text-2xl text-yellow-400';
+      themeIcon.className = 'fas fa-sun text-xl text-yellow-400';
       logoImage.src = 'static/images/actual logo.png';
     } else {
       root.classList.remove('dark');
-      themeIcon.className = 'fas fa-moon text-2xl text-gray-700';
+      themeIcon.className = 'fas fa-moon text-xl text-gray-700';
       logoImage.src = 'static/images/logo-light.png';
     }
     localStorage.setItem('theme', theme);
@@ -256,11 +416,6 @@
     window.open(`https://wa.me/994105051615?text=${encodeURIComponent(message)}`,'_blank');
   }
 
-  function orderService(serviceName){
-    const message = `Salam! ${serviceName} xidməti haqqında məlumat almaq istəyirəm.`;
-    window.open(`https://wa.me/994105051615?text=${encodeURIComponent(message)}`,'_blank');
-  }
-
   document.getElementById('mobileMenuBtn').addEventListener('click', () => {
     document.getElementById('mobileMenu').classList.toggle('hidden');
   });
@@ -277,8 +432,8 @@
       if(data.success) renderProducts(data.products);
     } catch {
       renderProducts([
-        {id:1,name:'TV Box X100',code:'TVX100',price:149.99,image:'static/images/xiaotv0.png'},
-        {id:2,name:'Qızdırıcı H200',code:'QZH200',price:49.99,image:'static/images/RAF qizdirici main.png'},
+        {id:1,name:'TV Box X100',code:'TVX100',price:149.99,image:'static/images/xiaotv0.png',badge:'Ən çox satılan'},
+        {id:2,name:'Qızdırıcı H200',code:'QZH200',price:49.99,image:'static/images/RAF qizdirici main.png',badge:'Yeni'},
         {id:4,name:'Keyboard',code:'BTB400',price:13.99,image:'static/images/kb0.png'}
       ]);
     }
@@ -287,7 +442,8 @@
   function renderProducts(products){
     const container = document.getElementById('featuredProducts');
     container.innerHTML = products.map(p => `
-      <div class="product-card bg-white dark:bg-navyBox rounded-2xl shadow-lg overflow-hidden transition-colors">
+      <div class="product-card bg-white dark:bg-navyBox rounded-2xl shadow-lg overflow-hidden transition-colors relative">
+        ${p.badge ? `<div class="promo-badge">${p.badge}</div>` : ''}
         <a href="/product?id=${p.id}" class="block">
           <div class="aspect-square bg-gray-100 dark:bg-navyDark">
             <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover">
@@ -300,7 +456,7 @@
         </a>
         <div class="px-4 pb-4">
           <div class="grid grid-cols-2 gap-2">
-            <button onclick='orderNow("${p.name}", "${p.code}", ${p.price})' class="bg-primary text-white px-4 py-3 rounded-lg font-semibold hover:bg-blue-700 transition text-sm">İndi Sifariş</button>
+            <button onclick='orderNow("${p.name}", "${p.code}", ${p.price})' class="bg-gradient-to-r from-primary to-accent text-white px-4 py-3 rounded-lg font-semibold hover:shadow-lg transition text-sm">İndi Sifariş</button>
             <button onclick='addToCart({id:${p.id},name:"${p.name}",price:${p.price},code:"${p.code}",image:"${p.image}"})' class="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white px-4 py-3 rounded-lg font-semibold hover:bg-gray-300 dark:hover:bg-gray-600 transition text-sm">Səbətə</button>
           </div>
         </div>

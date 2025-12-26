@@ -28,34 +28,164 @@
 
   <!-- Google Fonts & Custom CSS -->
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-    * { font-family: 'Inter', sans-serif; }
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
-    .stat-card { transition: transform 0.3s ease; }
-    .stat-card:hover { transform: translateY(-8px); }
+  * {
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.2px;
+  }
 
-    .cart-badge {
-      position: absolute;
-      top: -8px; right: -8px;
-      background: #FF6B35; color: white;
-      border-radius: 50%; width: 22px; height: 22px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 12px; font-weight: bold;
-    }
+  /* ===============================
+     STAT CARDS (premium glass look)
+  ================================ */
+  .stat-card {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
+    border-radius: 1.5rem;
+    padding: 2.5rem 1.5rem;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+  }
 
-    .whatsapp-float {
-      position: fixed; bottom: 25px; right: 25px;
-      z-index: 1000; animation: pulse 2s infinite;
-    }
+  .stat-card:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  }
 
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-    }
+  .dark .stat-card {
+    background: rgba(255, 255, 255, 0.06);
+  }
 
-    .team-member { transition: all 0.3s ease; }
-    .team-member:hover { transform: translateY(-10px); }
-  </style>
+  /* ===============================
+     CART BADGE (cleaner)
+  ================================ */
+  .cart-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: linear-gradient(135deg, #FF6B35, #ff855a);
+    color: white;
+    border-radius: 9999px;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  }
+
+  /* ===============================
+     HERO SECTION POLISH
+  ================================ */
+  section:first-of-type {
+    background: radial-gradient(
+      circle at top,
+      rgba(0, 102, 255, 0.12),
+      transparent 65%
+    );
+  }
+
+  section:first-of-type h1 {
+    letter-spacing: -1px;
+  }
+
+  section:first-of-type p {
+    opacity: 0.95;
+  }
+
+  /* ===============================
+     STORY IMAGE CARD
+  ================================ */
+  .aspect-video {
+    background: linear-gradient(135deg, #0066FF, #3B82F6);
+    border-radius: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .aspect-video::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(255,255,255,0.18),
+      transparent
+    );
+  }
+
+  /* ===============================
+     WHATSAPP FLOAT (softer pulse)
+  ================================ */
+  .whatsapp-float {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 1000;
+    animation: pulse 2.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+    100% { transform: scale(1); }
+  }
+
+  /* ===============================
+     NAVBAR REFINEMENT
+  ================================ */
+  nav {
+    backdrop-filter: blur(14px);
+  }
+
+  nav a {
+    position: relative;
+  }
+
+  nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 0;
+    height: 2px;
+    background: currentColor;
+    transition: width 0.3s ease;
+  }
+
+  nav a:hover::after {
+    width: 100%;
+  }
+
+  /* ===============================
+     TEAM MEMBER CARDS
+  ================================ */
+  .team-member {
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+  }
+
+  .team-member:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.18);
+  }
+
+  /* ===============================
+     FOOTER DEPTH
+  ================================ */
+  footer {
+    background: linear-gradient(180deg, #0f172a, #020617);
+  }
+
+  footer h3 {
+    letter-spacing: 0.6px;
+  }
+
+  .dark footer {
+    background: linear-gradient(180deg, #020617, #000);
+  }
+</style>
+
 </head>
 
 <body class="bg-white dark:bg-navyDark text-gray-900 dark:text-gray-100 transition-colors duration-300">
