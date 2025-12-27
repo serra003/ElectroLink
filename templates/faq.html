@@ -83,6 +83,15 @@
     .faq-icon {
       transition: transform 0.3s ease;
     }
+
+     footer {
+    background: linear-gradient(135deg, #0A1628, #0066FF);
+    color: #ffffff;
+  }
+
+  footer a:hover {
+    color: #FF6B35;
+  }
   </style>
 </head>
 
@@ -95,11 +104,11 @@
         
         <div class="flex items-center">
           <a href="/">
-            <img id="logoImage" src="/static/images/logo-light.png" alt="ElectroLink" class="h-16 w-auto">
+            <img id="logoImage" src="/static/images/Electrolink transparent.png" alt="ElectroLink" class="h-16 w-auto">
           </a>
         </div>
 
-        <div class="hidden md:flex space-x-8 text-lg">
+        <div class="hidden md:flex space-x-8 text-base ml-auto mr-16">
           <a href="/products" class="text-gray-700 dark:text-gray-300 hover:text-primary font-medium transition">Məhsullar</a>
           <a href="/about" class="text-gray-700 dark:text-gray-300 hover:text-primary font-medium transition">Haqqımızda</a>
           <a href="/contact" class="text-gray-700 dark:text-gray-300 hover:text-primary font-medium transition">Əlaqə</a>
@@ -399,11 +408,11 @@
       if (theme === 'dark') {
         root.classList.add('dark');
         themeIcon.className = 'fas fa-sun text-2xl text-yellow-400';
-        logoImage.src = '/static/images/actual logo.png';
+        logoImage.src = '/static/images/darkmodenew.png';
       } else {
         root.classList.remove('dark');
         themeIcon.className = 'fas fa-moon text-2xl text-gray-700';
-        logoImage.src = '/static/images/logo-light.png';
+        logoImage.src = '/static/images/Electrolink transparent.png';
       }
       localStorage.setItem('theme', theme);
     }

@@ -173,16 +173,13 @@
   /* ===============================
      FOOTER DEPTH
   ================================ */
-  footer {
-    background: linear-gradient(180deg, #0f172a, #020617);
+   footer {
+    background: linear-gradient(135deg, #0A1628, #0066FF);
+    color: #ffffff;
   }
 
-  footer h3 {
-    letter-spacing: 0.6px;
-  }
-
-  .dark footer {
-    background: linear-gradient(180deg, #020617, #000);
+  footer a:hover {
+    color: #FF6B35;
   }
 </style>
 
@@ -197,12 +194,12 @@
         <!-- Logo -->
         <div class="flex items-center">
           <a href="/">
-            <img id="logoImage" src="/static/images/logo-light.png" alt="ElectroLink" class="h-16 w-auto">
+            <img id="logoImage" src="/static/images/Electrolink transparent.png" alt="ElectroLink" class="h-16 w-auto">
           </a>
         </div>
 
         <!-- Desktop Menu -->
-        <div class="hidden md:flex space-x-8 text-lg">
+        <div class="hidden md:flex space-x-8 text-base ml-auto mr-16">
           <a href="/products" class="text-gray-700 dark:text-gray-300 hover:text-primary font-medium transition">Məhsullar</a>
           <a href="/about" class="text-primary font-bold transition">Haqqımızda</a>
           <a href="/contact" class="text-gray-700 dark:text-gray-300 hover:text-primary font-medium transition">Əlaqə</a>
@@ -352,11 +349,11 @@
       if (theme === 'dark') {
         root.classList.add('dark');
         themeIcon.className = 'fas fa-sun text-2xl text-yellow-400';
-        logoImage.src = '/static/images/actual logo.png';
+        logoImage.src = '/static/images/darkmodenew.png';
       } else {
         root.classList.remove('dark');
         themeIcon.className = 'fas fa-moon text-2xl text-gray-700';
-        logoImage.src = '/static/images/logo-light.png';
+        logoImage.src = '/static/images/Electrolink transparent.png';
       }
       localStorage.setItem('theme', theme);
     }

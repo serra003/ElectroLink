@@ -14,8 +14,8 @@
       theme: {
         extend: {
           colors: {
-            primary: '#0066FF',
-            secondary: '#FF6B35',
+            primary: '#FF6B35',
+            secondary: '#0066FF',
             navyDark: '#0A1628',
             navyBox: '#1A2942',
           }
@@ -95,6 +95,15 @@ body {
   }
 }
 
+ footer {
+    background: linear-gradient(135deg, #0A1628, #0066FF);
+    color: #ffffff;
+  }
+
+  footer a:hover {
+    color: #FF6B35;
+  }
+
 /* ===== Line Clamp ===== */
 .line-clamp-2 {
   display: -webkit-box;
@@ -152,6 +161,31 @@ button:hover {
   box-shadow: 0 25px 45px rgba(0, 0, 0, 0.6);
 }
 
+/* first button = Səbətə */
+.product-card button:first-of-type {
+  background: linear-gradient(135deg, #0066FF, #3385ff);
+  color: white;
+}
+
+/* second button = Sifariş edin */
+.product-card button:last-of-type {
+  background: linear-gradient(135deg, #FF6B35, #ff855a);
+  color: white;
+}
+
+  .product-card .price,
+.product-card .product-price,
+.product-card span[class*="price"],
+.product-card p[class*="price"] {
+  color: #FF6B35 !important;
+}
+
+/* ===== Modal Scroll ===== */
+.modal-content {
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
   </style>
 </head>
 <body class="bg-white dark:bg-navyDark text-gray-900 dark:text-gray-100 transition-colors">
@@ -161,10 +195,10 @@ button:hover {
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center h-20">
       <div class="flex items-center">
-        <a href="/"><img id="logoImage" src="/static/images/logo-light.png" alt="ElectroLink" class="h-16 w-auto"></a>
+        <a href="/"><img id="logoImage" src="/static/images/Electrolink transparent.png" alt="ElectroLink" class="h-16 w-auto"></a>
       </div>
-      <div class="hidden md:flex space-x-8 text-lg">
-        <a href="/products" class="text-primary font-semibold">Məhsullar</a>
+        <div class="hidden md:flex space-x-8 text-base ml-auto mr-16">
+        <a href="/products" class="text-gray-700 dark:text-gray-300 hover:text-primary font-medium transition">Məhsullar</a>
         <a href="/about" class="text-gray-700 dark:text-gray-300 hover:text-primary font-medium transition">Haqqımızda</a>
         <a href="/contact" class="text-gray-700 dark:text-gray-300 hover:text-primary font-medium transition">Əlaqə</a>
       </div>
@@ -241,7 +275,7 @@ button:hover {
   </div>
 </section>
 
-<!-- Footer & WhatsApp Float & Notification -->
+<!-- Footer -->
 <footer class="bg-gray-900 text-white py-12 px-4">
   <div class="max-w-7xl mx-auto grid md:grid-cols-4 gap-8">
     <div>
@@ -277,12 +311,14 @@ button:hover {
   </div>
 </footer>
 
+<!-- WhatsApp Float -->
 <a href="https://wa.me/994105051615" target="_blank" class="whatsapp-float">
   <div class="bg-green-500 text-white w-16 h-16 rounded-full flex items-center justify-center shadow-2xl hover:bg-green-600 transition">
     <i class="fab fa-whatsapp text-4xl"></i>
   </div>
 </a>
 
+<!-- Notification -->
 <div id="notification" class="notification hidden">
   <div class="flex items-center">
     <i class="fas fa-check-circle text-2xl mr-3"></i>
@@ -290,8 +326,66 @@ button:hover {
   </div>
 </div>
 
+<!-- PRODUCT DETAIL MODAL - NOW HORIZONTAL -->
+<div id="productModal" class="fixed inset-0 z-[9999] hidden bg-black/60 flex items-center justify-center p-4">
+  <div class="bg-white dark:bg-navyBox w-full max-w-5xl rounded-3xl shadow-2xl relative modal-content">
+    
+    <!-- Close Button -->
+    <button onclick="closeProductModal()" class="absolute top-4 right-4 z-10 text-3xl text-gray-400 hover:text-primary">
+      &times;
+    </button>
+
+    <!-- HORIZONTAL LAYOUT: Grid with 2 columns -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 p-6">
+
+      <!-- LEFT: Images Section -->
+      <div>
+        <img id="modalMainImage" class="w-full h-96 object-cover rounded-xl mb-4 cursor-pointer">
+        <div id="modalThumbnails" class="flex gap-3 flex-wrap"></div>
+      </div>
+
+      <!-- RIGHT: Product Info Section -->
+      <div class="flex flex-col">
+        <h2 id="modalName" class="text-3xl font-bold mb-2 text-gray-900 dark:text-white"></h2>
+        <p id="modalCode" class="text-sm text-gray-500 dark:text-gray-400 mb-3"></p>
+        <p id="modalPrice" class="text-4xl font-bold text-primary mb-3"></p>
+        <p id="modalStock" class="text-green-600 text-sm font-semibold mb-4">
+          <i class="fas fa-check-circle mr-1"></i>Stokda mövcuddur
+        </p>
+
+        <p id="modalDescription" class="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed"></p>
+
+        <ul id="modalHighlights" class="space-y-2 mb-6 text-gray-700 dark:text-gray-300"></ul>
+
+        <!-- Quantity Selector -->
+        <div class="flex items-center gap-3 mb-6">
+          <span class="text-gray-700 dark:text-gray-300 font-medium">Miqdar:</span>
+          <button onclick="changeModalQty(-1)" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition">
+            <i class="fas fa-minus"></i>
+          </button>
+          <input id="modalQty" type="number" value="1" min="1" class="w-20 text-center text-lg border-2 rounded-lg py-2 dark:bg-navyDark dark:border-gray-600">
+          <button onclick="changeModalQty(1)" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition">
+            <i class="fas fa-plus"></i>
+          </button>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex gap-3 mt-auto">
+          <button id="modalOrderBtn" class="flex-1 bg-gradient-to-r from-primary to-orange-600 text-white px-6 py-4 rounded-xl font-bold text-lg hover:shadow-lg transition">
+            <i class="fab fa-whatsapp mr-2"></i>Sifariş Et
+          </button>
+          <button id="modalCartBtn" class="flex-1 bg-gradient-to-r from-secondary to-blue-600 text-white px-6 py-4 rounded-xl font-bold text-lg hover:shadow-lg transition">
+            <i class="fas fa-shopping-cart mr-2"></i>Səbətə At
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 <script>
-  // ======== Sample fallback products in case API fails ========
+  // ======== Sample fallback products ========
   const fallbackProducts = [
     { id: 1, name: "RAF Fan qızdırıcı 3000W", code: "EL-HT001", category: "heaters", price: 49.99, image: "/static/images/RAF qizdirici main.png" },
     { id: 2, name: "Xiaomi TV Box S", code: "EL-TVB002", category: "tvbox", price: 149.99, image: "/static/images/xiaotv0.png" },
@@ -351,7 +445,7 @@ button:hover {
     noResults.classList.add('hidden');
     grid.innerHTML = filteredProducts.map(p => `
       <div class="product-card bg-white dark:bg-navyBox rounded-2xl shadow-lg overflow-hidden">
-        <a href="/products/${p.code}" class="block">
+        <div onclick='openProductModal(${JSON.stringify(p).replace(/'/g, "&apos;")})' class="cursor-pointer">
           <div class="aspect-square bg-gray-100 dark:bg-navyDark">
             <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover">
           </div>
@@ -360,11 +454,11 @@ button:hover {
             <h3 class="text-lg font-bold mb-2 line-clamp-2 text-gray-900 dark:text-white">${p.name}</h3>
             <p class="text-2xl font-bold text-primary mb-4">${p.price} AZN</p>
           </div>
-        </a>
+        </div>
         <div class="px-4 pb-4">
           <div class="grid grid-cols-2 gap-2">
-            <button onclick='orderNow("${p.name}", "${p.code}", ${p.price})' class="bg-primary text-white px-3 py-2 rounded-lg font-semibold hover:bg-blue-700 transition text-sm">Sifariş Et</button>
-            <button onclick='addToCart({id: ${p.id}, name: "${p.name}", price: ${p.price}, code: "${p.code}", image: "${p.image}"})' class="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white px-3 py-2 rounded-lg font-semibold hover:bg-gray-300 dark:hover:bg-gray-600 transition text-sm">Səbətə</button>
+            <button onclick='orderNow("${p.name}", "${p.code}", ${p.price})' class="bg-primary text-white px-3 py-2 rounded-lg font-semibold hover:bg-orange-700 transition text-sm">Sifariş Et</button>
+            <button onclick='addToCart(${JSON.stringify(p).replace(/'/g, "&apos;")})' class="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white px-3 py-2 rounded-lg font-semibold hover:bg-gray-300 dark:hover:bg-gray-600 transition text-sm">Səbətə</button>
           </div>
         </div>
       </div>
@@ -381,79 +475,143 @@ button:hover {
     const priceRange = priceFilter.value;
     const sort = sortFilter.value;
     const searchQuery = searchInput.value.toLowerCase();
-      filteredProducts = products.filter(product => {
-        const catMatch = cat === 'all' || product.category === cat;
-        const searchMatch = searchQuery === '' || 
-          product.name.toLowerCase().includes(searchQuery) ||
-          product.code.toLowerCase().includes(searchQuery);
+    
+    filteredProducts = products.filter(product => {
+      const catMatch = cat === 'all' || product.category === cat;
+      const searchMatch = searchQuery === '' || 
+        product.name.toLowerCase().includes(searchQuery) ||
+        product.code.toLowerCase().includes(searchQuery);
 
-        let priceMatch = true;
-        if (priceRange !== 'all') {
-          if (priceRange === '0-100') priceMatch = product.price <= 100;
-          else if (priceRange === '100-300') priceMatch = product.price > 100 && product.price <= 300;
-          else if (priceRange === '300-500') priceMatch = product.price > 300 && product.price <= 500;
-          else if (priceRange === '500+') priceMatch = product.price > 500;
-        }
-
-        return catMatch && priceMatch && searchMatch;
-      });
-
-      // Sorting
-      if (sort === 'name-asc') filteredProducts.sort((a,b) => a.name.localeCompare(b.name));
-      else if (sort === 'name-desc') filteredProducts.sort((a,b) => b.name.localeCompare(a.name));
-      else if (sort === 'price-asc') filteredProducts.sort((a,b) => a.price - b.price);
-      else if (sort === 'price-desc') filteredProducts.sort((a,b) => b.price - a.price);
-
-      renderProducts();
-    }
-
-    categoryFilter.addEventListener('change', applyFilters);
-    priceFilter.addEventListener('change', applyFilters);
-    sortFilter.addEventListener('change', applyFilters);
-    searchInput.addEventListener('input', applyFilters);
-
-    // Theme toggle
-    const themeToggle = document.getElementById('themeToggle');
-    const themeIcon = document.getElementById('themeIcon');
-    const logoImage = document.getElementById('logoImage');
-    const root = document.documentElement;
-
-    function applyTheme(theme) {
-      if (theme === 'dark') {
-        root.classList.add('dark');
-        themeIcon.className = 'fas fa-sun text-2xl text-yellow-400';
-        logoImage.src = '/static/images/actual logo.png';
-      } else {
-        root.classList.remove('dark');
-        themeIcon.className = 'fas fa-moon text-2xl text-gray-700';
-        logoImage.src = '/static/images/logo-light.png';
+      let priceMatch = true;
+      if (priceRange !== 'all') {
+        if (priceRange === '0-100') priceMatch = product.price <= 100;
+        else if (priceRange === '100-300') priceMatch = product.price > 100 && product.price <= 300;
+        else if (priceRange === '300-500') priceMatch = product.price > 300 && product.price <= 500;
+        else if (priceRange === '500+') priceMatch = product.price > 500;
       }
-      localStorage.setItem('theme', theme);
+
+      return catMatch && priceMatch && searchMatch;
+    });
+
+    // Sorting
+    if (sort === 'name-asc') filteredProducts.sort((a,b) => a.name.localeCompare(b.name));
+    else if (sort === 'name-desc') filteredProducts.sort((a,b) => b.name.localeCompare(a.name));
+    else if (sort === 'price-asc') filteredProducts.sort((a,b) => a.price - b.price);
+    else if (sort === 'price-desc') filteredProducts.sort((a,b) => b.price - a.price);
+
+    renderProducts();
+  }
+
+  categoryFilter.addEventListener('change', applyFilters);
+  priceFilter.addEventListener('change', applyFilters);
+  sortFilter.addEventListener('change', applyFilters);
+  searchInput.addEventListener('input', applyFilters);
+
+  // Theme toggle
+  const themeToggle = document.getElementById('themeToggle');
+  const themeIcon = document.getElementById('themeIcon');
+  const logoImage = document.getElementById('logoImage');
+  const root = document.documentElement;
+
+  function applyTheme(theme) {
+    if (theme === 'dark') {
+      root.classList.add('dark');
+      themeIcon.className = 'fas fa-sun text-2xl text-yellow-400';
+      logoImage.src = '/static/images/darkmodenew.png';
+    } else {
+      root.classList.remove('dark');
+      themeIcon.className = 'fas fa-moon text-2xl text-gray-700';
+      logoImage.src = '/static/images/Electrolink transparent.png';
     }
+    localStorage.setItem('theme', theme);
+  }
 
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    applyTheme(savedTheme);
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  applyTheme(savedTheme);
 
-    themeToggle.addEventListener('click', () => {
-      const next = root.classList.contains('dark') ? 'light' : 'dark';
-      applyTheme(next);
+  themeToggle.addEventListener('click', () => {
+    const next = root.classList.contains('dark') ? 'light' : 'dark';
+    applyTheme(next);
+  });
+
+  // Mobile menu toggle
+  document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+    document.getElementById('mobileMenu').classList.toggle('hidden');
+  });
+
+  // Modal Functions
+  let modalProduct = null;
+
+  function openProductModal(product) {
+    modalProduct = product;
+    document.getElementById('productModal').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+
+    // Set main image
+    const images = product.images || [product.image];
+    document.getElementById('modalMainImage').src = images[0];
+    
+    // Set product info
+    document.getElementById('modalName').textContent = product.name;
+    document.getElementById('modalCode').textContent = 'Kod: ' + product.code;
+    document.getElementById('modalPrice').textContent = product.price + ' AZN';
+    document.getElementById('modalDescription').textContent = product.description || 'Yüksək keyfiyyətli məhsul';
+    document.getElementById('modalQty').value = 1;
+
+    // Thumbnails
+    const thumbs = document.getElementById('modalThumbnails');
+    thumbs.innerHTML = '';
+    images.forEach((img, i) => {
+      const t = document.createElement('img');
+      t.src = img;
+      t.className = 'w-16 h-16 object-cover rounded-lg cursor-pointer border-2 border-transparent hover:border-primary transition';
+      t.onclick = () => document.getElementById('modalMainImage').src = img;
+      thumbs.appendChild(t);
     });
 
-    // Mobile menu toggle
-    document.getElementById('mobileMenuBtn').addEventListener('click', () => {
-      document.getElementById('mobileMenu').classList.toggle('hidden');
+    // Highlights
+    const highlights = product.highlights || ['Keyfiyyətli', 'Zəmanətli', 'Orijinal'];
+    const list = document.getElementById('modalHighlights');
+    list.innerHTML = '';
+    highlights.forEach(h => {
+      list.innerHTML += `
+        <li class="flex items-center gap-2">
+          <i class="fas fa-check-circle text-primary"></i>
+          <span>${h}</span>
+        </li>`;
     });
 
-    // Click outside notification to hide
-    document.addEventListener('click', (e) => {
-      const notification = document.getElementById('notification');
-      if (!notification.classList.contains('hidden') && !e.target.closest('.notification')) {
-        notification.classList.add('hidden');
+    // Order button action
+    document.getElementById('modalOrderBtn').onclick = () => {
+      const qty = document.getElementById('modalQty').value;
+      const msg = `Salam! Aşağıdakı məhsulu sifariş etmək istəyirəm:\n\n${product.name}\nKod: ${product.code}\nQiymət: ${product.price} AZN\nMiqdar: ${qty}`;
+      window.open('https://wa.me/994105051615?text=' + encodeURIComponent(msg), '_blank');
+    };
+
+    // Cart button action
+    document.getElementById('modalCartBtn').onclick = () => {
+      const qty = parseInt(document.getElementById('modalQty').value);
+      for (let i = 0; i < qty; i++) {
+        addToCart(product);
       }
-    });
+      closeProductModal();
+    };
+  }
 
-    // Load products on page ready
-    loadProducts();
+  function closeProductModal() {
+    document.getElementById('productModal').classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+
+  function changeModalQty(delta) {
+    const qtyInput = document.getElementById('modalQty');
+    const newValue = Math.max(1, parseInt(qtyInput.value) + delta);
+    qtyInput.value = newValue;
+  }
+
+  // Load products on page ready
+  loadProducts();
 </script>
+
 </body>
 </html>
