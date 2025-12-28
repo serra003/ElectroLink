@@ -617,7 +617,7 @@ section button.text-secondary {
     container.innerHTML = products.map(p => `
       <div class="product-card bg-white dark:bg-navyBox rounded-xl shadow-md overflow-hidden transition-colors relative">
         ${p.badge ? `<div class="promo-badge">${p.badge}</div>` : ''}
-        <a href="/product?id=${p.id}" class="block">
+        <div onclick='openProductModal(${JSON.stringify(p).replace(/'/g, "&apos;")})' class="cursor-pointer">
           <div class="aspect-square bg-gray-100 dark:bg-navyDark">
             <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover">
           </div>
@@ -626,7 +626,7 @@ section button.text-secondary {
             <h3 class="text-sm md:text-base font-bold mb-2 line-clamp-2 text-gray-900 dark:text-white">${p.name}</h3>
             <p class="text-xl md:text-2xl font-bold text-secondary mb-3">${p.price} AZN</p>
           </div>
-        </a>
+        </div>
         <div class="px-3 md:px-4 pb-3 md:pb-4">
           <div class="grid grid-cols-2 gap-2">
             <button onclick='orderNow("${p.name}", "${p.code}", ${p.price})' class="bg-secondary text-white px-2 md:px-3 py-2 md:py-2.5 rounded-lg font-semibold hover:bg-orange-600 transition text-xs md:text-sm">Sifariş et</button>
@@ -635,6 +635,76 @@ section button.text-secondary {
         </div>
       </div>
     `).join('');
+  }
+
+  // Modal Functions
+  let modalProduct = null;
+
+  function openProductModal(product) {
+    modalProduct = product;
+    document.getElementById('productModal').classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+
+    // Set main image
+    const images = product.images || [product.image];
+    document.getElementById('modalMainImage').src = images[0];
+    
+    // Set product info
+    document.getElementById('modalName').textContent = product.name;
+    document.getElementById('modalCode').textContent = 'Kod: ' + product.code;
+    document.getElementById('modalPrice').textContent = product.price + ' AZN';
+    document.getElementById('modalDescription').textContent = product.description || 'Yüksək keyfiyyətli məhsul';
+    document.getElementById('modalQty').value = 1;
+
+    // Thumbnails
+    const thumbs = document.getElementById('modalThumbnails');
+    thumbs.innerHTML = '';
+    images.forEach((img, i) => {
+      const t = document.createElement('img');
+      t.src = img;
+      t.className = 'w-16 h-16 object-cover rounded-lg cursor-pointer border-2 border-transparent hover:border-primary transition';
+      t.onclick = () => document.getElementById('modalMainImage').src = img;
+      thumbs.appendChild(t);
+    });
+
+    // Highlights
+    const highlights = product.highlights || ['Keyfiyyətli', 'Zəmanətli', 'Orijinal'];
+    const list = document.getElementById('modalHighlights');
+    list.innerHTML = '';
+    highlights.forEach(h => {
+      list.innerHTML += `
+        <li class="flex items-center gap-2">
+          <i class="fas fa-check-circle text-primary"></i>
+          <span>${h}</span>
+        </li>`;
+    });
+
+    // Order button action
+    document.getElementById('modalOrderBtn').onclick = () => {
+      const qty = document.getElementById('modalQty').value;
+      const msg = `Salam! Aşağıdakı məhsulu sifariş etmək istəyirəm:\n\n${product.name}\nKod: ${product.code}\nQiymət: ${product.price} AZN\nMiqdar: ${qty}`;
+      window.open('https://wa.me/994105051615?text=' + encodeURIComponent(msg), '_blank');
+    };
+
+    // Cart button action
+    document.getElementById('modalCartBtn').onclick = () => {
+      const qty = parseInt(document.getElementById('modalQty').value);
+      for (let i = 0; i < qty; i++) {
+        addToCart(product);
+      }
+      closeProductModal();
+    };
+  }
+
+  function closeProductModal() {
+    document.getElementById('productModal').classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+
+  function changeModalQty(delta) {
+    const qtyInput = document.getElementById('modalQty');
+    const newValue = Math.max(1, parseInt(qtyInput.value) + delta);
+    qtyInput.value = newValue;
   }
 
   loadFeaturedProducts();
