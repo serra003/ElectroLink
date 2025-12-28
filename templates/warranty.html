@@ -86,7 +86,7 @@
     <div class="flex justify-between items-center h-20">
 
       <a href="/">
-        <img id="logoImage" src="/static/images/logo-light.png" class="h-16">
+      <img id="logoImage" src="/static/images/Electrolink transparent.png" class="h-16">
       </a>
 
         <div class="hidden md:flex space-x-8 text-base ml-auto mr-16">
@@ -109,6 +109,16 @@
       </div>
   </div>
 </nav>
+
+<!-- MOBILE MENU -->
+<div id="mobileMenu" class="md:hidden hidden bg-white dark:bg-navyBox shadow-lg">
+  <div class="px-6 py-4 space-y-4 text-lg">
+    <a href="/products" class="block hover:text-primary">Məhsullar</a>
+    <a href="/about" class="block hover:text-primary">Haqqımızda</a>
+    <a href="/contact" class="block hover:text-primary">Əlaqə</a>
+  </div>
+</div>
+
 
 <!-- HERO -->
 <section class="py-16 px-4 bg-gradient-to-br from-blue-50 to-white dark:from-navyDark dark:to-navyBox">
@@ -275,6 +285,14 @@
   applyTheme(localStorage.getItem('theme') || 'light');
   document.getElementById('themeToggle').onclick = () =>
     applyTheme(root.classList.contains('dark') ? 'light' : 'dark');
+
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+
+mobileMenuBtn.addEventListener('click', () => {
+  mobileMenu.classList.toggle('hidden');
+});
+
 </script>
 
 </body>
