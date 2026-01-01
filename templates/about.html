@@ -182,6 +182,12 @@
     color: #FF6B35;
   }
 
+  #logoImage {
+  max-height: 50px;  /* Desktop max height */
+  width: auto;       /* Keep aspect ratio */
+  object-fit: contain;
+}
+
   @media (max-width: 768px) {
     #logoImage {
       max-height: 40px !important;

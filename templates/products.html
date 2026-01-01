@@ -186,15 +186,20 @@ button:hover {
   overflow-y: auto;
 }
 
- /* ===============================
-   MOBILE LOGO FIX
-=============================== */
-  @media (max-width: 768px) {
-    #logoImage {
-      max-height: 40px !important;
-      width: auto !important;
-      object-fit: contain;
-    } }
+#logoImage {
+  max-height: 50px;  /* Desktop max height */
+  width: auto;       /* Keep aspect ratio */
+  object-fit: contain;
+}
+
+ @media (max-width: 768px) {
+    .mobile-bottom-bar {
+      display: flex;
+    }
+    .whatsapp-float {
+      display: none;
+    }
+  }
 
   </style>
 </head>

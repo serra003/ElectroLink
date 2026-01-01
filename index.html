@@ -29,122 +29,107 @@
   * { font-family: 'Inter', sans-serif; }
 
   /* ===============================
-     HERO ANIMATION
+     CAROUSEL ANIMATIONS
   ================================ */
-  .hero-animate {
-    animation: slideIn 0.8s ease-out;
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
   }
 
-  @keyframes slideIn {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
+  .carousel-item {
+    animation: slideIn 0.5s ease-out;
   }
 
   /* ===============================
-     CATEGORY & PRODUCT CARDS
+     PRODUCT CARDS
   ================================ */
-  .category-card,
   .product-card {
     transition: all 0.3s ease;
+    border-radius: 1rem;
+  }
+  .product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
   }
 
+  .product-card img {
+    transition: transform 0.4s ease;
+  }
+  .product-card:hover img {
+    transform: scale(1.05);
+  }
+
+  /* ===============================
+     CATEGORY CARDS
+  ================================ */
+  .category-card {
+    transition: all 0.3s ease;
+  }
   .category-card:hover {
     transform: translateY(-8px);
     box-shadow: 0 20px 40px rgba(0, 102, 255, 0.2);
   }
 
-/* ===== Product Cards (match homepage) ===== */
-.product-card {
-  transition: all 0.3s ease;
-  border-radius: 1rem;
-}
-.product-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
-}
-
-/* ===== Images ===== */
-.product-card img {
-  transition: transform 0.4s ease;
-}
-.product-card:hover img {
-  transform: scale(1.05);
-}
-
-
   /* ===============================
-   PRODUCT CARD BUTTONS — ONLY
-=============================== */
+     BUTTONS
+  ================================ */
+  .btn-primary {
+    background: #0066FF;
+    color: white;
+  }
 
-/* FIRST BUTTON → SƏBƏTƏ (BLUE) */
-.product-card button:first-of-type {
-  background: linear-gradient(135deg, #0066FF, #3385ff);
-  color: #ffffff;
-  border: none;
-}
+  .btn-primary:hover {
+    background: #0052CC;
+  }
 
-/* second button = Sifariş edin */
-.product-card button:last-of-type {
-  background: linear-gradient(135deg, #FF6B35, #ff855a);
-  color: white;
-}
+  .btn-secondary {
+    background: transparent;
+    border: 2px solid #0066FF;
+    color: #0066FF;
+  }
 
-  .product-card .price,
-.product-card .product-price,
-.product-card span[class*="price"],
-.product-card p[class*="price"] {
-  color: #FF6B35 !important;
-}
+  .dark .btn-secondary {
+    border-color: #0066FF;
+    color: #0066FF;
+  }
 
-/* Hover */
-.product-card button:hover {
-  filter: brightness(1.05);
-  transform: translateY(-1px);
-}
+  .btn-secondary:hover {
+    background: #0066FF;
+    color: white;
+  }
 
-/* ===============================
-   RESET XİDMƏTLƏRİMİZ BUTTONS
-=============================== */
-section button.text-secondary {
-  background: transparent !important;
-  color: #0066FF !important;
-  padding: 0 !important;
-  box-shadow: none !important;
-}
+  .btn-order {
+    background: #0066FF;
+    color: white;
+  }
 
-
-  button:hover,
-  .add-to-cart:hover,
-  .btn-cart:hover {
-    filter: brightness(1.05);
-    transform: translateY(-1px);
+  .btn-order:hover {
+    background: #0052CC;
   }
 
   /* ===============================
-     PRICE TEXT → ORANGE
+     PRICE & BADGE
   ================================ */
-  .price,
-  .product-price,
-  span[class*="price"],
-  p[class*="price"] {
+  .price {
     color: #FF6B35 !important;
     font-weight: 700;
   }
 
-  /* ===============================
-     PROMO BADGE (keep blue)
-  ================================ */
-  .promo-badge {
+  .badge-flash {
     position: absolute;
     top: 12px;
     left: 12px;
-    background: #0066FF;
+    background: #FF6B35;
     color: white;
     padding: 4px 12px;
     border-radius: 6px;
     font-size: 11px;
     font-weight: 600;
     z-index: 10;
+  }
+
+  .badge-new {
+    background: #10B981;
   }
 
   /* ===============================
@@ -212,7 +197,26 @@ section button.text-secondary {
   }
 
   /* ===============================
-     FOOTER → BLUE THEME
+     MOBILE BOTTOM BAR
+  ================================ */
+  .mobile-bottom-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-top: 1px solid #e5e7eb;
+    z-index: 50;
+    display: none;
+  }
+
+  .dark .mobile-bottom-bar {
+    background: #1A2942;
+    border-top-color: #374151;
+  }
+
+  /* ===============================
+     FOOTER
   ================================ */
   footer {
     background: linear-gradient(135deg, #0A1628, #0066FF);
@@ -252,40 +256,76 @@ section button.text-secondary {
     overflow: hidden;
   }
 
+
   /* ===============================
-   MOBILE LOGO FIX
-=============================== */
-  @media (max-width: 768px) {
-    #logoImage {
-      max-height: 40px !important;
-      width: auto !important;
-      object-fit: contain;
-    }
+     MODAL
+  ================================ */
+  .modal-content {
+    max-height: 90vh;
+    overflow-y: auto;
   }
 
+  /* ===============================
+     CAROUSEL DOTS
+  ================================ */
+  .carousel-dots {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 16px;
+  }
+
+  .carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #D1D5DB;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .carousel-dot.active {
+    background: #0066FF;
+    width: 24px;
+    border-radius: 4px;
+  }
+
+ 
+#logoImage {
+  max-height: 70px !important;
+  width: auto !important;
+  object-fit: contain !important;
+}
+
+
+ @media (max-width: 768px) {
+    .mobile-bottom-bar {
+      display: flex;
+    }
+    .whatsapp-float {
+      display: none;
+    }
+  }
   </style>
 </head>
 <body class="bg-white dark:bg-navyDark text-gray-900 dark:text-gray-100 transition-colors duration-300">
 
-<!-- Navbar - FIXED FOR MOBILE -->
+<!-- Navbar -->
 <nav class="bg-white dark:bg-navyBox shadow-md sticky top-0 z-50 transition-colors">
   <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center h-16 md:h-20">
-      <!-- Logo - Smaller on mobile -->
       <div class="flex items-center flex-shrink-0">
         <a href="/">
-          <img id="logoImage" src="static/images/Electrolink transparent.png" alt="ElectroLink" class="h-10 md:h-14 w-auto">
+          <img id="logoImage" class="h-8 md:h-10" src="/static/images/Electrolink transparent.png" alt="ElectroLink.az Logo" />
         </a>
       </div>
 
-      <!-- Desktop Menu -->
       <div class="hidden md:flex space-x-8 text-base ml-auto mr-16">
         <a href="/products" class="text-gray-700 dark:text-gray-300 hover:text-primary font-medium transition">Məhsullar</a>
         <a href="/about" class="text-gray-700 dark:text-gray-300 hover:text-primary font-medium transition">Haqqımızda</a>
         <a href="/contact" class="text-gray-700 dark:text-gray-300 hover:text-primary font-medium transition">Əlaqə</a>
       </div>
 
-      <!-- Right Side Icons - Better spacing on mobile -->
       <div class="flex items-center space-x-2 sm:space-x-4">
         <button id="themeToggle" class="p-1.5 sm:p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition">
           <i id="themeIcon" class="fas fa-moon text-lg sm:text-xl text-gray-700 dark:text-gray-300"></i>
@@ -301,7 +341,6 @@ section button.text-secondary {
     </div>
   </div>
 
-  <!-- Mobile Menu -->
   <div id="mobileMenu" class="hidden md:hidden border-t bg-white dark:bg-navyBox border-gray-200 dark:border-gray-700">
     <div class="px-4 py-4 space-y-3">
       <a href="/products" class="block text-gray-700 dark:text-gray-300 hover:text-primary font-medium py-2">Məhsullar</a>
@@ -311,80 +350,22 @@ section button.text-secondary {
   </div>
 </nav>
 
-<!-- Hero Section -->
-<section class="py-12 md:py-16 px-4 bg-gradient-to-br from-blue-50 to-white dark:from-navyDark dark:to-navyBox hero-animate transition-colors">
+<!-- Flash Sale Carousel -->
+<section class="py-8 md:py-12 px-4 bg-gradient-to-br from-blue-50 to-white dark:from-navyDark dark:to-navyBox transition-colors">
   <div class="max-w-7xl mx-auto">
-    <div class="grid md:grid-cols-2 gap-8 items-center mb-12">
-      <div>
-        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-900 dark:text-white leading-tight">
-          Keyfiyyətli Elektronika<br>
-          <span class="text-primary">Sərfəli Qiymətə</span>
-        </h1>
-        <p class="text-lg md:text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed">
-          TV Box, Qızdırıcı və daha çoxu. Bakı üzrə pulsuz çatdırılma.
-        </p>
-        <a href="/products" class="inline-block bg-secondary text-white px-6 md:px-8 py-3 md:py-4 rounded-lg text-base md:text-lg font-semibold hover:bg-orange-600 shadow-lg hover:shadow-xl transition">
-          Bütün Çeşidlər
-        </a>
+    <div class="relative overflow-hidden rounded-2xl bg-white dark:bg-navyBox shadow-xl">
+      <div id="carouselContainer" class="relative h-[400px] md:h-[500px]">
+        <!-- Carousel items will be inserted here -->
       </div>
-
-      <div class="grid grid-cols-2 gap-3 md:gap-4">
-        <div class="bg-white dark:bg-navyBox border-2 border-secondary p-4 md:p-6 rounded-2xl text-center shadow-lg hover:shadow-xl transition transform hover:-translate-y-1">
-          <h3 class="text-base md:text-lg font-bold text-secondary mb-1 md:mb-2">50% Endirim</h3>
-          <p class="text-xs md:text-sm text-gray-600 dark:text-gray-400">TV Box seriyasında</p>
-        </div>
-        <div class="bg-white dark:bg-navyBox border-2 border-primary p-4 md:p-6 rounded-2xl text-center shadow-lg hover:shadow-xl transition transform hover:-translate-y-1">
-          <h3 class="text-base md:text-lg font-bold text-primary mb-1 md:mb-2">Yeni Kolleksiya</h3>
-          <p class="text-xs md:text-sm text-gray-600 dark:text-gray-400">Smart ev cihazları</p>
-        </div>
-        <div class="bg-white dark:bg-navyBox border-2 border-green-500 p-4 md:p-6 rounded-2xl text-center shadow-lg hover:shadow-xl transition transform hover:-translate-y-1">
-          <h3 class="text-base md:text-lg font-bold text-green-600 dark:text-green-500 mb-1 md:mb-2">Pulsuz Çatdırılma</h3>
-          <p class="text-xs md:text-sm text-gray-600 dark:text-gray-400">Bakı üzrə</p>
-        </div>
-        <div class="bg-white dark:bg-navyBox border-2 border-purple-500 p-4 md:p-6 rounded-2xl text-center shadow-lg hover:shadow-xl transition transform hover:-translate-y-1">
-          <h3 class="text-base md:text-lg font-bold text-purple-600 dark:text-purple-500 mb-1 md:mb-2">100+ Məhsul</h3>
-          <p class="text-xs md:text-sm text-gray-600 dark:text-gray-400">Sizin üçün</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Categories Section -->
-<section class="py-12 md:py-16 px-4 bg-gray-50 dark:bg-navyDark transition-colors">
-  <div class="max-w-7xl mx-auto">
-    <h2 class="text-2xl md:text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white">Məhsul Kateqoriyaları</h2>
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4 text-center">
-      <div class="category-card bg-white dark:bg-navyBox p-4 md:p-6 rounded-xl shadow-md cursor-pointer transition-colors">
-        <div class="text-primary text-3xl md:text-4xl mb-2 md:mb-3"><i class="fas fa-tv"></i></div>
-        <h3 class="text-sm md:text-base font-bold text-gray-800 dark:text-white">TV Box</h3>
-        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">3 məhsul</p>
-      </div>
-      <div class="category-card bg-white dark:bg-navyBox p-4 md:p-6 rounded-xl shadow-md cursor-pointer transition-colors">
-        <div class="text-secondary text-3xl md:text-4xl mb-2 md:mb-3"><i class="fas fa-fire"></i></div>
-        <h3 class="text-sm md:text-base font-bold text-gray-800 dark:text-white">Qızdırıcılar</h3>
-        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">3 məhsul</p>
-      </div>
-      <div class="category-card bg-white dark:bg-navyBox p-4 md:p-6 rounded-xl shadow-md cursor-pointer transition-colors">
-        <div class="text-primary text-3xl md:text-4xl mb-2 md:mb-3"><i class="fas fa-plug"></i></div>
-        <h3 class="text-sm md:text-base font-bold text-gray-800 dark:text-white">Aksesuarlar</h3>
-        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">1 məhsul</p>
-      </div>
-      <div class="category-card bg-white dark:bg-navyBox p-4 md:p-6 rounded-xl shadow-md cursor-pointer transition-colors">
-        <div class="text-secondary text-3xl md:text-4xl mb-2 md:mb-3"><i class="fas fa-camera"></i></div>
-        <h3 class="text-sm md:text-base font-bold text-gray-800 dark:text-white">Kameralar</h3>
-        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Tezliklə</p>
-      </div>
-      <div class="category-card bg-white dark:bg-navyBox p-4 md:p-6 rounded-xl shadow-md cursor-pointer transition-colors">
-        <div class="text-primary text-3xl md:text-4xl mb-2 md:mb-3"><i class="fas fa-battery-full"></i></div>
-        <h3 class="text-sm md:text-base font-bold text-gray-800 dark:text-white">Batareyalar</h3>
-        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Tezliklə</p>
-      </div>
-      <div class="category-card bg-white dark:bg-navyBox p-4 md:p-6 rounded-xl shadow-md cursor-pointer transition-colors">
-        <div class="text-secondary text-3xl md:text-4xl mb-2 md:mb-3"><i class="fas fa-tools"></i></div>
-        <h3 class="text-sm md:text-base font-bold text-gray-800 dark:text-white">Xidmətlər</h3>
-        <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Əlaqə</p>
-      </div>
+      <div class="carousel-dots absolute bottom-4 left-0 right-0"></div>
+      
+      <!-- Navigation Arrows -->
+      <button id="prevSlide" class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 dark:bg-navyBox/80 p-3 rounded-full shadow-lg hover:bg-white dark:hover:bg-navyBox transition">
+        <i class="fas fa-chevron-left text-primary"></i>
+      </button>
+      <button id="nextSlide" class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 dark:bg-navyBox/80 p-3 rounded-full shadow-lg hover:bg-white dark:hover:bg-navyBox transition">
+        <i class="fas fa-chevron-right text-primary"></i>
+      </button>
     </div>
   </div>
 </section>
@@ -398,34 +379,52 @@ section button.text-secondary {
   </div>
 </section>
 
-<!-- Services Section -->
+<!-- Categories / Services Section -->
 <section class="py-12 md:py-16 px-4 bg-gray-50 dark:bg-navyDark transition-colors">
   <div class="max-w-7xl mx-auto">
     <h2 class="text-2xl md:text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white">Xidmətlərimiz</h2>
-    <div class="grid md:grid-cols-3 gap-6 mt-10">
-      <div class="bg-white dark:bg-navyBox p-6 rounded-xl shadow-md hover:shadow-lg transition">
-        <div class="bg-primary/10 dark:bg-primary/20 w-14 h-14 rounded-lg flex items-center justify-center mb-4">
-          <i class="fas fa-wrench text-2xl text-primary"></i>
-        </div>
-        <h3 class="text-lg font-bold mb-2 text-gray-900 dark:text-white">Kanal Yüklənməsi</h3>
-        <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">TV Box-a pulsuz kanal yükləmə xidməti</p>
-        <button onclick='orderService("Kanal Yüklənməsi")' class="text-secondary hover:text-orange-700 font-semibold text-sm">Ətraflı <i class="fas fa-arrow-right ml-1"></i></button>
-      </div>
-      <div class="bg-white dark:bg-navyBox p-6 rounded-xl shadow-md hover:shadow-lg transition">
-        <div class="bg-secondary/10 dark:bg-secondary/20 w-14 h-14 rounded-lg flex items-center justify-center mb-4">
-          <i class="fas fa-camera text-2xl text-secondary"></i>
-        </div>
-        <h3 class="text-lg font-bold mb-2 text-gray-900 dark:text-white">Kamera Quraşdırılması</h3>
-        <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">Peşəkar kamera sistemləri quraşdırılması</p>
-        <button onclick='orderService("Kamera Quraşdırılması")' class="text-secondary hover:text-orange-700 font-semibold text-sm">Ətraflı <i class="fas fa-arrow-right ml-1"></i></button>
-      </div>
-      <div class="bg-white dark:bg-navyBox p-6 rounded-xl shadow-md hover:shadow-lg transition">
-        <div class="bg-primary/10 dark:bg-primary/20 w-14 h-14 rounded-lg flex items-center justify-center mb-4">
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+      <div class="category-card bg-white dark:bg-navyBox p-6 rounded-xl shadow-md cursor-pointer">
+        <div class="bg-primary/10 dark:bg-primary/20 w-14 h-14 rounded-lg flex items-center justify-center mb-4 mx-auto">
           <i class="fas fa-battery-full text-2xl text-primary"></i>
         </div>
-        <h3 class="text-lg font-bold mb-2 text-gray-900 dark:text-white">Batareya Yığılması</h3>
-        <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">Fərdi batareya yığma xidməti</p>
-        <button onclick='orderService("Batareya Yığılması")' class="text-secondary hover:text-orange-700 font-semibold text-sm">Ətraflı <i class="fas fa-arrow-right ml-1"></i></button>
+        <h3 class="text-base font-bold mb-2 text-gray-900 dark:text-white text-center">Batareya Dəyişimi</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-300 text-center">Peşəkar batareya yığma</p>
+      </div>
+      <div class="category-card bg-white dark:bg-navyBox p-6 rounded-xl shadow-md cursor-pointer">
+        <div class="bg-secondary/10 dark:bg-secondary/20 w-14 h-14 rounded-lg flex items-center justify-center mb-4 mx-auto">
+          <i class="fas fa-camera text-2xl text-secondary"></i>
+        </div>
+        <h3 class="text-base font-bold mb-2 text-gray-900 dark:text-white text-center">Kamera Təmiri</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-300 text-center">Kamera quraşdırılması</p>
+      </div>
+      <div class="category-card bg-white dark:bg-navyBox p-6 rounded-xl shadow-md cursor-pointer">
+        <div class="bg-primary/10 dark:bg-primary/20 w-14 h-14 rounded-lg flex items-center justify-center mb-4 mx-auto">
+          <i class="fas fa-tv text-2xl text-primary"></i>
+        </div>
+        <h3 class="text-base font-bold mb-2 text-gray-900 dark:text-white text-center">Ekran Təmiri</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-300 text-center">TV və monitor təmiri</p>
+      </div>
+      <div class="category-card bg-white dark:bg-navyBox p-6 rounded-xl shadow-md cursor-pointer">
+        <div class="bg-secondary/10 dark:bg-secondary/20 w-14 h-14 rounded-lg flex items-center justify-center mb-4 mx-auto">
+          <i class="fas fa-wrench text-2xl text-secondary"></i>
+        </div>
+        <h3 class="text-base font-bold mb-2 text-gray-900 dark:text-white text-center">Kanal Yükləmə</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-300 text-center">TV Box xidməti</p>
+      </div>
+      <div class="category-card bg-white dark:bg-navyBox p-6 rounded-xl shadow-md cursor-pointer">
+        <div class="bg-primary/10 dark:bg-primary/20 w-14 h-14 rounded-lg flex items-center justify-center mb-4 mx-auto">
+          <i class="fas fa-tools text-2xl text-primary"></i>
+        </div>
+        <h3 class="text-base font-bold mb-2 text-gray-900 dark:text-white text-center">Ümumi Təmir</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-300 text-center">Elektronika təmiri</p>
+      </div>
+      <div class="category-card bg-white dark:bg-navyBox p-6 rounded-xl shadow-md cursor-pointer">
+        <div class="bg-secondary/10 dark:bg-secondary/20 w-14 h-14 rounded-lg flex items-center justify-center mb-4 mx-auto">
+          <i class="fas fa-headset text-2xl text-secondary"></i>
+        </div>
+        <h3 class="text-base font-bold mb-2 text-gray-900 dark:text-white text-center">Dəstək</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-300 text-center">Texniki məsləhət</p>
       </div>
     </div>
   </div>
@@ -444,59 +443,25 @@ section button.text-secondary {
           <i class="fas fa-search text-2xl md:text-3xl text-secondary"></i>
         </div>
         <h3 class="text-lg md:text-xl font-bold mb-2 text-gray-900 dark:text-white">Məhsul seçin</h3>
-        <p class="text-sm text-gray-600 dark:text-gray-300">Kataloqmuzdakı məhsullara baxın və istədiyinizi seçin</p>
+        <p class="text-sm text-gray-600 dark:text-gray-300">Kataloqdan istədiyiniz məhsulu seçin</p>
       </div>
 
       <div class="bg-gray-50 dark:bg-navyDark p-6 md:p-8 rounded-xl text-center relative">
         <div class="step-number">2</div>
         <div class="bg-primary/10 dark:bg-primary/20 w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-          <i class="fas fa-shopping-cart text-2xl md:text-3xl text-primary"></i>
+          <i class="fas fa-mouse-pointer text-2xl md:text-3xl text-primary"></i>
         </div>
-        <h3 class="text-lg md:text-xl font-bold mb-2 text-gray-900 dark:text-white">Səbətə əlavə edin</h3>
-        <p class="text-sm text-gray-600 dark:text-gray-300">İstədiyiniz məhsulları səbətə yığın və ya dərhal sifariş verin</p>
+        <h3 class="text-lg md:text-xl font-bold mb-2 text-gray-900 dark:text-white">"Sifariş Et" basın</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-300">Məhsul səhifəsində sifariş düyməsini basın</p>
       </div>
 
       <div class="bg-gray-50 dark:bg-navyDark p-6 md:p-8 rounded-xl text-center relative">
         <div class="step-number">3</div>
         <div class="bg-green-500/10 dark:bg-green-500/20 w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center mx-auto mb-4">
-          <i class="fab fa-whatsapp text-2xl md:text-3xl text-green-600"></i>
+          <i class="fas fa-check-circle text-2xl md:text-3xl text-green-600"></i>
         </div>
-        <h3 class="text-lg md:text-xl font-bold mb-2 text-gray-900 dark:text-white">WhatsApp ilə sifariş</h3>
-        <p class="text-sm text-gray-600 dark:text-gray-300">WhatsApp vasitəsilə sifarişinizi tamamlayın</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Customer Reviews Section -->
-<section class="py-12 md:py-16 px-4 bg-gray-50 dark:bg-navyDark transition-colors">
-  <div class="max-w-7xl mx-auto">
-    <h2 class="text-2xl md:text-3xl font-bold text-center mb-3 text-gray-900 dark:text-white">Müştəri Rəyləri</h2>
-    <p class="text-center text-gray-600 dark:text-gray-400 mb-8 md:mb-10">Minlərlə razı müştərimiz var</p>
-    <div class="grid md:grid-cols-3 gap-6">
-      <div class="bg-white dark:bg-navyBox p-6 rounded-xl shadow-md">
-        <div class="flex items-center mb-3">
-          <div class="text-yellow-400 text-lg">★★★★★</div>
-        </div>
-        <p class="text-gray-700 dark:text-gray-300 text-sm mb-3 italic">"TV Box çox keyfiyyətli çıxdı, kanal yükləmə xidməti də pulsuz idi. Çox razıyam!"</p>
-        <p class="text-xs text-gray-500 dark:text-gray-400 font-semibold">Anar M.</p>
-        <p class="text-xs text-gray-400 dark:text-gray-500">2 gün əvvəl</p>
-      </div>
-      <div class="bg-white dark:bg-navyBox p-6 rounded-xl shadow-md">
-        <div class="flex items-center mb-3">
-          <div class="text-yellow-400 text-lg">★★★★★</div>
-        </div>
-        <p class="text-gray-700 dark:text-gray-300 text-sm mb-3 italic">"Qızdırıcı mükəmməldir, çox tez qızdırır və enerji qənaatlıdır. Tövsiyə edirəm!"</p>
-        <p class="text-xs text-gray-500 dark:text-gray-400 font-semibold">Nigar K.</p>
-        <p class="text-xs text-gray-400 dark:text-gray-500">1 həftə əvvəl</p>
-      </div>
-      <div class="bg-white dark:bg-navyBox p-6 rounded-xl shadow-md">
-        <div class="flex items-center mb-3">
-          <div class="text-yellow-400 text-lg">★★★★★</div>
-        </div>
-        <p class="text-gray-700 dark:text-gray-300 text-sm mb-3 italic">"Çatdırılma çox sürətli oldu, məhsul əla vəziyyətdə gəldi. Təşəkkür edirəm!"</p>
-        <p class="text-xs text-gray-500 dark:text-gray-400 font-semibold">Elvin R.</p>
-        <p class="text-xs text-gray-400 dark:text-gray-500">3 gün əvvəl</p>
+        <h3 class="text-lg md:text-xl font-bold mb-2 text-gray-900 dark:text-white">Sifarişiniz təsdiqləndi</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-300">WhatsApp vasitəsilə sifarişi tamamlayın</p>
       </div>
     </div>
   </div>
@@ -538,12 +503,25 @@ section button.text-secondary {
   </div>
 </footer>
 
-<!-- WhatsApp Floating Button -->
+<!-- WhatsApp Floating Button (Desktop) -->
 <a href="https://wa.me/994105051615" target="_blank" class="whatsapp-float">
   <div class="bg-green-500 text-white w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center shadow-2xl hover:bg-green-600 transition">
     <i class="fab fa-whatsapp text-3xl md:text-4xl"></i>
   </div>
 </a>
+
+<!-- Mobile Bottom Bar -->
+<div class="mobile-bottom-bar">
+  <a href="/cart" class="flex-1 flex flex-col items-center justify-center py-3 relative">
+    <i class="fas fa-shopping-cart text-xl text-gray-700 dark:text-gray-300"></i>
+    <span class="text-xs mt-1 text-gray-700 dark:text-gray-300">Səbət</span>
+    <span id="cartCountMobile" class="cart-badge">0</span>
+  </a>
+  <a href="https://wa.me/994105051615" target="_blank" class="flex-1 flex flex-col items-center justify-center py-3 bg-green-500 text-white">
+    <i class="fab fa-whatsapp text-xl"></i>
+    <span class="text-xs mt-1">WhatsApp</span>
+  </a>
+</div>
 
 <!-- Notification -->
 <div id="notification" class="notification hidden">
@@ -553,14 +531,12 @@ section button.text-secondary {
 
 <!-- PRODUCT DETAIL MODAL -->
 <div id="productModal" class="fixed inset-0 z-[9999] hidden bg-black/60 flex items-center justify-center p-4">
-  <div class="bg-white dark:bg-navyBox w-full max-w-5xl rounded-3xl shadow-2xl relative overflow-y-auto" style="max-height: 90vh;">
+  <div class="bg-white dark:bg-navyBox w-full max-w-5xl rounded-3xl shadow-2xl relative modal-content">
     
-    <!-- Close Button -->
-    <button onclick="closeProductModal()" class="absolute top-4 right-4 z-10 text-3xl text-gray-400 hover:text-primary transition">
+    <button id="closeModalBtn" class="absolute top-4 right-4 z-10 text-3xl text-gray-400 hover:text-primary transition">
       &times;
     </button>
 
-    <!-- HORIZONTAL LAYOUT: Grid with 2 columns -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 p-6">
 
       <!-- LEFT: Images Section -->
@@ -573,7 +549,7 @@ section button.text-secondary {
       <div class="flex flex-col">
         <h2 id="modalName" class="text-3xl font-bold mb-2 text-gray-900 dark:text-white"></h2>
         <p id="modalCode" class="text-sm text-gray-500 dark:text-gray-400 mb-3"></p>
-        <p id="modalPrice" class="text-4xl font-bold text-secondary mb-3"></p>
+        <p id="modalPrice" class="text-4xl font-bold price mb-3"></p>
         <p id="modalStock" class="text-green-600 text-sm font-semibold mb-4">
           <i class="fas fa-check-circle mr-1"></i>Stokda mövcuddur
         </p>
@@ -585,21 +561,21 @@ section button.text-secondary {
         <!-- Quantity Selector -->
         <div class="flex items-center gap-3 mb-6">
           <span class="text-gray-700 dark:text-gray-300 font-medium">Miqdar:</span>
-          <button onclick="changeModalQty(-1)" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition">
+          <button id="modalQtyMinus" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition">
             <i class="fas fa-minus"></i>
           </button>
           <input id="modalQty" type="number" value="1" min="1" class="w-20 text-center text-lg border-2 rounded-lg py-2 dark:bg-navyDark dark:border-gray-600">
-          <button onclick="changeModalQty(1)" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition">
+          <button id="modalQtyPlus" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition">
             <i class="fas fa-plus"></i>
           </button>
         </div>
 
         <!-- Action Buttons -->
         <div class="flex gap-3 mt-auto">
-          <button id="modalOrderBtn" class="flex-1 bg-gradient-to-r from-secondary to-orange-600 text-white px-6 py-4 rounded-xl font-bold text-lg hover:shadow-lg transition">
+          <button id="modalOrderBtn" class="flex-1 btn-order px-6 py-4 rounded-xl font-bold text-lg hover:shadow-lg transition">
             <i class="fab fa-whatsapp mr-2"></i>Sifariş Et
           </button>
-          <button id="modalCartBtn" class="flex-1 bg-gradient-to-r from-primary to-blue-600 text-white px-6 py-4 rounded-xl font-bold text-lg hover:shadow-lg transition">
+          <button id="modalCartBtn" class="flex-1 btn-secondary px-6 py-4 rounded-xl font-bold text-lg hover:shadow-lg transition">
             <i class="fas fa-shopping-cart mr-2"></i>Səbətə At
           </button>
         </div>
@@ -610,136 +586,309 @@ section button.text-secondary {
 </div>
 
 <script>
-  const themeToggle = document.getElementById('themeToggle');
+   const root = document.documentElement;
   const themeIcon = document.getElementById('themeIcon');
   const logoImage = document.getElementById('logoImage');
-  const root = document.documentElement;
 
-  function applyTheme(theme) {
-    if(theme === 'dark') {
+  function applyTheme(t) {
+    if (t === 'dark') {
       root.classList.add('dark');
-      themeIcon.className = 'fas fa-sun text-lg sm:text-xl text-yellow-400';
-      logoImage.src = 'static/images/darkmodenew.png';
+      themeIcon.className = 'fas fa-sun text-yellow-400';
+      logoImage.src = '/static/images/darkmodenew.png';
     } else {
       root.classList.remove('dark');
-      themeIcon.className = 'fas fa-moon text-lg sm:text-xl text-gray-700';
-      logoImage.src = 'static/images/Electrolink transparent.png';
+      themeIcon.className = 'fas fa-moon';
+      logoImage.src = '/static/images/Electrolink transparent.png';
     }
-    localStorage.setItem('theme', theme);
+    localStorage.setItem('theme', t);
   }
+  const products = [
+    {
+      id: 1,
+      name: 'Android TV Box 4K Ultra HD',
+      code: 'EL-TVB01',
+      price: 149.99,
+      image: "/static/images/xiaotv0.png",
+      images: [
+        '/static/images/xiaotv1.png',
+        '/static/images/xiaotv2.png'
+      ],
+      badge: 'Ən çox satılan',
+      description: 'Android TV əsaslı smart TV box. 4K Ultra HD dəstəyi, Google Assistant və minlərlə tətbiq.',
+      highlights: ['4K Ultra HD keyfiyyət', 'Android TV 11', 'Google Assistant dəstəyi']
+    },
+    {
+      id: 2,
+      name: 'Portativ Qızdırıcı 2000W',
+      code: 'EL-QZD01',
+      price: 49.99,
+      image: '/static/images/RAF qizdirici main.png',
+      images: ['/static/images/raf fan guc.png',
+        '/static/images/raf fan dayan.png',
+        '/static/images/raf fan.png'
+      ],
+      badge: 'Yeni',
+      description: 'Güclü 2000W portativ qızdırıcı, sürətli və effektiv otaq isitmə.',
+      highlights: ['2000W güclü isitmə', 'Avtomatik temperatur', 'Enerji qənaətcil']
+    },
+    {
+      id: 3,
+      name: 'Bluetooth Keyboard',
+      code: 'EL-KB01',
+      price: 13.99,
+      image: '/static/images/kb0.png',
+      images: ['/static/images/kb1.png'],
+      badge: 'Endirim',
+      description: 'Kompakt simsiz klaviatura touchpad ilə.',
+      highlights: ['Bluetooth 5.0', 'Touchpad', 'Portativ']
+    },
+    
+  ];
 
-  const savedTheme = localStorage.getItem('theme') || 'light';
-  applyTheme(savedTheme);
-
-  themeToggle.addEventListener('click', () => {
-    const next = root.classList.contains('dark') ? 'light' : 'dark';
-    applyTheme(next);
-  });
-
+  let currentSlide = 0;
   let cart = JSON.parse(localStorage.getItem('cart')) || [];
-  function updateCartCount() { document.getElementById('cartCount').textContent = cart.length; }
+  let modalProduct = null;
+
+  // Update cart count
+  function updateCartCount() {
+    document.getElementById('cartCount').textContent = cart.length;
+    document.getElementById('cartCountMobile').textContent = cart.length;
+  }
   updateCartCount();
 
-  function addToCart(product) {
-    cart.push(product);
-    localStorage.setItem('cart', JSON.stringify(cart));
-    updateCartCount();
-    showNotification();
+  // Add to cart
+ function addToCart(product, qty = 1) {
+  const existing = cart.find(p => p.id === product.id);
+  if(existing) {
+    existing.qty += qty;
+  } else {
+    cart.push({...product, qty});
   }
+  localStorage.setItem('cart', JSON.stringify(cart));
+  updateCartCount();
+  showNotification();
+}
 
+
+  // Show notification
   function showNotification() {
     const notification = document.getElementById('notification');
     notification.classList.remove('hidden');
     setTimeout(() => notification.classList.add('hidden'), 2500);
-    document.addEventListener('click', hideNotification);
   }
 
-  function hideNotification(e) {
-    const notification = document.getElementById('notification');
-    if(!notification.classList.contains('hidden') && !notification.contains(e.target)) {
-      notification.classList.add('hidden');
-      document.removeEventListener('click', hideNotification);
-    }
+  // Order now via WhatsApp
+  function orderNow(name, code, price) {
+    const message = `Salam! Sizdən ${name} (${code}) 1 ədəd sifariş etmək istəyirəm.`;
+    window.open(`https://wa.me/994105051615?text=${encodeURIComponent(message)}`, '_blank');
   }
 
-  function orderNow(name, code, price){
-    const message = `Salam! Sizdən ${name} ${code} 1 ədəd sifariş etmək istəyirəm.`;
-    window.open(`https://wa.me/994105051615?text=${encodeURIComponent(message)}`,'_blank');
+  // Carousel
+  function renderCarousel() {
+    const container = document.getElementById('carouselContainer');
+    const dotsContainer = document.querySelector('.carousel-dots');
+
+    container.innerHTML = products.map((p, index) => `
+      <div class="carousel-item absolute inset-0 transition-opacity duration-500 ${index === currentSlide ? 'opacity-100' : 'opacity-0 pointer-events-none'}">
+        <div class="grid md:grid-cols-2 gap-6 h-full p-8 items-center">
+          <div class="relative">
+            <span class="badge-flash ${p.badge === 'Yeni' ? 'badge-new' : ''}">${p.badge}</span>
+           <img src="${p.image}" alt="${p.name}" class="w-full h-64 md:h-80 object-cover rounded-xl" loading="lazy">
+          </div>
+          <div class="text-center md:text-left">
+            <h3 class="text-2xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">${p.name}</h3>
+            <p class="text-gray-600 dark:text-gray-400 mb-4 text-sm md:text-base">${p.description}</p>
+            <p class="text-3xl md:text-5xl font-bold price mb-6">${p.price} AZN</p>
+            <button onclick='orderNow("${p.name}", "${p.code}", ${p.price})' class="btn-order px-8 py-4 rounded-lg font-bold text-lg hover:shadow-lg transition">
+              <i class="fab fa-whatsapp mr-2"></i>Sifariş Et
+            </button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+
+    dotsContainer.innerHTML = products.map((_, index) => 
+      `<div class="carousel-dot ${index === currentSlide ? 'active' : ''}" data-slide="${index}"></div>`
+    ).join('');
+
+    document.querySelectorAll('.carousel-dot').forEach(dot => {
+      dot.addEventListener('click', () => {
+        currentSlide = parseInt(dot.dataset.slide);
+        renderCarousel();
+      });
+    });
+  }
+  function nextSlide() {
+    currentSlide = (currentSlide + 1) % products.length;
+    renderCarousel();
+  }
+  function prevSlide() {
+    currentSlide = (currentSlide - 1 + products.length) % products.length;
+    renderCarousel();
+  }
+let carouselInterval = setInterval(nextSlide, 5000);
+
+const carouselContainer = document.getElementById('carouselContainer');
+carouselContainer.addEventListener('mouseenter', () => clearInterval(carouselInterval));
+carouselContainer.addEventListener('mouseleave', () => {
+  carouselInterval = setInterval(nextSlide, 5000);
+});
+  document.getElementById('nextSlide').addEventListener('click', nextSlide);
+  document.getElementById('prevSlide').addEventListener('click', prevSlide);
+
+  // Featured products
+  function renderProducts() {
+    const grid = document.getElementById('featuredProducts');
+    grid.innerHTML = products.map(p => `
+      <div class="product-card bg-white dark:bg-navyBox rounded-2xl shadow-lg overflow-hidden relative">
+        ${p.badge ? `<span class="badge-flash ${p.badge === 'Yeni' ? 'badge-new' : ''}">${p.badge}</span>` : ''}
+        <div class="cursor-pointer" data-product-id="${p.id}">
+          <div class="aspect-square bg-gray-100 dark:bg-navyDark">
+            <img src="${p.image}" alt="${p.name}" class="w-full h-64 md:h-80 object-cover rounded-xl" loading="lazy">
+
+          </div>
+          <div class="p-4">
+            <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Kod: ${p.code}</p>
+            <h3 class="text-base md:text-lg font-bold mb-2 line-clamp-2 text-gray-900 dark:text-white">${p.name}</h3>
+            <p class="text-xl md:text-2xl font-bold price mb-4">${p.price} AZN</p>
+          </div>
+        </div>
+        <div class="px-4 pb-4">
+          <div class="grid grid-cols-2 gap-2">
+            <button class="order-btn btn-order py-2 rounded-lg font-semibold text-sm" data-product-id="${p.id}">Sifariş Et</button>
+            <button class="cart-btn btn-secondary py-2 rounded-lg font-semibold text-sm" data-product-id="${p.id}">Səbətə</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+
+    // Event listeners
+    document.querySelectorAll('.product-card > div[data-product-id]').forEach(card => {
+      card.addEventListener('click', function() {
+        const product = products.find(p => p.id === parseInt(this.dataset.productId));
+        if (product) openProductModal(product);
+      });
+    });
+
+    document.querySelectorAll('.order-btn').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const product = products.find(p => p.id === parseInt(this.dataset.productId));
+        if (product) orderNow(product.name, product.code, product.price);
+      });
+    });
+
+    document.querySelectorAll('.cart-btn').forEach(btn => {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const product = products.find(p => p.id === parseInt(this.dataset.productId));
+        if (product) addToCart(product);
+      });
+    });
   }
 
-  function orderService(serviceName){
-    const message = `Salam! ${serviceName} xidməti haqqında məlumat almaq istəyirəm.`;
-    window.open(`https://wa.me/994105051615?text=${encodeURIComponent(message)}`,'_blank');
+  // Modal
+  function openProductModal(product) {
+    modalProduct = product;
+    const modal = document.getElementById('productModal');
+    modal.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+
+    const images = product.images || [product.image];
+    document.getElementById('modalMainImage').src = images[0];
+    document.getElementById('modalName').textContent = product.name;
+    document.getElementById('modalCode').textContent = 'Kod: ' + product.code;
+    document.getElementById('modalPrice').textContent = product.price + ' AZN';
+    document.getElementById('modalDescription').textContent = product.description || '';
+    document.getElementById('modalQty').value = 1;
+
+    const thumbs = document.getElementById('modalThumbnails');
+    thumbs.innerHTML = '';
+    images.forEach(img => {
+      const t = document.createElement('img');
+      t.src = img;
+      t.className = 'w-16 h-16 object-cover rounded-lg cursor-pointer border-2 border-transparent hover:border-primary transition';
+      t.onclick = () => document.getElementById('modalMainImage').src = img;
+      thumbs.appendChild(t);
+    });
+
+    const highlights = product.highlights || [];
+    const list = document.getElementById('modalHighlights');
+    list.innerHTML = '';
+    highlights.forEach(h => {
+      list.innerHTML += `<li class="flex items-center gap-2"><i class="fas fa-check-circle text-primary"></i><span>${h}</span></li>`;
+    });
   }
 
-  document.getElementById('mobileMenuBtn').addEventListener('click', () => {
-    document.getElementById('mobileMenu').classList.toggle('hidden');
+  function closeProductModal() {
+    document.getElementById('productModal').classList.add('hidden');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('closeModalBtn').addEventListener('click', closeProductModal);
+
+  document.getElementById('modalQtyMinus').addEventListener('click', () => {
+    const qtyInput = document.getElementById('modalQty');
+    qtyInput.value = Math.max(1, parseInt(qtyInput.value) - 1);
   });
 
-  async function loadFeaturedProducts() {
-    try {
-      const response = await fetch('api/products/featured');
-      const data = await response.json();
-      if(data.success) renderProducts(data.products);
-    } catch {
-      renderProducts([
-        {id:1,name:'Android TV Box 4K Ultra HD',code:'EL-TVB01',price:149.99,image:'static/images/xiaotv0.png',badge:'Ən çox satılan'},
-        {id:2,name:'Portativ Qızdırıcı 2000W',code:'EL-QZD01',price:49.99,image:'static/images/RAF qizdirici main.png',badge:'Yeni'},
-        {id:4,name:'Bluetooth Keyboard',code:'EL-KB01',price:13.99,image:'static/images/kb0.png'}
-      ]);
-    }
+  document.getElementById('modalQtyPlus').addEventListener('click', () => {
+    const qtyInput = document.getElementById('modalQty');
+    qtyInput.value = parseInt(qtyInput.value) + 1;
+  });
+
+  document.getElementById('modalOrderBtn').addEventListener('click', () => {
+    if (modalProduct) orderNow(modalProduct.name, modalProduct.code, modalProduct.price);
+  });
+
+ document.getElementById('modalCartBtn').addEventListener('click', () => {
+  if (modalProduct) {
+    const qty = parseInt(document.getElementById('modalQty').value);
+    addToCart(modalProduct, qty); // use qty
+    closeProductModal();
   }
+});
 
- function renderProducts(products) {
-  const grid = document.getElementById('featuredProducts');
 
-  grid.innerHTML = products.map(p => `
-    <div class="product-card bg-white dark:bg-navyBox rounded-2xl shadow-lg overflow-hidden">
-      <div onclick='openProductModal(${JSON.stringify(p).replace(/'/g, "&apos;")})' class="cursor-pointer">
-        <div class="aspect-square bg-gray-100 dark:bg-navyDark">
-          <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover">
-        </div>
-        <div class="p-4">
-          <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Kod: ${p.code}</p>
-          <h3 class="text-lg font-bold mb-2 line-clamp-2">${p.name}</h3>
-          <p class="text-2xl font-bold text-secondary">${p.price} AZN</p>
-        </div>
-      </div>
-      <div class="px-4 pb-4">
-        <div class="grid grid-cols-2 gap-2">
-          <button onclick='orderNow("${p.name}", "${p.code}", ${p.price})'
-            class="bg-secondary text-white py-2 rounded-lg font-semibold text-sm">
-            Sifariş Et
-          </button>
-          <button onclick='addToCart(${JSON.stringify(p).replace(/'/g, "&apos;")})'
-            class="bg-primary text-white py-2 rounded-lg font-semibold text-sm">
-            Səbətə
-          </button>
-        </div>
-      </div>
-    </div>
-  `).join('');
-}
-  loadFeaturedProducts();
-function openProductModal(product) {
-  document.getElementById('modalName').textContent = product.name;
-  document.getElementById('modalCode').textContent = `Kod: ${product.code}`;
-  document.getElementById('modalPrice').textContent = `${product.price} AZN`;
-  document.getElementById('modalDescription').textContent = product.description || '';
 
-  const img = document.getElementById('modalMainImage');
-  img.src = product.image;
+  themeToggle.addEventListener('click', () => {
+    if (document.documentElement.classList.contains('dark')) {
+      applyTheme('light');
+    } else {
+      applyTheme('dark');
+    }
+  });
 
-  document.getElementById('productModal').classList.remove('hidden');
+  // Apply saved theme on load
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  applyTheme(savedTheme);
 
-  document.getElementById('modalCartBtn').onclick = () => addToCart(product);
-  document.getElementById('modalOrderBtn').onclick = () =>
-    orderNow(product.name, product.code, product.price);
-}
+  // Initial render
+  renderCarousel();
+  renderProducts();
 
-function closeProductModal() {
-  document.getElementById('productModal').classList.add('hidden');
-}
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+
+mobileMenuBtn.addEventListener('click', () => {
+  mobileMenu.classList.toggle('hidden');
+});
+
+// Close mobile menu when link clicked
+mobileMenu.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    mobileMenu.classList.add('hidden');
+  });
+});
+
+
+  // Smooth scroll for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if(target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
 </script>
-</body>
-</html>
