@@ -24,54 +24,84 @@
     }
   </script>
 
- <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
-/* ===== Global ===== */
+/* ===============================
+   GLOBAL
+================================ */
 * {
   font-family: 'Inter', sans-serif;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
 }
 
-/* ===== CAROUSEL ===== */
+/* ===============================
+   LOGO (GLOBAL FIX)
+================================ */
+#logoImage {
+  height: 42px;
+  max-height: 42px;
+  width: auto;
+  object-fit: contain;
+}
+
+@media (min-width: 768px) {
+  #logoImage {
+    height: 48px;
+    max-height: 48px;
+  }
+}
+/* ===============================
+   CAROUSEL (FIXED & STABLE)
+================================ */
 .carousel-item {
-  width: 100%;          /* full width */
-  height: 480px;        /* smaller desktop height */
-  overflow: hidden;
+  width: 100%;
+  height: 100%;
   position: relative;
+  overflow: hidden;
 }
 
-.carousel-item img {
-  width: 80%;
-  height: 100%;         /* fill container fully */
-  object-fit: cover;    /* keeps aspect ratio and fills container */
-  transition: transform 0.4s ease;
+/* Carousel container proper sizing */
+#carouselContainer {
+  height: 400px;
 }
 
-.carousel-item:hover img {
-  transform: scale(1.03); /* subtle zoom */
-}
-
-/* Mobile carousel height */
 @media (max-width: 768px) {
-  .carousel-item {
-    height: 400px;      /* smaller on mobile */
+  #carouselContainer {
+    height: 350px;
   }
 }
 
-/* ===== CAROUSEL ANIMATION ===== */
-@keyframes slideIn {
-  from { opacity: 0; transform: translateX(30px); }
-  to { opacity: 1; transform: translateX(0); }
+/* Carousel grid layout */
+.carousel-item .grid {
+  height: 100%;
 }
 
-.carousel-item {
-  animation: slideIn 0.5s ease-out;
+/* Image container in carousel */
+.carousel-item .relative {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 
-/* Carousel dots */
+/* Image sizing - properly contained */
+.carousel-item img {
+  max-width: 100%;
+  max-height: 280px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+@media (max-width: 768px) {
+  .carousel-item img {
+    max-height: 220px;
+  }
+}
+
+/* ===============================
+   CAROUSEL DOTS
+================================ */
 .carousel-dots {
   display: flex;
   gap: 8px;
@@ -94,10 +124,12 @@
   border-radius: 4px;
 }
 
-/* ===== PRODUCT CARDS ===== */
+/* ===============================
+   PRODUCT CARDS
+================================ */
 .product-card {
-  transition: all 0.3s ease;
   border-radius: 1rem;
+  transition: all 0.3s ease;
 }
 
 .product-card:hover {
@@ -105,15 +137,24 @@
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 
-.product-card img {
-  transition: transform 0.4s ease;
+/* Product image container */
+.product-image {
+  aspect-ratio: 1 / 1;
+  background: #F3F4F6;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
-.product-card:hover img {
-  transform: scale(1.05);
+.product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 12px;
 }
 
-/* ===== CATEGORY CARDS ===== */
+/* ===============================
+   CATEGORY CARDS
+================================ */
 .category-card {
   transition: all 0.3s ease;
 }
@@ -123,40 +164,36 @@
   box-shadow: 0 20px 40px rgba(0, 102, 255, 0.2);
 }
 
-/* ===== BUTTONS ===== */
-.btn-primary {
-  background: #0066FF;
-  color: white;
-  transition: all 0.25s ease;
-}
-
-.btn-primary:hover {
-  background: #0052CC;
-}
-
-.btn-secondary {
-  background: transparent;
-  border: 2px solid #0066FF;
-  color: #0066FF;
-}
-
-.btn-secondary:hover {
-  background: #0066FF;
-  color: white;
-}
-
+/* ===============================
+   BUTTONS
+================================ */
+.btn-primary,
 .btn-order {
   background: #0066FF;
   color: white;
 }
 
+.btn-primary:hover,
 .btn-order:hover {
   background: #0052CC;
 }
 
-/* ===== PRICE & BADGE ===== */
+.btn-secondary {
+  background: transparent;
+  border: 2px solid #FF6B35;
+  color: #FF6B35;
+}
+
+.btn-secondary:hover {
+  background: #FF6B35;
+  color: white;
+}
+
+/* ===============================
+   PRICE & BADGES
+================================ */
 .price {
-  color: #FF6B35 !important;
+  color: #FF6B35;
   font-weight: 700;
 }
 
@@ -177,7 +214,9 @@
   background: #10B981;
 }
 
-/* ===== CART BADGE ===== */
+/* ===============================
+   CART BADGE
+================================ */
 .cart-badge {
   position: absolute;
   top: -8px;
@@ -194,105 +233,9 @@
   font-weight: bold;
 }
 
-/* ===== WHATSAPP FLOAT ===== */
-.whatsapp-float {
-  position: fixed;
-  bottom: 25px;
-  right: 25px;
-  z-index: 1000;
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-}
-
-/* ===== NOTIFICATION ===== */
-.notification {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #10B981;
-  color: white;
-  padding: 12px 24px;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  z-index: 9999;
-  animation: slideUp 0.3s ease-out;
-  font-size: 14px;
-}
-
-@keyframes slideUp {
-  from { transform: translateX(-50%) translateY(100px); opacity: 0; }
-  to { transform: translateX(-50%) translateY(0); opacity: 1; }
-}
-
-/* ===== MOBILE BOTTOM BAR ===== */
-.mobile-bottom-bar {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: white;
-  border-top: 1px solid #e5e7eb;
-  z-index: 50;
-  display: none;
-}
-
-.dark .mobile-bottom-bar {
-  background: #1A2942;
-  border-top-color: #374151;
-}
-
-@media (max-width: 768px) {
-  .mobile-bottom-bar {
-    display: flex;
-  }
-  .whatsapp-float {
-    display: none;
-  }
-}
-
-/* ===== FOOTER ===== */
-footer {
-  background: linear-gradient(135deg, #0A1628, #0066FF);
-  color: #ffffff;
-}
-
-footer a:hover {
-  color: #FF6B35;
-}
-
-/* ===== LOGO ===== */
-.header-logo-container {
-  display: flex;
-  align-items: center;
-  height: 70px;  /* container height */
-}
-
-#logoImage {
-  max-height: 70px;  /* match container */
-  width: auto;
-  object-fit: contain;
-}
-
-/* ===== MODAL ===== */
-.modal-content {
-  max-height: 90vh;
-  overflow-y: auto;
-}
-
-/* ===== LINE CLAMP ===== */
-.line-clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-/* ===== STEP NUMBER ===== */
+/* ===============================
+   STEP NUMBER
+================================ */
 .step-number {
   position: absolute;
   top: -12px;
@@ -308,6 +251,77 @@ footer a:hover {
   font-weight: bold;
   font-size: 16px;
 }
+
+/* ===============================
+   LINE CLAMP
+================================ */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ===============================
+   MODAL
+================================ */
+.modal-content {
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+/* ===============================
+   WHATSAPP FLOAT
+================================ */
+.whatsapp-float {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  z-index: 1000;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* ===============================
+   MOBILE BOTTOM BAR
+================================ */
+.mobile-bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  border-top: 1px solid #e5e7eb;
+  z-index: 50;
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-bottom-bar {
+    display: flex;
+  }
+
+  .whatsapp-float {
+    display: none;
+  }
+}
+
+/* ===============================
+   FOOTER
+================================ */
+footer {
+  background: linear-gradient(135deg, #0A1628, #0066FF);
+  color: white;
+}
+
+footer a:hover {
+  color: #FF6B35;
+}
+
 </style>
 
 </head>
@@ -353,23 +367,62 @@ footer a:hover {
   </div>
 </nav>
 
-<!-- Flash Sale Carousel -->
-<section class="py-8 md:py-12 px-4 bg-gradient-to-br from-blue-50 to-white dark:from-navyDark dark:to-navyBox transition-colors">
+<section class="py-12 md:py-16 px-4 bg-navyDark">
   <div class="max-w-7xl mx-auto">
+
+    <section class="py-12 md:py-20 px-4 bg-navyDark">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+
+    <!-- LEFT: TEXT -->
+    <div>
+      <h1 class="text-4xl md:text-5xl font-extrabold leading-tight text-white">
+        Çox <span class="text-secondary">Çeşid</span><br>
+        Keyfiyyətli <span class="text-secondary">Məhsullar</span>
+      </h1>
+
+      <p class="mt-6 text-gray-300 max-w-md">
+        Elektronika, TV Box, aksesuarlar və peşəkar xidmətlər – hamısı bir yerdə.
+      </p>
+    </div>
+
+    <!-- RIGHT: MINI CAROUSEL -->
     <div class="relative overflow-hidden rounded-2xl bg-white dark:bg-navyBox shadow-xl">
-      <div id="carouselContainer" class="relative h-[400px] md:h-[500px]">
-        <!-- Carousel items will be inserted here -->
+      <div
+        id="carouselContainer"
+        class="relative h-[260px] md:h-[320px]"
+      >
+        <!-- Carousel items injected here -->
       </div>
-      <div class="carousel-dots absolute bottom-4 left-0 right-0"></div>
-      
-      <!-- Navigation Arrows -->
-      <button id="prevSlide" class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/80 dark:bg-navyBox/80 p-3 rounded-full shadow-lg hover:bg-white dark:hover:bg-navyBox transition">
-        <i class="fas fa-chevron-left text-primary"></i>
+
+      <!-- Dots -->
+      <div class="carousel-dots absolute bottom-3 left-0 right-0"></div>
+
+      <!-- Arrows -->
+      <button
+        id="prevSlide"
+        class="absolute left-3 top-1/2 -translate-y-1/2 bg-white/80 dark:bg-navyBox/80 p-2 rounded-full shadow"
+      >
+        <i class="fas fa-chevron-left text-primary text-sm"></i>
       </button>
-      <button id="nextSlide" class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/80 dark:bg-navyBox/80 p-3 rounded-full shadow-lg hover:bg-white dark:hover:bg-navyBox transition">
-        <i class="fas fa-chevron-right text-primary"></i>
+
+      <button
+        id="nextSlide"
+        class="absolute right-3 top-1/2 -translate-y-1/2 bg-white/80 dark:bg-navyBox/80 p-2 rounded-full shadow"
+      >
+        <i class="fas fa-chevron-right text-primary text-sm"></i>
       </button>
     </div>
+
+  </div>
+</section>
+
+
+
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+      <!-- boxes / products / cards later -->
+    </div>
+
   </div>
 </section>
 
@@ -382,56 +435,59 @@ footer a:hover {
   </div>
 </section>
 
+
 <!-- Categories / Services Section -->
 <section class="py-12 md:py-16 px-4 bg-gray-50 dark:bg-navyDark transition-colors">
   <div class="max-w-7xl mx-auto">
-    <h2 class="text-2xl md:text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white">Xidmətlərimiz</h2>
+    <h2 class="text-2xl md:text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white">
+      Xidmətlərimiz
+    </h2>
+
     <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-      <div class="category-card bg-white dark:bg-navyBox p-6 rounded-xl shadow-md cursor-pointer">
-        <div class="bg-primary/10 dark:bg-primary/20 w-14 h-14 rounded-lg flex items-center justify-center mb-4 mx-auto">
-          <i class="fas fa-battery-full text-2xl text-primary"></i>
-        </div>
-        <h3 class="text-base font-bold mb-2 text-gray-900 dark:text-white text-center">Batareya Dəyişimi</h3>
-        <p class="text-sm text-gray-600 dark:text-gray-300 text-center">Peşəkar batareya yığma</p>
-      </div>
-      <div class="category-card bg-white dark:bg-navyBox p-6 rounded-xl shadow-md cursor-pointer">
-        <div class="bg-secondary/10 dark:bg-secondary/20 w-14 h-14 rounded-lg flex items-center justify-center mb-4 mx-auto">
-          <i class="fas fa-camera text-2xl text-secondary"></i>
-        </div>
-        <h3 class="text-base font-bold mb-2 text-gray-900 dark:text-white text-center">Kamera Təmiri</h3>
-        <p class="text-sm text-gray-600 dark:text-gray-300 text-center">Kamera quraşdırılması</p>
-      </div>
+
+      <!-- TV Box quraşdırılması -->
       <div class="category-card bg-white dark:bg-navyBox p-6 rounded-xl shadow-md cursor-pointer">
         <div class="bg-primary/10 dark:bg-primary/20 w-14 h-14 rounded-lg flex items-center justify-center mb-4 mx-auto">
           <i class="fas fa-tv text-2xl text-primary"></i>
         </div>
-        <h3 class="text-base font-bold mb-2 text-gray-900 dark:text-white text-center">Ekran Təmiri</h3>
-        <p class="text-sm text-gray-600 dark:text-gray-300 text-center">TV və monitor təmiri</p>
+        <h3 class="text-base font-bold mb-2 text-gray-900 dark:text-white text-center">
+          TV Box Quraşdırılması
+        </h3>
+        <p class="text-sm text-gray-600 dark:text-gray-300 text-center">
+          Kanal və sistem qurulumu
+        </p>
       </div>
-      <div class="category-card bg-white dark:bg-navyBox p-6 rounded-xl shadow-md cursor-pointer">
-        <div class="bg-secondary/10 dark:bg-secondary/20 w-14 h-14 rounded-lg flex items-center justify-center mb-4 mx-auto">
-          <i class="fas fa-wrench text-2xl text-secondary"></i>
-        </div>
-        <h3 class="text-base font-bold mb-2 text-gray-900 dark:text-white text-center">Kanal Yükləmə</h3>
-        <p class="text-sm text-gray-600 dark:text-gray-300 text-center">TV Box xidməti</p>
-      </div>
-      <div class="category-card bg-white dark:bg-navyBox p-6 rounded-xl shadow-md cursor-pointer">
-        <div class="bg-primary/10 dark:bg-primary/20 w-14 h-14 rounded-lg flex items-center justify-center mb-4 mx-auto">
-          <i class="fas fa-tools text-2xl text-primary"></i>
-        </div>
-        <h3 class="text-base font-bold mb-2 text-gray-900 dark:text-white text-center">Ümumi Təmir</h3>
-        <p class="text-sm text-gray-600 dark:text-gray-300 text-center">Elektronika təmiri</p>
-      </div>
+
+      <!-- Ümumi dəstək -->
       <div class="category-card bg-white dark:bg-navyBox p-6 rounded-xl shadow-md cursor-pointer">
         <div class="bg-secondary/10 dark:bg-secondary/20 w-14 h-14 rounded-lg flex items-center justify-center mb-4 mx-auto">
           <i class="fas fa-headset text-2xl text-secondary"></i>
         </div>
-        <h3 class="text-base font-bold mb-2 text-gray-900 dark:text-white text-center">Dəstək</h3>
-        <p class="text-sm text-gray-600 dark:text-gray-300 text-center">Texniki məsləhət</p>
+        <h3 class="text-base font-bold mb-2 text-gray-900 dark:text-white text-center">
+          Ümumi Dəstək
+        </h3>
+        <p class="text-sm text-gray-600 dark:text-gray-300 text-center">
+          Texniki məsləhət və yardım
+        </p>
       </div>
+
+      <!-- Quraşdırma köməyi -->
+      <div class="category-card bg-white dark:bg-navyBox p-6 rounded-xl shadow-md cursor-pointer">
+        <div class="bg-primary/10 dark:bg-primary/20 w-14 h-14 rounded-lg flex items-center justify-center mb-4 mx-auto">
+          <i class="fas fa-tools text-2xl text-primary"></i>
+        </div>
+        <h3 class="text-base font-bold mb-2 text-gray-900 dark:text-white text-center">
+          Quraşdırma Köməyi
+        </h3>
+        <p class="text-sm text-gray-600 dark:text-gray-300 text-center">
+          Evdə və ofisdə quraşdırma
+        </p>
+      </div>
+
     </div>
   </div>
 </section>
+
 
 <!-- How to Order Section -->
 <section class="py-12 md:py-16 px-4 bg-white dark:bg-navyBox transition-colors">
@@ -608,7 +664,7 @@ footer a:hover {
   const products = [
     {
       id: 1,
-      name: 'Android TV Box 4K Ultra HD',
+      name: 'TV Box 4K Ultra HD',
       code: 'EL-TVB01',
       price: 149.99,
       image: "/static/images/xiaotv0.png",
@@ -617,7 +673,7 @@ footer a:hover {
         '/static/images/xiaotv2.png'
       ],
       badge: 'Ən çox satılan',
-      description: 'Android TV əsaslı smart TV box. 4K Ultra HD dəstəyi, Google Assistant və minlərlə tətbiq.',
+      description: 'TV əsaslı smart TV box. 4K Ultra HD dəstəyi, Google Assistant və minlərlə tətbiq.',
       highlights: ['4K Ultra HD keyfiyyət', 'Android TV 11', 'Google Assistant dəstəyi']
     },
     {
@@ -895,4 +951,3 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 </script>
-
