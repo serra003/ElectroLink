@@ -836,10 +836,9 @@ carouselContainer.addEventListener('mouseleave', () => {
 
 document.getElementById('nextSlide').addEventListener('click', nextSlide);
 document.getElementById('prevSlide').addEventListener('click', prevSlide);
-
-// Featured products
 function renderProducts() {
   const grid = document.getElementById('featuredProducts');
+
   grid.innerHTML = products.map(p => `
     <div class="product-card bg-white dark:bg-navyBox rounded-2xl shadow-lg overflow-hidden relative">
       ${p.badge ? `<span class="badge-flash ${p.badge === 'Yeni' ? 'badge-new' : ''}">${p.badge}</span>` : ''}
@@ -866,30 +865,34 @@ function renderProducts() {
     </div>
   `).join('');
 
-  // Event listeners
-  document.querySelectorAll('.product-card > div[data-product-id]').forEach(card => {
-    card.addEventListener('click', function() {
-      const product = products.find(p => p.id === parseInt(this.dataset.productId));
-      if (product) openProductModal(product);
+  // Add listeners **after DOM is updated**
+  grid.querySelectorAll('.cursor-pointer').forEach(card => {
+    card.addEventListener('click', () => {
+      const product = products.find(p => p.id === parseInt(card.dataset.productId));
+      if(product) openProductModal(product);
     });
   });
 
-  document.querySelectorAll('.order-btn').forEach(btn => {
-    btn.addEventListener('click', function(e) {
+  grid.querySelectorAll('.order-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
       e.stopPropagation();
-      const product = products.find(p => p.id === parseInt(this.dataset.productId));
-      if (product) orderNow(product.name, product.code, product.price);
+      const product = products.find(p => p.id === parseInt(btn.dataset.productId));
+      if(product) orderNow(product.name, product.code, product.price);
     });
   });
 
-  document.querySelectorAll('.cart-btn').forEach(btn => {
-    btn.addEventListener('click', function(e) {
+  grid.querySelectorAll('.cart-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
       e.stopPropagation();
-      const product = products.find(p => p.id === parseInt(this.dataset.productId));
-      if (product) addToCart(product);
+      const product = products.find(p => p.id === parseInt(btn.dataset.productId));
+      if(product) addToCart(product);
     });
   });
 }
+ document.addEventListener('DOMContentLoaded', () => {
+    renderProducts();
+});
+
 
 // Modal
 function openProductModal(product) {
