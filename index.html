@@ -77,6 +77,18 @@
   pointer-events: auto;
 }
 
+  /* Reserve space for dots so text never overlaps */
+.carousel-item .grid {
+  padding-bottom: 4.5rem; /* space for dots */
+}
+
+@media (min-width: 768px) {
+  .carousel-item .grid {
+    padding-bottom: 3.5rem;
+  }
+}
+
+
 /* Carousel content wrapper */
 .carousel-content {
   display: grid;
@@ -1032,3 +1044,4 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 </script>
 </body>
 </html>
+
