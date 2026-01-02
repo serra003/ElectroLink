@@ -16,8 +16,8 @@
           colors: {
             primary: '#0066FF',
             secondary: '#FF6B35',
-            navyDark: '#0A1628',
-            navyBox: '#1A2942',
+            navyDark: '#0F172A',
+            navyBox: '#1E293B',
           }
         }
       }
@@ -27,16 +27,11 @@
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
-/* ===============================
-   GLOBAL
-================================ */
 * {
   font-family: 'Inter', sans-serif;
 }
 
-/* ===============================
-   LOGO (GLOBAL FIX)
-================================ */
+/* LOGO */
 #logoImage {
   height: 42px;
   max-height: 42px;
@@ -50,44 +45,40 @@
     max-height: 48px;
   }
 }
-/* ===============================
-   CAROUSEL (FIXED & STABLE)
-================================ */
-.carousel-item {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  overflow: hidden;
+
+/* CAROUSEL CONTAINER */
+#carouselContainer {
+  background: white;
+  height: 380px;
 }
 
-/* Carousel container proper sizing */
-#carouselContainer {
-  height: 400px;
+.dark #carouselContainer {
+  background: #1E293B;
 }
 
 @media (max-width: 768px) {
   #carouselContainer {
-    height: 350px;
+    height: 320px;
   }
 }
 
-/* Carousel grid layout */
-.carousel-item .grid {
-  height: 100%;
+/* CAROUSEL ITEMS */
+.carousel-item {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  pointer-events: none;
 }
 
-/* Image container in carousel */
-.carousel-item .relative {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
+.carousel-item.active {
+  opacity: 1;
+  pointer-events: auto;
 }
 
-/* Image sizing - properly contained */
 .carousel-item img {
   max-width: 100%;
-  max-height: 280px;
+  max-height: 250px;
   width: auto;
   height: auto;
   object-fit: contain;
@@ -95,25 +86,22 @@
 
 @media (max-width: 768px) {
   .carousel-item img {
-    max-height: 220px;
+    max-height: 180px;
   }
 }
 
-/* ===============================
-   CAROUSEL DOTS
-================================ */
+/* CAROUSEL DOTS */
 .carousel-dots {
   display: flex;
   gap: 8px;
   justify-content: center;
-  margin-top: 16px;
 }
 
 .carousel-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #D1D5DB;
+  background: #CBD5E1;
   cursor: pointer;
   transition: all 0.3s ease;
 }
@@ -124,9 +112,7 @@
   border-radius: 4px;
 }
 
-/* ===============================
-   PRODUCT CARDS
-================================ */
+/* PRODUCT CARDS */
 .product-card {
   border-radius: 1rem;
   transition: all 0.3s ease;
@@ -137,12 +123,18 @@
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 
-/* Product image container */
 .product-image {
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 4 / 5;
   background: #F3F4F6;
   border-radius: 12px;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dark .product-image {
+  background: #0F172A;
 }
 
 .product-image img {
@@ -152,9 +144,7 @@
   padding: 12px;
 }
 
-/* ===============================
-   CATEGORY CARDS
-================================ */
+/* CATEGORY CARDS */
 .category-card {
   transition: all 0.3s ease;
 }
@@ -164,13 +154,12 @@
   box-shadow: 0 20px 40px rgba(0, 102, 255, 0.2);
 }
 
-/* ===============================
-   BUTTONS
-================================ */
+/* BUTTONS */
 .btn-primary,
 .btn-order {
   background: #0066FF;
   color: white;
+  transition: all 0.3s ease;
 }
 
 .btn-primary:hover,
@@ -182,6 +171,7 @@
   background: transparent;
   border: 2px solid #FF6B35;
   color: #FF6B35;
+  transition: all 0.3s ease;
 }
 
 .btn-secondary:hover {
@@ -189,9 +179,12 @@
   color: white;
 }
 
-/* ===============================
-   PRICE & BADGES
-================================ */
+.dark .btn-secondary {
+  color: #FF6B35;
+  border-color: #FF6B35;
+}
+
+/* PRICE & BADGES */
 .price {
   color: #FF6B35;
   font-weight: 700;
@@ -214,9 +207,7 @@
   background: #10B981;
 }
 
-/* ===============================
-   CART BADGE
-================================ */
+/* CART BADGE */
 .cart-badge {
   position: absolute;
   top: -8px;
@@ -233,9 +224,7 @@
   font-weight: bold;
 }
 
-/* ===============================
-   STEP NUMBER
-================================ */
+/* STEP NUMBER */
 .step-number {
   position: absolute;
   top: -12px;
@@ -252,9 +241,7 @@
   font-size: 16px;
 }
 
-/* ===============================
-   LINE CLAMP
-================================ */
+/* LINE CLAMP */
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -262,17 +249,13 @@
   overflow: hidden;
 }
 
-/* ===============================
-   MODAL
-================================ */
+/* MODAL */
 .modal-content {
   max-height: 90vh;
   overflow-y: auto;
 }
 
-/* ===============================
-   WHATSAPP FLOAT
-================================ */
+/* WHATSAPP FLOAT */
 .whatsapp-float {
   position: fixed;
   bottom: 25px;
@@ -286,40 +269,65 @@
   50% { transform: scale(1.05); }
 }
 
-/* ===============================
-   MOBILE BOTTOM BAR
-================================ */
-.mobile-bottom-bar {
+@media (max-width: 768px) {
+  .whatsapp-float {
+    bottom: 20px;
+    right: 20px;
+  }
+}
+
+/* NOTIFICATION */
+.notification {
   position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: white;
-  border-top: 1px solid #e5e7eb;
-  z-index: 50;
+  top: 20px;
+  right: 20px;
+  background: #10B981;
+  color: white;
+  padding: 16px 24px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.notification.hidden {
   display: none;
 }
 
-@media (max-width: 768px) {
-  .mobile-bottom-bar {
-    display: flex;
-  }
-
-  .whatsapp-float {
-    display: none;
-  }
-}
-
-/* ===============================
-   FOOTER
-================================ */
+/* FOOTER */
 footer {
-  background: linear-gradient(135deg, #0A1628, #0066FF);
+  background: linear-gradient(135deg, #0F172A, #0066FF);
   color: white;
 }
 
 footer a:hover {
   color: #FF6B35;
+}
+
+/* Mobile product card improvements */
+@media (max-width: 640px) {
+  .product-card .grid {
+    gap: 0.5rem;
+  }
+  
+  .product-card .btn-order,
+  .product-card .btn-secondary {
+    font-size: 0.75rem;
+    padding: 0.5rem 0.75rem;
+  }
 }
 
 </style>
@@ -367,10 +375,8 @@ footer a:hover {
   </div>
 </nav>
 
-<section class="py-12 md:py-16 px-4 bg-navyDark">
-  <div class="max-w-7xl mx-auto">
-
-    <section class="py-12 md:py-20 px-4 bg-navyDark">
+<!-- Hero Section with Carousel -->
+<section class="py-12 md:py-20 px-4 bg-navyDark">
   <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
 
     <!-- LEFT: TEXT -->
@@ -385,13 +391,10 @@ footer a:hover {
       </p>
     </div>
 
-    <!-- RIGHT: MINI CAROUSEL -->
-    <div class="relative overflow-hidden rounded-2xl bg-white dark:bg-navyBox shadow-xl">
-      <div
-        id="carouselContainer"
-        class="relative h-[260px] md:h-[320px]"
-      >
-        <!-- Carousel items injected here -->
+    <!-- RIGHT: CAROUSEL -->
+    <div class="relative overflow-hidden rounded-2xl shadow-xl">
+      <div id="carouselContainer" class="relative">
+        <!-- Carousel items will be injected here -->
       </div>
 
       <!-- Dots -->
@@ -400,14 +403,14 @@ footer a:hover {
       <!-- Arrows -->
       <button
         id="prevSlide"
-        class="absolute left-3 top-1/2 -translate-y-1/2 bg-white/80 dark:bg-navyBox/80 p-2 rounded-full shadow"
+        class="absolute left-3 top-1/2 -translate-y-1/2 bg-white/90 dark:bg-navyBox/90 p-2 rounded-full shadow hover:bg-white transition"
       >
         <i class="fas fa-chevron-left text-primary text-sm"></i>
       </button>
 
       <button
         id="nextSlide"
-        class="absolute right-3 top-1/2 -translate-y-1/2 bg-white/80 dark:bg-navyBox/80 p-2 rounded-full shadow"
+        class="absolute right-3 top-1/2 -translate-y-1/2 bg-white/90 dark:bg-navyBox/90 p-2 rounded-full shadow hover:bg-white transition"
       >
         <i class="fas fa-chevron-right text-primary text-sm"></i>
       </button>
@@ -416,18 +419,8 @@ footer a:hover {
   </div>
 </section>
 
-
-
-
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-      <!-- boxes / products / cards later -->
-    </div>
-
-  </div>
-</section>
-
 <!-- Featured Products Section -->
-<section class="py-12 md:py-16 px-4 bg-white dark:bg-navyBox transition-colors">
+<section class="py-12 md:py-16 px-4 bg-gray-50 dark:bg-navyBox transition-colors">
   <div class="max-w-7xl mx-auto">
     <h2 class="text-2xl md:text-3xl font-bold text-center mb-3 text-gray-900 dark:text-white">Seçilmiş Məhsullar</h2>
     <p class="text-center text-gray-600 dark:text-gray-400 mb-8 md:mb-10">Ən çox satılan və yeni məhsullarımız</p>
@@ -435,9 +428,8 @@ footer a:hover {
   </div>
 </section>
 
-
-<!-- Categories / Services Section -->
-<section class="py-12 md:py-16 px-4 bg-gray-50 dark:bg-navyDark transition-colors">
+<!-- Services Section -->
+<section class="py-12 md:py-16 px-4 bg-white dark:bg-navyDark transition-colors">
   <div class="max-w-7xl mx-auto">
     <h2 class="text-2xl md:text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white">
       Xidmətlərimiz
@@ -446,7 +438,7 @@ footer a:hover {
     <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
 
       <!-- TV Box quraşdırılması -->
-      <div class="category-card bg-white dark:bg-navyBox p-6 rounded-xl shadow-md cursor-pointer">
+      <div class="category-card bg-gray-50 dark:bg-navyBox p-6 rounded-xl shadow-md cursor-pointer">
         <div class="bg-primary/10 dark:bg-primary/20 w-14 h-14 rounded-lg flex items-center justify-center mb-4 mx-auto">
           <i class="fas fa-tv text-2xl text-primary"></i>
         </div>
@@ -459,7 +451,7 @@ footer a:hover {
       </div>
 
       <!-- Ümumi dəstək -->
-      <div class="category-card bg-white dark:bg-navyBox p-6 rounded-xl shadow-md cursor-pointer">
+      <div class="category-card bg-gray-50 dark:bg-navyBox p-6 rounded-xl shadow-md cursor-pointer">
         <div class="bg-secondary/10 dark:bg-secondary/20 w-14 h-14 rounded-lg flex items-center justify-center mb-4 mx-auto">
           <i class="fas fa-headset text-2xl text-secondary"></i>
         </div>
@@ -472,7 +464,7 @@ footer a:hover {
       </div>
 
       <!-- Quraşdırma köməyi -->
-      <div class="category-card bg-white dark:bg-navyBox p-6 rounded-xl shadow-md cursor-pointer">
+      <div class="category-card bg-gray-50 dark:bg-navyBox p-6 rounded-xl shadow-md cursor-pointer">
         <div class="bg-primary/10 dark:bg-primary/20 w-14 h-14 rounded-lg flex items-center justify-center mb-4 mx-auto">
           <i class="fas fa-tools text-2xl text-primary"></i>
         </div>
@@ -488,15 +480,14 @@ footer a:hover {
   </div>
 </section>
 
-
 <!-- How to Order Section -->
-<section class="py-12 md:py-16 px-4 bg-white dark:bg-navyBox transition-colors">
+<section class="py-12 md:py-16 px-4 bg-gray-50 dark:bg-navyBox transition-colors">
   <div class="max-w-7xl mx-auto">
     <h2 class="text-2xl md:text-3xl font-bold text-center mb-3 text-gray-900 dark:text-white">Necə sifariş edim?</h2>
     <p class="text-center text-gray-600 dark:text-gray-400 mb-8 md:mb-10">Üç sadə addımda sifarişinizi verin</p>
     
     <div class="grid md:grid-cols-3 gap-6 md:gap-8">
-      <div class="bg-gray-50 dark:bg-navyDark p-6 md:p-8 rounded-xl text-center relative">
+      <div class="bg-white dark:bg-navyDark p-6 md:p-8 rounded-xl text-center relative">
         <div class="step-number">1</div>
         <div class="bg-secondary/10 dark:bg-secondary/20 w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center mx-auto mb-4">
           <i class="fas fa-search text-2xl md:text-3xl text-secondary"></i>
@@ -505,7 +496,7 @@ footer a:hover {
         <p class="text-sm text-gray-600 dark:text-gray-300">Kataloqdan istədiyiniz məhsulu seçin</p>
       </div>
 
-      <div class="bg-gray-50 dark:bg-navyDark p-6 md:p-8 rounded-xl text-center relative">
+      <div class="bg-white dark:bg-navyDark p-6 md:p-8 rounded-xl text-center relative">
         <div class="step-number">2</div>
         <div class="bg-primary/10 dark:bg-primary/20 w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center mx-auto mb-4">
           <i class="fas fa-mouse-pointer text-2xl md:text-3xl text-primary"></i>
@@ -514,7 +505,7 @@ footer a:hover {
         <p class="text-sm text-gray-600 dark:text-gray-300">Məhsul səhifəsində sifariş düyməsini basın</p>
       </div>
 
-      <div class="bg-gray-50 dark:bg-navyDark p-6 md:p-8 rounded-xl text-center relative">
+      <div class="bg-white dark:bg-navyDark p-6 md:p-8 rounded-xl text-center relative">
         <div class="step-number">3</div>
         <div class="bg-green-500/10 dark:bg-green-500/20 w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center mx-auto mb-4">
           <i class="fas fa-check-circle text-2xl md:text-3xl text-green-600"></i>
@@ -562,25 +553,12 @@ footer a:hover {
   </div>
 </footer>
 
-<!-- WhatsApp Floating Button (Desktop) -->
+<!-- WhatsApp Floating Button -->
 <a href="https://wa.me/994105051615" target="_blank" class="whatsapp-float">
   <div class="bg-green-500 text-white w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center shadow-2xl hover:bg-green-600 transition">
     <i class="fab fa-whatsapp text-3xl md:text-4xl"></i>
   </div>
 </a>
-
-<!-- Mobile Bottom Bar -->
-<div class="mobile-bottom-bar">
-  <a href="/cart" class="flex-1 flex flex-col items-center justify-center py-3 relative">
-    <i class="fas fa-shopping-cart text-xl text-gray-700 dark:text-gray-300"></i>
-    <span class="text-xs mt-1 text-gray-700 dark:text-gray-300">Səbət</span>
-    <span id="cartCountMobile" class="cart-badge">0</span>
-  </a>
-  <a href="https://wa.me/994105051615" target="_blank" class="flex-1 flex flex-col items-center justify-center py-3 bg-green-500 text-white">
-    <i class="fab fa-whatsapp text-xl"></i>
-    <span class="text-xs mt-1">WhatsApp</span>
-  </a>
-</div>
 
 <!-- Notification -->
 <div id="notification" class="notification hidden">
@@ -600,7 +578,7 @@ footer a:hover {
 
       <!-- LEFT: Images Section -->
       <div>
-        <img id="modalMainImage" class="w-full h-96 object-cover rounded-xl mb-4 cursor-pointer">
+        <img id="modalMainImage" class="w-full h-96 object-contain rounded-xl mb-4 cursor-pointer bg-gray-100 dark:bg-navyDark p-4">
         <div id="modalThumbnails" class="flex gap-3 flex-wrap"></div>
       </div>
 
@@ -623,7 +601,7 @@ footer a:hover {
           <button id="modalQtyMinus" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition">
             <i class="fas fa-minus"></i>
           </button>
-          <input id="modalQty" type="number" value="1" min="1" class="w-20 text-center text-lg border-2 rounded-lg py-2 dark:bg-navyDark dark:border-gray-600">
+          <input id="modalQty" type="number" value="1" min="1" class="w-20 text-center text-lg border-2 rounded-lg py-2 dark:bg-navyDark dark:border-gray-600 dark:text-white">
           <button id="modalQtyPlus" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition">
             <i class="fas fa-plus"></i>
           </button>
@@ -645,78 +623,71 @@ footer a:hover {
 </div>
 
 <script>
-   const root = document.documentElement;
-  const themeIcon = document.getElementById('themeIcon');
-  const logoImage = document.getElementById('logoImage');
+const root = document.documentElement;
+const themeIcon = document.getElementById('themeIcon');
+const logoImage = document.getElementById('logoImage');
 
-  function applyTheme(t) {
-    if (t === 'dark') {
-      root.classList.add('dark');
-      themeIcon.className = 'fas fa-sun text-yellow-400';
-      logoImage.src = '/static/images/darkmodenew.png';
-    } else {
-      root.classList.remove('dark');
-      themeIcon.className = 'fas fa-moon';
-      logoImage.src = '/static/images/Electrolink transparent.png';
-    }
-    localStorage.setItem('theme', t);
+function applyTheme(t) {
+  if (t === 'dark') {
+    root.classList.add('dark');
+    themeIcon.className = 'fas fa-sun text-lg sm:text-xl text-yellow-400';
+    logoImage.src = '/static/images/darkmodenew.png';
+  } else {
+    root.classList.remove('dark');
+    themeIcon.className = 'fas fa-moon text-lg sm:text-xl text-gray-700';
+    logoImage.src = '/static/images/Electrolink transparent.png';
   }
-  const products = [
-    {
-      id: 1,
-      name: 'TV Box 4K Ultra HD',
-      code: 'EL-TVB01',
-      price: 149.99,
-      image: "/static/images/xiaotv0.png",
-      images: [
-        '/static/images/xiaotv1.png',
-        '/static/images/xiaotv2.png'
-      ],
-      badge: 'Ən çox satılan',
-      description: 'TV əsaslı smart TV box. 4K Ultra HD dəstəyi, Google Assistant və minlərlə tətbiq.',
-      highlights: ['4K Ultra HD keyfiyyət', 'Android TV 11', 'Google Assistant dəstəyi']
-    },
-    {
-      id: 2,
-      name: 'Portativ Qızdırıcı 2000W',
-      code: 'EL-QZD01',
-      price: 49.99,
-      image: '/static/images/RAF qizdirici main.png',
-      images: ['/static/images/raf fan guc.png',
-        '/static/images/raf fan dayan.png',
-        '/static/images/raf fan.png'
-      ],
-      badge: 'Yeni',
-      description: 'Güclü 2000W portativ qızdırıcı, sürətli və effektiv otaq isitmə.',
-      highlights: ['2000W güclü isitmə', 'Avtomatik temperatur', 'Enerji qənaətcil']
-    },
-    {
-      id: 3,
-      name: 'Bluetooth Keyboard',
-      code: 'EL-KB01',
-      price: 13.99,
-      image: '/static/images/kb0.png',
-      images: ['/static/images/kb1.png'],
-      badge: 'Endirim',
-      description: 'Kompakt simsiz klaviatura touchpad ilə.',
-      highlights: ['Bluetooth 5.0', 'Touchpad', 'Portativ']
-    },
-    
-  ];
+  localStorage.setItem('theme', t);
+}
 
-  let currentSlide = 0;
-  let cart = JSON.parse(localStorage.getItem('cart')) || [];
-  let modalProduct = null;
+const products = [
+  {
+    id: 1,
+    name: 'TV Box 4K Ultra HD',
+    code: 'EL-TVB01',
+    price: 149.99,
+    image: "/static/images/xiaotv0.png",
+    images: [
+      '/static/images/xiaotv0.png',
+      '/static/images/xiaotv1.png',
+      '/static/images/xiaotv2.png'
+    ],
+    badge: 'Yeni',
+    description: 'Güclü 2000W portativ qızdırıcı, sürətli və effektiv otaq isitmə.',
+    highlights: ['2000W güclü isitmə', 'Avtomatik temperatur', 'Enerji qənaətcil']
+  },
+  { id: 2, name: 'Portativ Qızdırıcı 2000W', code: 'EL-QZD01', 
+    price: 49.99, image: '/static/images/RAF qizdirici main.png', 
+    images: ['/static/images/raf fan guc.png', '/static/images/raf fan dayan.png',
+    '/static/images/raf fan.png' ], 
+    badge: 'Yeni', 
+    description: 'Güclü 2000W portativ qızdırıcı, sürətli və effektiv otaq isitmə.', 
+    highlights: ['2000W güclü isitmə', 'Avtomatik temperatur', 'Enerji qənaətcil'] },
+  {
+    id: 3,
+    name: 'Bluetooth Keyboard',
+    code: 'EL-KB01',
+    price: 13.99,
+    image: '/static/images/kb0.png',
+    images: ['/static/images/kb0.png', '/static/images/kb1.png'],
+    badge: 'Endirim',
+    description: 'Kompakt simsiz klaviatura touchpad ilə.',
+    highlights: ['Bluetooth 5.0', 'Touchpad', 'Portativ']
+  },
+];
 
-  // Update cart count
-  function updateCartCount() {
-    document.getElementById('cartCount').textContent = cart.length;
-    document.getElementById('cartCountMobile').textContent = cart.length;
-  }
-  updateCartCount();
+let currentSlide = 0;
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+let modalProduct = null;
 
-  // Add to cart
- function addToCart(product, qty = 1) {
+// Update cart count
+function updateCartCount() {
+  document.getElementById('cartCount').textContent = cart.length;
+}
+updateCartCount();
+
+// Add to cart
+function addToCart(product, qty = 1) {
   const existing = cart.find(p => p.id === product.id);
   if(existing) {
     existing.qty += qty;
@@ -728,63 +699,69 @@ footer a:hover {
   showNotification();
 }
 
+// Show notification
+function showNotification() {
+  const notification = document.getElementById('notification');
+  notification.classList.remove('hidden');
+  setTimeout(() => notification.classList.add('hidden'), 2500);
+}
 
-  // Show notification
-  function showNotification() {
-    const notification = document.getElementById('notification');
-    notification.classList.remove('hidden');
-    setTimeout(() => notification.classList.add('hidden'), 2500);
-  }
+// Order now via WhatsApp
+function orderNow(name, code, price) {
+  const message = `Salam! Sizdən ${name} (${code}) 1 ədəd sifariş etmək istəyirəm.`;
+  window.open(`https://wa.me/994105051615?text=${encodeURIComponent(message)}`, '_blank');
+}
 
-  // Order now via WhatsApp
-  function orderNow(name, code, price) {
-    const message = `Salam! Sizdən ${name} (${code}) 1 ədəd sifariş etmək istəyirəm.`;
-    window.open(`https://wa.me/994105051615?text=${encodeURIComponent(message)}`, '_blank');
-  }
+// Carousel
+function renderCarousel() {
+  const container = document.getElementById('carouselContainer');
+  const dotsContainer = document.querySelector('.carousel-dots');
 
-  // Carousel
-  function renderCarousel() {
-    const container = document.getElementById('carouselContainer');
-    const dotsContainer = document.querySelector('.carousel-dots');
-
-    container.innerHTML = products.map((p, index) => `
-      <div class="carousel-item absolute inset-0 transition-opacity duration-500 ${index === currentSlide ? 'opacity-100' : 'opacity-0 pointer-events-none'}">
-        <div class="grid md:grid-cols-2 gap-6 h-full p-8 items-center">
-          <div class="relative">
-            <span class="badge-flash ${p.badge === 'Yeni' ? 'badge-new' : ''}">${p.badge}</span>
-           <img src="${p.image}" alt="${p.name}" class="w-full h-64 md:h-80 object-cover rounded-xl" loading="lazy">
-          </div>
-          <div class="text-center md:text-left">
-            <h3 class="text-2xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">${p.name}</h3>
-            <p class="text-gray-600 dark:text-gray-400 mb-4 text-sm md:text-base">${p.description}</p>
-            <p class="text-3xl md:text-5xl font-bold price mb-6">${p.price} AZN</p>
-            <button onclick='orderNow("${p.name}", "${p.code}", ${p.price})' class="btn-order px-8 py-4 rounded-lg font-bold text-lg hover:shadow-lg transition">
-              <i class="fab fa-whatsapp mr-2"></i>Sifariş Et
-            </button>
-          </div>
+  container.innerHTML = products.map((p, index) => `
+    <div class="carousel-item ${index === currentSlide ? 'active' : ''}">
+      <div class="grid md:grid-cols-2 gap-6 h-full p-6 md:p-8 items-center">
+        <div class="relative flex items-center justify-center">
+          <span class="badge-flash ${p.badge === 'Yeni' ? 'badge-new' : ''}">${p.badge}</span>
+          <img 
+            src="${p.image}" 
+            alt="${p.name}" 
+            loading="lazy"
+          />
+        </div>
+        <div class="text-center md:text-left">
+          <h3 class="text-xl md:text-3xl font-bold mb-3 text-gray-900 dark:text-white">${p.name}</h3>
+          <p class="text-gray-600 dark:text-gray-400 mb-4 text-sm md:text-base">${p.description}</p>
+          <p class="text-2xl md:text-4xl font-bold price mb-6">${p.price} AZN</p>
+          <button onclick='orderNow("${p.name}", "${p.code}", ${p.price})' class="btn-order px-6 md:px-8 py-3 md:py-4 rounded-lg font-bold text-base md:text-lg hover:shadow-lg transition">
+            <i class="fab fa-whatsapp mr-2"></i>Sifariş Et
+          </button>
         </div>
       </div>
-    `).join('');
+    </div>
+  `).join('');
 
-    dotsContainer.innerHTML = products.map((_, index) => 
-      `<div class="carousel-dot ${index === currentSlide ? 'active' : ''}" data-slide="${index}"></div>`
-    ).join('');
+  dotsContainer.innerHTML = products.map((_, index) => 
+    `<div class="carousel-dot ${index === currentSlide ? 'active' : ''}" data-slide="${index}"></div>`
+  ).join('');
 
-    document.querySelectorAll('.carousel-dot').forEach(dot => {
-      dot.addEventListener('click', () => {
-        currentSlide = parseInt(dot.dataset.slide);
-        renderCarousel();
-      });
+  document.querySelectorAll('.carousel-dot').forEach(dot => {
+    dot.addEventListener('click', () => {
+      currentSlide = parseInt(dot.dataset.slide);
+      renderCarousel();
     });
-  }
-  function nextSlide() {
-    currentSlide = (currentSlide + 1) % products.length;
-    renderCarousel();
-  }
-  function prevSlide() {
-    currentSlide = (currentSlide - 1 + products.length) % products.length;
-    renderCarousel();
-  }
+  });
+}
+
+function nextSlide() {
+  currentSlide = (currentSlide + 1) % products.length;
+  renderCarousel();
+}
+
+function prevSlide() {
+  currentSlide = (currentSlide - 1 + products.length) % products.length;
+  renderCarousel();
+}
+
 let carouselInterval = setInterval(nextSlide, 5000);
 
 const carouselContainer = document.getElementById('carouselContainer');
@@ -792,156 +769,157 @@ carouselContainer.addEventListener('mouseenter', () => clearInterval(carouselInt
 carouselContainer.addEventListener('mouseleave', () => {
   carouselInterval = setInterval(nextSlide, 5000);
 });
-  document.getElementById('nextSlide').addEventListener('click', nextSlide);
-  document.getElementById('prevSlide').addEventListener('click', prevSlide);
 
-  // Featured products
-  function renderProducts() {
-    const grid = document.getElementById('featuredProducts');
-    grid.innerHTML = products.map(p => `
-      <div class="product-card bg-white dark:bg-navyBox rounded-2xl shadow-lg overflow-hidden relative">
-        ${p.badge ? `<span class="badge-flash ${p.badge === 'Yeni' ? 'badge-new' : ''}">${p.badge}</span>` : ''}
-        <div class="cursor-pointer" data-product-id="${p.id}">
-          <div class="aspect-square bg-gray-100 dark:bg-navyDark">
-            <img src="${p.image}" alt="${p.name}" class="w-full h-64 md:h-80 object-cover rounded-xl" loading="lazy">
+document.getElementById('nextSlide').addEventListener('click', nextSlide);
+document.getElementById('prevSlide').addEventListener('click', prevSlide);
 
-          </div>
-          <div class="p-4">
-            <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Kod: ${p.code}</p>
-            <h3 class="text-base md:text-lg font-bold mb-2 line-clamp-2 text-gray-900 dark:text-white">${p.name}</h3>
-            <p class="text-xl md:text-2xl font-bold price mb-4">${p.price} AZN</p>
-          </div>
+// Featured products
+function renderProducts() {
+  const grid = document.getElementById('featuredProducts');
+  grid.innerHTML = products.map(p => `
+    <div class="product-card bg-white dark:bg-navyBox rounded-2xl shadow-lg overflow-hidden relative">
+      ${p.badge ? `<span class="badge-flash ${p.badge === 'Yeni' ? 'badge-new' : ''}">${p.badge}</span>` : ''}
+      <div class="cursor-pointer" data-product-id="${p.id}">
+        <div class="product-image">
+          <img src="${p.image}" alt="${p.name}" loading="lazy">
         </div>
-        <div class="px-4 pb-4">
-          <div class="grid grid-cols-2 gap-2">
-            <button class="order-btn btn-order py-2 rounded-lg font-semibold text-sm" data-product-id="${p.id}">Sifariş Et</button>
-            <button class="cart-btn btn-secondary py-2 rounded-lg font-semibold text-sm" data-product-id="${p.id}">Səbətə</button>
-          </div>
+        <div class="p-3 md:p-4">
+          <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Kod: ${p.code}</p>
+          <h3 class="text-sm md:text-base font-bold mb-2 line-clamp-2 text-gray-900 dark:text-white">${p.name}</h3>
+          <p class="text-lg md:text-xl font-bold price mb-3">${p.price} AZN</p>
         </div>
       </div>
-    `).join('');
+      <div class="px-3 pb-3 md:px-4 md:pb-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <button class="order-btn btn-order py-2 md:py-2.5 rounded-lg font-semibold text-xs md:text-sm" data-product-id="${p.id}">
+            <i class="fab fa-whatsapp mr-1"></i>Sifariş Et
+          </button>
+          <button class="cart-btn btn-secondary py-2 md:py-2.5 rounded-lg font-semibold text-xs md:text-sm" data-product-id="${p.id}">
+            <i class="fas fa-shopping-cart mr-1"></i>Səbətə
+          </button>
+        </div>
+      </div>
+    </div>
+  `).join('');
 
-    // Event listeners
-    document.querySelectorAll('.product-card > div[data-product-id]').forEach(card => {
-      card.addEventListener('click', function() {
-        const product = products.find(p => p.id === parseInt(this.dataset.productId));
-        if (product) openProductModal(product);
-      });
+  // Event listeners
+  document.querySelectorAll('.product-card > div[data-product-id]').forEach(card => {
+    card.addEventListener('click', function() {
+      const product = products.find(p => p.id === parseInt(this.dataset.productId));
+      if (product) openProductModal(product);
     });
-
-    document.querySelectorAll('.order-btn').forEach(btn => {
-      btn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        const product = products.find(p => p.id === parseInt(this.dataset.productId));
-        if (product) orderNow(product.name, product.code, product.price);
-      });
-    });
-
-    document.querySelectorAll('.cart-btn').forEach(btn => {
-      btn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        const product = products.find(p => p.id === parseInt(this.dataset.productId));
-        if (product) addToCart(product);
-      });
-    });
-  }
-
-  // Modal
-  function openProductModal(product) {
-    modalProduct = product;
-    const modal = document.getElementById('productModal');
-    modal.classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
-
-    const images = product.images || [product.image];
-    document.getElementById('modalMainImage').src = images[0];
-    document.getElementById('modalName').textContent = product.name;
-    document.getElementById('modalCode').textContent = 'Kod: ' + product.code;
-    document.getElementById('modalPrice').textContent = product.price + ' AZN';
-    document.getElementById('modalDescription').textContent = product.description || '';
-    document.getElementById('modalQty').value = 1;
-
-    const thumbs = document.getElementById('modalThumbnails');
-    thumbs.innerHTML = '';
-    images.forEach(img => {
-      const t = document.createElement('img');
-      t.src = img;
-      t.className = 'w-16 h-16 object-cover rounded-lg cursor-pointer border-2 border-transparent hover:border-primary transition';
-      t.onclick = () => document.getElementById('modalMainImage').src = img;
-      thumbs.appendChild(t);
-    });
-
-    const highlights = product.highlights || [];
-    const list = document.getElementById('modalHighlights');
-    list.innerHTML = '';
-    highlights.forEach(h => {
-      list.innerHTML += `<li class="flex items-center gap-2"><i class="fas fa-check-circle text-primary"></i><span>${h}</span></li>`;
-    });
-  }
-
-  function closeProductModal() {
-    document.getElementById('productModal').classList.add('hidden');
-    document.body.style.overflow = '';
-  }
-
-  document.getElementById('closeModalBtn').addEventListener('click', closeProductModal);
-
-  document.getElementById('modalQtyMinus').addEventListener('click', () => {
-    const qtyInput = document.getElementById('modalQty');
-    qtyInput.value = Math.max(1, parseInt(qtyInput.value) - 1);
   });
 
-  document.getElementById('modalQtyPlus').addEventListener('click', () => {
-    const qtyInput = document.getElementById('modalQty');
-    qtyInput.value = parseInt(qtyInput.value) + 1;
+  document.querySelectorAll('.order-btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      const product = products.find(p => p.id === parseInt(this.dataset.productId));
+      if (product) orderNow(product.name, product.code, product.price);
+    });
   });
 
-  document.getElementById('modalOrderBtn').addEventListener('click', () => {
-    if (modalProduct) orderNow(modalProduct.name, modalProduct.code, modalProduct.price);
+  document.querySelectorAll('.cart-btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      const product = products.find(p => p.id === parseInt(this.dataset.productId));
+      if (product) addToCart(product);
+    });
+  });
+}
+
+// Modal
+function openProductModal(product) {
+  modalProduct = product;
+  const modal = document.getElementById('productModal');
+  modal.classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+
+  const images = product.images || [product.image];
+  document.getElementById('modalMainImage').src = images[0];
+  document.getElementById('modalName').textContent = product.name;
+  document.getElementById('modalCode').textContent = 'Kod: ' + product.code;
+  document.getElementById('modalPrice').textContent = product.price + ' AZN';
+  document.getElementById('modalDescription').textContent = product.description || '';
+  document.getElementById('modalQty').value = 1;
+
+  const thumbs = document.getElementById('modalThumbnails');
+  thumbs.innerHTML = '';
+  images.forEach(img => {
+    const t = document.createElement('img');
+    t.src = img;
+    t.className = 'w-16 h-16 object-cover rounded-lg cursor-pointer border-2 border-transparent hover:border-primary transition';
+    t.onclick = () => document.getElementById('modalMainImage').src = img;
+    thumbs.appendChild(t);
   });
 
- document.getElementById('modalCartBtn').addEventListener('click', () => {
+  const highlights = product.highlights || [];
+  const list = document.getElementById('modalHighlights');
+  list.innerHTML = '';
+  highlights.forEach(h => {
+    list.innerHTML += `<li class="flex items-center gap-2"><i class="fas fa-check-circle text-primary"></i><span>${h}</span></li>`;
+  });
+}
+
+function closeProductModal() {
+  document.getElementById('productModal').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('closeModalBtn').addEventListener('click', closeProductModal);
+
+document.getElementById('modalQtyMinus').addEventListener('click', () => {
+  const qtyInput = document.getElementById('modalQty');
+  qtyInput.value = Math.max(1, parseInt(qtyInput.value) - 1);
+});
+
+document.getElementById('modalQtyPlus').addEventListener('click', () => {
+  const qtyInput = document.getElementById('modalQty');
+  qtyInput.value = parseInt(qtyInput.value) + 1;
+});
+
+document.getElementById('modalOrderBtn').addEventListener('click', () => {
+  if (modalProduct) orderNow(modalProduct.name, modalProduct.code, modalProduct.price);
+});
+
+document.getElementById('modalCartBtn').addEventListener('click', () => {
   if (modalProduct) {
     const qty = parseInt(document.getElementById('modalQty').value);
-    addToCart(modalProduct, qty); // use qty
+    addToCart(modalProduct, qty);
     closeProductModal();
   }
 });
 
+themeToggle.addEventListener('click', () => {
+  if (document.documentElement.classList.contains('dark')) {
+    applyTheme('light');
+  } else {
+    applyTheme('dark');
+  }
+});
 
+// Apply saved theme on load
+const savedTheme = localStorage.getItem('theme') || 'light';
+applyTheme(savedTheme);
 
-  themeToggle.addEventListener('click', () => {
-    if (document.documentElement.classList.contains('dark')) {
-      applyTheme('light');
-    } else {
-      applyTheme('dark');
-    }
-  });
-
-  // Apply saved theme on load
-  const savedTheme = localStorage.getItem('theme') || 'light';
-  applyTheme(savedTheme);
-
-  // Initial render
-  renderCarousel();
-  renderProducts();
-
-  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+// Mobile menu
+const mobileMenuBtn = document.getElementById('mobileMenuBtn');
 const mobileMenu = document.getElementById('mobileMenu');
 
 mobileMenuBtn.addEventListener('click', () => {
   mobileMenu.classList.toggle('hidden');
 });
 
-// Close mobile menu when link clicked
 mobileMenu.querySelectorAll('a').forEach(link => {
   link.addEventListener('click', () => {
     mobileMenu.classList.add('hidden');
   });
 });
 
+// Initial render
+renderCarousel();
+renderProducts();
 
-  // Smooth scroll for anchor links
+// Smooth scroll for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function(e) {
     e.preventDefault();
@@ -951,3 +929,5 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 });
 
 </script>
+</body>
+</html>
