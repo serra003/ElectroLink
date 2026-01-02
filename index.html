@@ -77,10 +77,8 @@
   pointer-events: auto;
 }
 
-  /* Reserve space for dots so text never overlaps */
-.carousel-item .grid {
-  padding-bottom: 4.5rem; /* space for dots */
-}
+
+
 
 @media (min-width: 768px) {
   .carousel-item .grid {
@@ -148,50 +146,7 @@
   }
 }
 
-/* CAROUSEL DOTS - REPOSITIONED */
-.carousel-dots {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  position: absolute;
-  bottom: 1rem;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 20;
-}
 
-/* MOBILE carousel spacing fix */
-@media (max-width: 768px) {
-  .carousel-item .grid {
-    padding-bottom: 5rem; /* creates safe space above dots */
-  }
-
-  .carousel-dots {
-    bottom: 0.75rem;
-  }
-}
-
-
-@media (min-width: 768px) {
-  .carousel-dots {
-    bottom: 1.5rem;
-  }
-}
-
-.carousel-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: rgba(0, 102, 255, 0.3);
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.carousel-dot.active {
-  background: #0066FF;
-  width: 28px;
-  border-radius: 5px;
-}
 
 /* PRODUCT CARDS */
 .product-card {
@@ -502,9 +457,6 @@ footer a:hover {
       <div id="carouselContainer" class="relative">
         <!-- Carousel items will be injected here -->
       </div>
-
-      <!-- Dots -->
-      <div class="carousel-dots"></div>
 
       <!-- Arrows -->
       <button
@@ -826,7 +778,6 @@ function orderNow(name, code, price) {
 // Carousel
 function renderCarousel() {
   const container = document.getElementById('carouselContainer');
-  const dotsContainer = document.querySelector('.carousel-dots');
 
   container.innerHTML = products.map((p, index) => `
     <div class="carousel-item ${index === currentSlide ? 'active' : ''}">
@@ -1044,4 +995,3 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 </script>
 </body>
 </html>
-
