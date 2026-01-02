@@ -186,11 +186,14 @@ button:hover {
   overflow-y: auto;
 }
 
+/* LOGO */
 #logoImage {
-  max-height: 50px;  /* Desktop max height */
-  width: auto;       /* Keep aspect ratio */
+  height: 42px;
+  max-height: 42px;
+  width: auto;
   object-fit: contain;
 }
+
 
  @media (max-width: 768px) {
     .mobile-bottom-bar {
@@ -210,7 +213,7 @@ button:hover {
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center h-20">
       <div class="flex items-center">
-        <a href="/"><img id="logoImage" src="/static/images/Electrolink transparent.png" alt="ElectroLink" class="h-16 w-auto"></a>
+        <a href="/"><img id="logoImage" src="/static/images/Electrolink transparent.png" alt="ElectroLink" class="w-auto"></a>
       </div>
         <div class="hidden md:flex space-x-8 text-base ml-auto mr-16">
         <a href="/products" class="text-gray-700 dark:text-gray-300 hover:text-primary font-medium transition">Məhsullar</a>

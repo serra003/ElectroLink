@@ -182,15 +182,18 @@
     color: #FF6B35;
   }
 
-  #logoImage {
-  max-height: 50px;  /* Desktop max height */
-  width: auto;       /* Keep aspect ratio */
+/* LOGO */
+#logoImage {
+  height: 42px;
+  max-height: 42px;
+  width: auto;
   object-fit: contain;
 }
 
+
   @media (max-width: 768px) {
     #logoImage {
-      max-height: 40px !important;
+      max-height: 4px !important;
       width: auto !important;
       object-fit: contain;
     }}
@@ -207,7 +210,7 @@
         <!-- Logo -->
         <div class="flex items-center">
           <a href="/">
-            <img id="logoImage" src="/static/images/Electrolink transparent.png" alt="ElectroLink" class="h-16 w-auto">
+            <img id="logoImage" src="/static/images/Electrolink transparent.png" alt="ElectroLink" class="w-auto">
           </a>
         </div>
 
