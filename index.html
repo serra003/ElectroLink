@@ -148,6 +148,18 @@
   z-index: 20;
 }
 
+/* MOBILE carousel spacing fix */
+@media (max-width: 768px) {
+  .carousel-item .grid {
+    padding-bottom: 5rem; /* creates safe space above dots */
+  }
+
+  .carousel-dots {
+    bottom: 0.75rem;
+  }
+}
+
+
 @media (min-width: 768px) {
   .carousel-dots {
     bottom: 1.5rem;
@@ -801,7 +813,10 @@ function renderCarousel() {
 
   container.innerHTML = products.map((p, index) => `
     <div class="carousel-item ${index === currentSlide ? 'active' : ''}">
-      <div class="grid md:grid-cols-2 gap-6 h-full p-6 md:p-8 items-center">
+      <div class="grid md:grid-cols-2 gap-6 h-full p-6 md:p-10">
+
+
+
         <div class="relative flex items-center justify-center">
           <span class="badge-flash ${p.badge === 'Yeni' ? 'badge-new' : ''}">${p.badge}</span>
           <img 
@@ -810,12 +825,11 @@ function renderCarousel() {
             loading="lazy"
           />
         </div>
-        <div class="text-center md:text-left">
+         <div class="text-center md:text-left flex flex-col justify-center h-full">
+
           <h3 class="text-xl md:text-3xl font-bold mb-3 text-gray-900 dark:text-white">${p.name}</h3>
           <p class="text-gray-600 dark:text-gray-400 mb-4 text-sm md:text-base">${p.description}</p>
           <p class="text-2xl md:text-4xl font-bold price mb-6">${p.price} AZN</p>
-          <button onclick='orderNow("${p.name}", "${p.code}", ${p.price})' class="btn-order px-6 md:px-8 py-3 md:py-4 rounded-lg font-bold text-base md:text-lg hover:shadow-lg transition">
-            <i class="fab fa-whatsapp mr-2"></i>Sifariş Et
           </button>
         </div>
       </div>
