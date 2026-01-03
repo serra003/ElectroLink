@@ -307,153 +307,166 @@
   </a>
 
   <script>
-    // Theme management
-    const themeToggle = document.getElementById('themeToggle');
-    const themeIcon = document.getElementById('themeIcon');
-    const logoImage = document.getElementById('logoImage');
-    const root = document.documentElement;
+  // Theme management
+const themeToggle = document.getElementById('themeToggle');
+const themeIcon = document.getElementById('themeIcon');
+const logoImage = document.getElementById('logoImage');
+const root = document.documentElement;
 
-    function applyTheme(theme) {
-      if (theme === 'dark') {
-        root.classList.add('dark');
-        themeIcon.className = 'fas fa-sun text-2xl text-yellow-400';
-        logoImage.src = '../static/images/darkmodenew.png';
-      } else {
-        root.classList.remove('dark');
-        themeIcon.className = 'fas fa-moon text-2xl text-gray-700';
-        logoImage.src = '../static/images/Electrolink transparent.png';
-      }
-      localStorage.setItem('theme', theme);
-    }
+function applyTheme(theme) {
+  if (theme === 'dark') {
+    root.classList.add('dark');
+    themeIcon.className = 'fas fa-sun text-2xl text-yellow-400';
+    logoImage.src = '../static/images/darkmodenew.png';
+  } else {
+    root.classList.remove('dark');
+    themeIcon.className = 'fas fa-moon text-2xl text-gray-700';
+    logoImage.src = '../static/images/Electrolink transparent.png';
+  }
+  localStorage.setItem('theme', theme);
+}
 
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    applyTheme(savedTheme);
+const savedTheme = localStorage.getItem('theme') || 'light';
+applyTheme(savedTheme);
 
-    themeToggle.addEventListener('click', () => {
-      const next = root.classList.contains('dark') ? 'light' : 'dark';
-      applyTheme(next);
-    });
+themeToggle.addEventListener('click', () => {
+  const next = root.classList.contains('dark') ? 'light' : 'dark';
+  applyTheme(next);
+});
 
-    // Cart management
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-    
-    function updateCartDisplay() {
-      const cartCount = document.getElementById('cartCount');
-      const emptyCart = document.getElementById('emptyCart');
-      const cartSummary = document.getElementById('cartSummary');
-      const cartItems = document.getElementById('cartItems');
-      const itemCount = document.getElementById('itemCount');
+// CLEAN CART SYSTEM - Same as index.html and products.html
+function getCart() {
+  const cartData = localStorage.getItem('cart');
+  if (!cartData) return [];
+  
+  try {
+    const cart = JSON.parse(cartData);
+    // Ensure all items have qty property
+    return cart.map(item => ({
+      ...item,
+      qty: item.qty || 1
+    }));
+  } catch (e) {
+    console.error('Cart parsing error:', e);
+    return [];
+  }
+}
+
+function saveCart(cart) {
+  localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+function updateCartDisplay() {
+  const cartCount = document.getElementById('cartCount');
+  const emptyCart = document.getElementById('emptyCart');
+  const cartSummary = document.getElementById('cartSummary');
+  const cartItems = document.getElementById('cartItems');
+  const itemCount = document.getElementById('itemCount');
+  
+  const cart = getCart();
+  
+  // Update cart count badge
+  const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+  cartCount.textContent = totalQty;
+  
+  if (cart.length === 0) {
+    emptyCart.classList.remove('hidden');
+    cartSummary.classList.add('hidden');
+    return;
+  }
+  
+  emptyCart.classList.add('hidden');
+  cartSummary.classList.remove('hidden');
+  
+  itemCount.textContent = cart.length;
+  
+  cartItems.innerHTML = cart.map(item => `
+    <div class="cart-item flex items-center gap-4 p-4 rounded-2xl border-2 border-gray-200 dark:border-gray-700">
+      <img src="${item.image || 'https://via.placeholder.com/100'}" alt="${item.name}" class="w-24 h-24 rounded-xl object-cover">
       
-      cartCount.textContent = cart.length;
+      <div class="flex-1">
+        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1">${item.name}</h3>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Kod: ${item.code}</p>
+        <p class="text-xl font-bold text-primary">${item.price} AZN</p>
+      </div>
       
-      if (cart.length === 0) {
-        emptyCart.classList.remove('hidden');
-        cartSummary.classList.add('hidden');
-        return;
-      }
-      
-      emptyCart.classList.add('hidden');
-      cartSummary.classList.remove('hidden');
-      
-      // Group items by product
-      const groupedCart = {};
-      cart.forEach(item => {
-        if (!groupedCart[item.id]) {
-          groupedCart[item.id] = { ...item, quantity: 0 };
-        }
-        groupedCart[item.id].quantity++;
-      });
-      
-      itemCount.textContent = Object.keys(groupedCart).length;
-      
-      // Render cart items
-      cartItems.innerHTML = Object.values(groupedCart).map((item, index) => `
-        <div class="cart-item flex items-center gap-4 p-4 rounded-2xl border-2 border-gray-200 dark:border-gray-700">
-          <img src="${item.image || 'https://via.placeholder.com/100'}" alt="${item.name}" class="w-24 h-24 rounded-xl object-cover">
-          
-          <div class="flex-1">
-            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1">${item.name}</h3>
-            <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Kod: ${item.code}</p>
-            <p class="text-xl font-bold text-primary">${item.price} AZN</p>
-          </div>
-          
-          <div class="flex items-center gap-3">
-            <div class="flex items-center border-2 border-gray-300 dark:border-gray-600 rounded-lg">
-              <button onclick="decreaseQty(${item.id})" class="px-3 py-1 text-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">−</button>
-              <span class="px-4 text-lg font-bold text-gray-900 dark:text-white">${item.quantity}</span>
-              <button onclick="increaseQty(${item.id})" class="px-3 py-1 text-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">+</button>
-            </div>
-            
-            <button onclick="decreaseQty(${item.id})" class="text-red-500 hover:text-red-700 p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition">
-              <i class="fas fa-trash text-xl"></i>
-            </button>
-          </div>
+      <div class="flex items-center gap-3">
+        <div class="flex items-center border-2 border-gray-300 dark:border-gray-600 rounded-lg">
+          <button onclick="decreaseQty(${item.id})" class="px-3 py-1 text-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">−</button>
+          <span class="px-4 text-lg font-bold text-gray-900 dark:text-white">${item.qty}</span>
+          <button onclick="increaseQty(${item.id})" class="px-3 py-1 text-xl text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">+</button>
         </div>
-      `).join('');
-      
-      // Update totals
-      const subtotal = cart.reduce((sum, item) => sum + item.price, 0);
-      document.getElementById('subtotal').textContent = `${subtotal.toFixed(2)} AZN`;
-      document.getElementById('total').textContent = `${subtotal.toFixed(2)} AZN`;
-    }
+        
+        <button onclick="removeItem(${item.id})" class="text-red-500 hover:text-red-700 p-2">
+          <i class="fas fa-trash text-xl"></i>
+        </button>
+      </div>
+    </div>
+  `).join('');
+  
+  // Update totals
+  const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+  document.getElementById('subtotal').textContent = `${subtotal.toFixed(2)} AZN`;
+  document.getElementById('total').textContent = `${subtotal.toFixed(2)} AZN`;
+}
 
-    function increaseQty(productId) {
-      const item = cart.find(i => i.id === productId);
-      if (item) {
-        cart.push({ ...item });
-        localStorage.setItem('cart', JSON.stringify(cart));
-        updateCartDisplay();
-      }
-    }
-
-    function decreaseQty(productId) {
-      const index = cart.findIndex(i => i.id === productId);
-      if (index !== -1) {
-        cart.splice(index, 1);
-        localStorage.setItem('cart', JSON.stringify(cart));
-        updateCartDisplay();
-      }
-    }
-
-    function removeItem(productId) {
-      cart = cart.filter(i => i.id !== productId);
-      localStorage.setItem('cart', JSON.stringify(cart));
-      updateCartDisplay();
-    }
-
-    function orderViaWhatsApp() {
-      if (cart.length === 0) return;
-      
-      // Group items by product
-      const groupedCart = {};
-      cart.forEach(item => {
-        if (!groupedCart[item.id]) {
-          groupedCart[item.id] = { ...item, quantity: 0 };
-        }
-        groupedCart[item.id].quantity++;
-      });
-      
-      let message = "Salam! Səbətimdə aşağıdakı məhsullar var:\n\n";
-      
-      Object.values(groupedCart).forEach(item => {
-        const itemTotal = (item.price * item.quantity).toFixed(2);
-        message += `${item.code} – ${item.name} – ${item.quantity} ədəd – ${itemTotal} AZN\n`;
-      });
-      
-      const total = cart.reduce((sum, item) => sum + item.price, 0).toFixed(2);
-      message += `\nToplam: ${total} AZN`;
-      
-      const whatsappUrl = `https://wa.me/994105051615?text=${encodeURIComponent(message)}`;
-      window.open(whatsappUrl, '_blank');
-    }
-
-    // Mobile menu
-    document.getElementById('mobileMenuBtn').addEventListener('click', () => {
-      document.getElementById('mobileMenu').classList.toggle('hidden');
-    });
-
-    // Initialize
+function increaseQty(productId) {
+  const cart = getCart();
+  const item = cart.find(i => i.id === productId);
+  if (item) {
+    item.qty += 1;
+    saveCart(cart);
     updateCartDisplay();
+  }
+}
+
+function decreaseQty(productId) {
+  const cart = getCart();
+  const item = cart.find(i => i.id === productId);
+  if (item) {
+    if (item.qty > 1) {
+      item.qty -= 1;
+      saveCart(cart);
+    } else {
+      removeItem(productId);
+      return;
+    }
+    updateCartDisplay();
+  }
+}
+
+function removeItem(productId) {
+  let cart = getCart();
+  cart = cart.filter(i => i.id !== productId);
+  saveCart(cart);
+  updateCartDisplay();
+}
+
+function orderViaWhatsApp() {
+  const cart = getCart();
+  if (cart.length === 0) return;
+  
+  let message = "Salam! Səbətimdə aşağıdakı məhsullar var:\n\n";
+  
+  cart.forEach(item => {
+    const itemTotal = (item.price * item.qty).toFixed(2);
+    message += `${item.code} – ${item.name} – ${item.qty} ədəd – ${itemTotal} AZN\n`;
+  });
+  
+  const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0).toFixed(2);
+  message += `\nToplam: ${total} AZN`;
+  
+  const whatsappUrl = `https://wa.me/994105051615?text=${encodeURIComponent(message)}`;
+  window.open(whatsappUrl, '_blank');
+}
+
+// Mobile menu
+document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+  document.getElementById('mobileMenu').classList.toggle('hidden');
+});
+
+// Initialize
+updateCartDisplay();
   </script>
 
 </body>

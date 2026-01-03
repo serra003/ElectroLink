@@ -194,15 +194,12 @@ button:hover {
   object-fit: contain;
 }
 
-
- @media (max-width: 768px) {
-    .mobile-bottom-bar {
-      display: flex;
-    }
-    .whatsapp-float {
-      display: none;
-    }
+@media (min-width: 768px) {
+  #logoImage {
+    height: 48px;
+    max-height: 48px;
   }
+}
 
   </style>
 </head>
@@ -344,55 +341,60 @@ button:hover {
   </div>
 </div>
 
-<!-- PRODUCT DETAIL MODAL - NOW HORIZONTAL -->
+<!-- PRODUCT DETAIL MODAL - RESPONSIVE -->
 <div id="productModal" class="fixed inset-0 z-[9999] hidden bg-black/60 flex items-center justify-center p-4">
-  <div class="bg-white dark:bg-navyBox w-full max-w-5xl rounded-3xl shadow-2xl relative modal-content">
+  <div class="bg-white dark:bg-navyBox w-full max-w-5xl rounded-3xl shadow-2xl relative overflow-y-auto" style="max-height: 90vh;">
     
     <!-- Close Button -->
-    <button onclick="closeProductModal()" class="absolute top-4 right-4 z-10 text-3xl text-gray-400 hover:text-primary">
+    <button onclick="closeProductModal()" class="absolute top-4 right-4 z-10 text-3xl text-gray-400 hover:text-primary bg-white dark:bg-navyDark rounded-full w-10 h-10 flex items-center justify-center">
       &times;
     </button>
 
-    <!-- HORIZONTAL LAYOUT: Grid with 2 columns -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 p-6">
+    <!-- RESPONSIVE LAYOUT -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 p-4 md:p-6">
 
       <!-- LEFT: Images Section -->
       <div>
-        <img id="modalMainImage" class="w-full h-96 object-cover rounded-xl mb-4 cursor-pointer">
-        <div id="modalThumbnails" class="flex gap-3 flex-wrap"></div>
+        <!-- Main Image - FIXED: Changed object-cover to object-contain -->
+        <div class="bg-gray-100 dark:bg-navyDark rounded-xl mb-4 flex items-center justify-center" style="min-height: 250px; height: 300px;">
+          <img id="modalMainImage" class="w-full h-full object-contain rounded-xl p-4" alt="Product">
+        </div>
+        
+        <!-- Thumbnails -->
+        <div id="modalThumbnails" class="flex gap-2 flex-wrap justify-center lg:justify-start"></div>
       </div>
 
       <!-- RIGHT: Product Info Section -->
       <div class="flex flex-col">
-        <h2 id="modalName" class="text-3xl font-bold mb-2 text-gray-900 dark:text-white"></h2>
-        <p id="modalCode" class="text-sm text-gray-500 dark:text-gray-400 mb-3"></p>
-        <p id="modalPrice" class="text-4xl font-bold text-primary mb-3"></p>
-        <p id="modalStock" class="text-green-600 text-sm font-semibold mb-4">
+        <h2 id="modalName" class="text-2xl md:text-3xl font-bold mb-2 text-gray-900 dark:text-white"></h2>
+        <p id="modalCode" class="text-sm text-gray-500 dark:text-gray-400 mb-2"></p>
+        <p id="modalPrice" class="text-3xl md:text-4xl font-bold text-primary mb-2"></p>
+        <p id="modalStock" class="text-green-600 text-sm font-semibold mb-3">
           <i class="fas fa-check-circle mr-1"></i>Stokda mövcuddur
         </p>
 
-        <p id="modalDescription" class="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed"></p>
+        <p id="modalDescription" class="text-gray-700 dark:text-gray-300 mb-4 leading-relaxed text-sm md:text-base"></p>
 
-        <ul id="modalHighlights" class="space-y-2 mb-6 text-gray-700 dark:text-gray-300"></ul>
+        <ul id="modalHighlights" class="space-y-2 mb-4 md:mb-6 text-gray-700 dark:text-gray-300 text-sm md:text-base"></ul>
 
         <!-- Quantity Selector -->
-        <div class="flex items-center gap-3 mb-6">
-          <span class="text-gray-700 dark:text-gray-300 font-medium">Miqdar:</span>
-          <button onclick="changeModalQty(-1)" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition">
-            <i class="fas fa-minus"></i>
+        <div class="flex items-center gap-3 mb-4 md:mb-6">
+          <span class="text-gray-700 dark:text-gray-300 font-medium text-sm md:text-base">Miqdar:</span>
+          <button onclick="changeModalQty(-1)" class="px-3 md:px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition">
+            <i class="fas fa-minus text-sm"></i>
           </button>
-          <input id="modalQty" type="number" value="1" min="1" class="w-20 text-center text-lg border-2 rounded-lg py-2 dark:bg-navyDark dark:border-gray-600">
-          <button onclick="changeModalQty(1)" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition">
-            <i class="fas fa-plus"></i>
+          <input id="modalQty" type="number" value="1" min="1" class="w-16 md:w-20 text-center text-base md:text-lg border-2 rounded-lg py-2 dark:bg-navyDark dark:border-gray-600 dark:text-white">
+          <button onclick="changeModalQty(1)" class="px-3 md:px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition">
+            <i class="fas fa-plus text-sm"></i>
           </button>
         </div>
 
         <!-- Action Buttons -->
-        <div class="flex gap-3 mt-auto">
-          <button id="modalOrderBtn" class="flex-1 bg-gradient-to-r from-primary to-orange-600 text-white px-6 py-4 rounded-xl font-bold text-lg hover:shadow-lg transition">
+        <div class="flex flex-col sm:flex-row gap-2 md:gap-3 mt-auto">
+          <button id="modalOrderBtn" class="flex-1 bg-gradient-to-r from-primary to-orange-600 text-white px-4 md:px-6 py-3 md:py-4 rounded-xl font-bold text-base md:text-lg hover:shadow-lg transition">
             <i class="fab fa-whatsapp mr-2"></i>Sifariş Et
           </button>
-          <button id="modalCartBtn" class="flex-1 bg-gradient-to-r from-secondary to-blue-600 text-white px-6 py-4 rounded-xl font-bold text-lg hover:shadow-lg transition">
+          <button id="modalCartBtn" class="flex-1 bg-gradient-to-r from-secondary to-blue-600 text-white px-4 md:px-6 py-3 md:py-4 rounded-xl font-bold text-base md:text-lg hover:shadow-lg transition">
             <i class="fas fa-shopping-cart mr-2"></i>Səbətə At
           </button>
         </div>
@@ -403,232 +405,331 @@ button:hover {
 </div>
 
 <script>
-  // ======== Sample fallback products ========
-  const fallbackProducts = [
-    { id: 1, name: "RAF Fan qızdırıcı 3000W", code: "EL-HT001", category: "heaters", price: 49.99, image: "/static/images/RAF qizdirici main.png" },
-    { id: 2, name: "Xiaomi TV Box S", code: "EL-TVB002", category: "tvbox", price: 149.99, image: "/static/images/xiaotv0.png" },
-    { id: 3, name: "Mini simsiz klaviatura + touchpad", code: "EL-ACC003", category: "accessories", price: 13.99, image: "/static/images/kb0.png" }
-  ];
+// ======== Hardcoded products (no API needed) ========
+const products = [
+  { 
+    id: 1, 
+    name: "TV Box 4K Ultra HD", 
+    code: "EL-TVB01", 
+    category: "tvbox", 
+    price: 149.99, 
+    image: "/static/images/xiaotv0.png",
+    images: ['/static/images/xiaotv0.png', '/static/images/xiaotv1.png', '/static/images/xiaotv2.png'],
+    description: '4K Ultra HD TV Box – sürətli və rahat istifadə.',
+    highlights: ['4K Ultra HD görüntü', 'Sürətli və stabil işləmə', 'YouTube, Netflix və tətbiqlər']
+  },
+  { 
+    id: 2, 
+    name: "Portativ Qızdırıcı", 
+    code: "EL-QZD01", 
+    category: "heaters", 
+    price: 49.99, 
+    image: '/static/images/RAF qizdirici main.png',
+    images: ['/static/images/raf fan guc.png', '/static/images/raf fan dayan.png', '/static/images/raf fan.png'],
+    description: 'Güclü 2000W portativ sürətli qızdırıcı.',
+    highlights: ['2000W güclü isitmə', 'Avtomatik temperatur', 'Enerji qənaətcil']
+  },
+  { 
+    id: 3, 
+    name: "Mini simsiz klaviatura + touchpad", 
+    code: "EL-KB01", 
+    category: "accessories", 
+    price: 13.99, 
+    image: '/static/images/kb0.png',
+    images: ['/static/images/kb0.png', '/static/images/kb1.png'],
+    description: 'Kompakt simsiz klaviatura touchpad ilə.',
+    highlights: ['Bluetooth 5.0', 'Touchpad', 'Portativ']
+  }
+];
 
-  let products = [];
-  let filteredProducts = [];
-  let cart = JSON.parse(localStorage.getItem('cart')) || [];
+let filteredProducts = [...products]; // Start with all products
+
+// CLEAN CART SYSTEM - Same as index.html (NO MIGRATION LOGIC)
+function getCart() {
+  const cartData = localStorage.getItem('cart');
+  if (!cartData) return [];
+  
+  try {
+    const cart = JSON.parse(cartData);
+    // Ensure all items have qty property
+    return cart.map(item => ({
+      ...item,
+      qty: item.qty || 1
+    }));
+  } catch (e) {
+    console.error('Cart parsing error:', e);
+    return [];
+  }
+}
+
+function saveCart(cart) {
+  localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+function updateCartCount() {
+  const cart = getCart();
+  const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+  document.getElementById('cartCount').textContent = totalQty;
+}
+
+function addToCart(product, qty = 1) {
+  const cart = getCart();
+  const existing = cart.find(p => p.id === product.id);
+  
+  if (existing) {
+    existing.qty += qty;
+  } else {
+    cart.push({
+      id: product.id,
+      name: product.name,
+      code: product.code,
+      price: product.price,
+      image: product.image,
+      qty: qty
+    });
+  }
+  
+  saveCart(cart);
   updateCartCount();
+  showNotification();
+}
 
-  function updateCartCount() {
-    document.getElementById('cartCount').textContent = cart.length;
+function showNotification() {
+  const notification = document.getElementById('notification');
+  notification.classList.remove('hidden');
+  setTimeout(() => notification.classList.add('hidden'), 3000);
+}
+
+function orderNow(productName, productCode, price) {
+  const message = `Salam! Aşağıdakı məhsulu sifariş etmək istəyirəm:\n\n${productName}\nKod: ${productCode}\nQiymət: ${price} AZN\nMiqdar: 1`;
+  const whatsappUrl = `https://wa.me/994105051615?text=${encodeURIComponent(message)}`;
+  window.open(whatsappUrl, '_blank');
+}
+
+function renderProducts() {
+  const grid = document.getElementById('productsGrid');
+  const noResults = document.getElementById('noResults');
+  const countEl = document.getElementById('productCount');
+  countEl.textContent = filteredProducts.length;
+  
+  if (!filteredProducts.length) {
+    grid.innerHTML = '';
+    noResults.classList.remove('hidden');
+    return;
   }
-
-  function addToCart(product) {
-    cart.push(product);
-    localStorage.setItem('cart', JSON.stringify(cart));
-    updateCartCount();
-    showNotification();
-  }
-
-  function showNotification() {
-    const notification = document.getElementById('notification');
-    notification.classList.remove('hidden');
-    setTimeout(() => notification.classList.add('hidden'), 3000);
-  }
-
-  function orderNow(productName, productCode, price) {
-    const message = `Salam! Aşağıdakı məhsulu sifariş etmək istəyirəm:\n\n${productName}\nKod: ${productCode}\nQiymət: ${price} AZN\nMiqdar: 1`;
-    const whatsappUrl = `https://wa.me/994105051615?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
-  }
-
-  async function loadProducts() {
-    try {
-      const response = await fetch('/api/products');
-      const data = await response.json();
-      products = data.success ? data.products : fallbackProducts;
-    } catch {
-      products = fallbackProducts;
-    }
-    filteredProducts = [...products];
-    applyFilters();
-  }
-
-  function renderProducts() {
-    const grid = document.getElementById('productsGrid');
-    const noResults = document.getElementById('noResults');
-    const countEl = document.getElementById('productCount');
-    countEl.textContent = filteredProducts.length;
-    if (!filteredProducts.length) {
-      grid.innerHTML = '';
-      noResults.classList.remove('hidden');
-      return;
-    }
-    noResults.classList.add('hidden');
-    grid.innerHTML = filteredProducts.map(p => `
-      <div class="product-card bg-white dark:bg-navyBox rounded-2xl shadow-lg overflow-hidden">
-        <div onclick='openProductModal(${JSON.stringify(p).replace(/'/g, "&apos;")})' class="cursor-pointer">
-          <div class="aspect-square bg-gray-100 dark:bg-navyDark">
-            <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover">
-          </div>
-          <div class="p-4">
-            <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Kod: ${p.code}</p>
-            <h3 class="text-lg font-bold mb-2 line-clamp-2 text-gray-900 dark:text-white">${p.name}</h3>
-            <p class="text-2xl font-bold text-primary mb-4">${p.price} AZN</p>
-          </div>
+  
+  noResults.classList.add('hidden');
+  
+  // Use data attributes instead of onclick with JSON
+  grid.innerHTML = filteredProducts.map(p => `
+    <div class="product-card bg-white dark:bg-navyBox rounded-2xl shadow-lg overflow-hidden" data-product-id="${p.id}">
+      <div class="cursor-pointer product-card-clickable">
+        <div class="aspect-square bg-gray-100 dark:bg-navyDark">
+          <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover">
         </div>
-        <div class="px-4 pb-4">
-          <div class="grid grid-cols-2 gap-2">
-            <button onclick='orderNow("${p.name}", "${p.code}", ${p.price})' class="bg-primary text-white px-3 py-2 rounded-lg font-semibold hover:bg-orange-700 transition text-sm">Sifariş Et</button>
-            <button onclick='addToCart(${JSON.stringify(p).replace(/'/g, "&apos;")})' class="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white px-3 py-2 rounded-lg font-semibold hover:bg-gray-300 dark:hover:bg-gray-600 transition text-sm">Səbətə</button>
-          </div>
+        <div class="p-4">
+          <p class="text-xs text-gray-500 dark:text-gray-400 mb-1">Kod: ${p.code}</p>
+          <h3 class="text-lg font-bold mb-2 line-clamp-2 text-gray-900 dark:text-white">${p.name}</h3>
+          <p class="text-2xl font-bold text-primary mb-4">${p.price} AZN</p>
         </div>
       </div>
-    `).join('');
-  }
+      <div class="px-4 pb-4">
+        <div class="grid grid-cols-2 gap-2">
+          <button class="order-btn bg-primary text-white px-3 py-2 rounded-lg font-semibold hover:bg-orange-700 transition text-sm">
+            Sifariş Et
+          </button>
+          <button class="cart-btn bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white px-3 py-2 rounded-lg font-semibold hover:bg-gray-300 dark:hover:bg-gray-600 transition text-sm">
+            Səbətə
+          </button>
+        </div>
+      </div>
+    </div>
+  `).join('');
 
-  const categoryFilter = document.getElementById('categoryFilter');
-  const priceFilter = document.getElementById('priceFilter');
-  const sortFilter = document.getElementById('sortFilter');
-  const searchInput = document.getElementById('searchInput');
+  // Add event listeners after rendering
+  attachProductEventListeners();
+}
 
-  function applyFilters() {
-    const cat = categoryFilter.value;
-    const priceRange = priceFilter.value;
-    const sort = sortFilter.value;
-    const searchQuery = searchInput.value.toLowerCase();
+function attachProductEventListeners() {
+  const productCards = document.querySelectorAll('.product-card');
+  
+  productCards.forEach(card => {
+    const productId = parseInt(card.dataset.productId);
+    const product = filteredProducts.find(p => p.id === productId);
     
-    filteredProducts = products.filter(product => {
-      const catMatch = cat === 'all' || product.category === cat;
-      const searchMatch = searchQuery === '' || 
-        product.name.toLowerCase().includes(searchQuery) ||
-        product.code.toLowerCase().includes(searchQuery);
-
-      let priceMatch = true;
-      if (priceRange !== 'all') {
-        if (priceRange === '0-100') priceMatch = product.price <= 100;
-        else if (priceRange === '100-300') priceMatch = product.price > 100 && product.price <= 300;
-        else if (priceRange === '300-500') priceMatch = product.price > 300 && product.price <= 500;
-        else if (priceRange === '500+') priceMatch = product.price > 500;
-      }
-
-      return catMatch && priceMatch && searchMatch;
-    });
-
-    // Sorting
-    if (sort === 'name-asc') filteredProducts.sort((a,b) => a.name.localeCompare(b.name));
-    else if (sort === 'name-desc') filteredProducts.sort((a,b) => b.name.localeCompare(a.name));
-    else if (sort === 'price-asc') filteredProducts.sort((a,b) => a.price - b.price);
-    else if (sort === 'price-desc') filteredProducts.sort((a,b) => b.price - a.price);
-
-    renderProducts();
-  }
-
-  categoryFilter.addEventListener('change', applyFilters);
-  priceFilter.addEventListener('change', applyFilters);
-  sortFilter.addEventListener('change', applyFilters);
-  searchInput.addEventListener('input', applyFilters);
-
-  // Theme toggle
-  const themeToggle = document.getElementById('themeToggle');
-  const themeIcon = document.getElementById('themeIcon');
-  const logoImage = document.getElementById('logoImage');
-  const root = document.documentElement;
-
-  function applyTheme(theme) {
-    if (theme === 'dark') {
-      root.classList.add('dark');
-      themeIcon.className = 'fas fa-sun text-2xl text-yellow-400';
-      logoImage.src = '/static/images/darkmodenew.png';
-    } else {
-      root.classList.remove('dark');
-      themeIcon.className = 'fas fa-moon text-2xl text-gray-700';
-      logoImage.src = '/static/images/Electrolink transparent.png';
+    if (!product) return;
+    
+    // Click on card image/info to open modal
+    const clickableArea = card.querySelector('.product-card-clickable');
+    if (clickableArea) {
+      clickableArea.addEventListener('click', () => openProductModal(product));
     }
-    localStorage.setItem('theme', theme);
-  }
-
-  const savedTheme = localStorage.getItem('theme') || 'light';
-  applyTheme(savedTheme);
-
-  themeToggle.addEventListener('click', () => {
-    const next = root.classList.contains('dark') ? 'light' : 'dark';
-    applyTheme(next);
-  });
-
-  // Mobile menu toggle
-  document.getElementById('mobileMenuBtn').addEventListener('click', () => {
-    document.getElementById('mobileMenu').classList.toggle('hidden');
-  });
-
-  // Modal Functions
-  let modalProduct = null;
-
-  function openProductModal(product) {
-    modalProduct = product;
-    document.getElementById('productModal').classList.remove('hidden');
-    document.body.style.overflow = 'hidden';
-
-    // Set main image
-    const images = product.images || [product.image];
-    document.getElementById('modalMainImage').src = images[0];
     
-    // Set product info
-    document.getElementById('modalName').textContent = product.name;
-    document.getElementById('modalCode').textContent = 'Kod: ' + product.code;
-    document.getElementById('modalPrice').textContent = product.price + ' AZN';
-    document.getElementById('modalDescription').textContent = product.description || 'Yüksək keyfiyyətli məhsul';
-    document.getElementById('modalQty').value = 1;
-
-    // Thumbnails
-    const thumbs = document.getElementById('modalThumbnails');
-    thumbs.innerHTML = '';
-    images.forEach((img, i) => {
-      const t = document.createElement('img');
-      t.src = img;
-      t.className = 'w-16 h-16 object-cover rounded-lg cursor-pointer border-2 border-transparent hover:border-primary transition';
-      t.onclick = () => document.getElementById('modalMainImage').src = img;
-      thumbs.appendChild(t);
-    });
-
-    // Highlights
-    const highlights = product.highlights || ['Keyfiyyətli', 'Zəmanətli', 'Orijinal'];
-    const list = document.getElementById('modalHighlights');
-    list.innerHTML = '';
-    highlights.forEach(h => {
-      list.innerHTML += `
-        <li class="flex items-center gap-2">
-          <i class="fas fa-check-circle text-primary"></i>
-          <span>${h}</span>
-        </li>`;
-    });
-
-    // Order button action
-    document.getElementById('modalOrderBtn').onclick = () => {
-      const qty = document.getElementById('modalQty').value;
-      const msg = `Salam! Aşağıdakı məhsulu sifariş etmək istəyirəm:\n\n${product.name}\nKod: ${product.code}\nQiymət: ${product.price} AZN\nMiqdar: ${qty}`;
-      window.open('https://wa.me/994105051615?text=' + encodeURIComponent(msg), '_blank');
-    };
-
-    // Cart button action
-    document.getElementById('modalCartBtn').onclick = () => {
-      const qty = parseInt(document.getElementById('modalQty').value);
-      for (let i = 0; i < qty; i++) {
+    // Order button
+    const orderBtn = card.querySelector('.order-btn');
+    if (orderBtn) {
+      orderBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        orderNow(product.name, product.code, product.price);
+      });
+    }
+    
+    // Cart button
+    const cartBtn = card.querySelector('.cart-btn');
+    if (cartBtn) {
+      cartBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
         addToCart(product);
-      }
-      closeProductModal();
-    };
-  }
+      });
+    }
+  });
+}
 
-  function closeProductModal() {
-    document.getElementById('productModal').classList.add('hidden');
-    document.body.style.overflow = '';
-  }
+const categoryFilter = document.getElementById('categoryFilter');
+const priceFilter = document.getElementById('priceFilter');
+const sortFilter = document.getElementById('sortFilter');
+const searchInput = document.getElementById('searchInput');
 
-  function changeModalQty(delta) {
-    const qtyInput = document.getElementById('modalQty');
-    const newValue = Math.max(1, parseInt(qtyInput.value) + delta);
-    qtyInput.value = newValue;
-  }
+function applyFilters() {
+  const cat = categoryFilter.value;
+  const priceRange = priceFilter.value;
+  const sort = sortFilter.value;
+  const searchQuery = searchInput.value.toLowerCase();
+  
+  filteredProducts = products.filter(product => {
+    const catMatch = cat === 'all' || product.category === cat;
+    const searchMatch = searchQuery === '' || 
+      product.name.toLowerCase().includes(searchQuery) ||
+      product.code.toLowerCase().includes(searchQuery);
 
-  // Load products on page ready
-  loadProducts();
+    let priceMatch = true;
+    if (priceRange !== 'all') {
+      if (priceRange === '0-100') priceMatch = product.price <= 100;
+      else if (priceRange === '100-300') priceMatch = product.price > 100 && product.price <= 300;
+      else if (priceRange === '300-500') priceMatch = product.price > 300 && product.price <= 500;
+      else if (priceRange === '500+') priceMatch = product.price > 500;
+    }
+
+    return catMatch && priceMatch && searchMatch;
+  });
+
+  // Sorting
+  if (sort === 'name-asc') filteredProducts.sort((a,b) => a.name.localeCompare(b.name));
+  else if (sort === 'name-desc') filteredProducts.sort((a,b) => b.name.localeCompare(a.name));
+  else if (sort === 'price-asc') filteredProducts.sort((a,b) => a.price - b.price);
+  else if (sort === 'price-desc') filteredProducts.sort((a,b) => b.price - a.price);
+
+  renderProducts();
+}
+
+categoryFilter.addEventListener('change', applyFilters);
+priceFilter.addEventListener('change', applyFilters);
+sortFilter.addEventListener('change', applyFilters);
+searchInput.addEventListener('input', applyFilters);
+
+// Theme toggle
+const themeToggle = document.getElementById('themeToggle');
+const themeIcon = document.getElementById('themeIcon');
+const logoImage = document.getElementById('logoImage');
+const root = document.documentElement;
+
+function applyTheme(theme) {
+  if (theme === 'dark') {
+    root.classList.add('dark');
+    themeIcon.className = 'fas fa-sun text-2xl text-yellow-400';
+    logoImage.src = '/static/images/darkmodenew.png';
+  } else {
+    root.classList.remove('dark');
+    themeIcon.className = 'fas fa-moon text-2xl text-gray-700';
+    logoImage.src = '/static/images/Electrolink transparent.png';
+  }
+  localStorage.setItem('theme', theme);
+}
+
+const savedTheme = localStorage.getItem('theme') || 'light';
+applyTheme(savedTheme);
+
+themeToggle.addEventListener('click', () => {
+  const next = root.classList.contains('dark') ? 'light' : 'dark';
+  applyTheme(next);
+});
+
+// Mobile menu toggle
+document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+  document.getElementById('mobileMenu').classList.toggle('hidden');
+});
+
+// Modal Functions
+let modalProduct = null;
+
+function openProductModal(product) {
+  modalProduct = product;
+  document.getElementById('productModal').classList.remove('hidden');
+  document.body.style.overflow = 'hidden';
+
+  // Set main image
+  const images = product.images || [product.image];
+  document.getElementById('modalMainImage').src = images[0];
+  
+  // Set product info
+  document.getElementById('modalName').textContent = product.name;
+  document.getElementById('modalCode').textContent = 'Kod: ' + product.code;
+  document.getElementById('modalPrice').textContent = product.price + ' AZN';
+  document.getElementById('modalDescription').textContent = product.description || 'Yüksək keyfiyyətli məhsul';
+  document.getElementById('modalQty').value = 1;
+
+  // Thumbnails
+  const thumbs = document.getElementById('modalThumbnails');
+  thumbs.innerHTML = '';
+  images.forEach((img) => {
+    const t = document.createElement('img');
+    t.src = img;
+    t.className = 'w-16 h-16 object-cover rounded-lg cursor-pointer border-2 border-transparent hover:border-primary transition';
+    t.onclick = () => document.getElementById('modalMainImage').src = img;
+    thumbs.appendChild(t);
+  });
+
+  // Highlights
+  const highlights = product.highlights || ['Keyfiyyətli', 'Zəmanətli', 'Orijinal'];
+  const list = document.getElementById('modalHighlights');
+  list.innerHTML = '';
+  highlights.forEach(h => {
+    list.innerHTML += `
+      <li class="flex items-center gap-2">
+        <i class="fas fa-check-circle text-primary"></i>
+        <span>${h}</span>
+      </li>`;
+  });
+
+  // Order button action
+  document.getElementById('modalOrderBtn').onclick = () => {
+    const qty = document.getElementById('modalQty').value;
+    const msg = `Salam! Aşağıdakı məhsulu sifariş etmək istəyirəm:\n\n${product.name}\nKod: ${product.code}\nQiymət: ${product.price} AZN\nMiqdar: ${qty}`;
+    window.open('https://wa.me/994105051615?text=' + encodeURIComponent(msg), '_blank');
+  };
+
+  // Cart button action
+  document.getElementById('modalCartBtn').onclick = () => {
+    const qty = parseInt(document.getElementById('modalQty').value);
+    addToCart(product, qty);
+    closeProductModal();
+  };
+}
+
+function closeProductModal() {
+  document.getElementById('productModal').classList.add('hidden');
+  document.body.style.overflow = '';
+}
+
+function changeModalQty(delta) {
+  const qtyInput = document.getElementById('modalQty');
+  const newValue = Math.max(1, parseInt(qtyInput.value) + delta);
+  qtyInput.value = newValue;
+}
+
+// Initialize
+updateCartCount();
+applyFilters(); // Render products on load
 </script>
 
 </body>

@@ -382,34 +382,27 @@ footer a:hover {
 
 </head>
 <body class="bg-white dark:bg-navyDark text-gray-900 dark:text-gray-100 transition-colors duration-300">
-
 <!-- Navbar -->
 <nav class="bg-white dark:bg-navyBox shadow-md sticky top-0 z-50 transition-colors">
-  <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-    <div class="flex justify-between items-center h-16 md:h-20">
-      <div class="flex items-center flex-shrink-0">
-        <a href="/">
-          <img id="logoImage" class="h-8 md:h-10" src="/static/images/Electrolink transparent.png" alt="ElectroLink.az Logo" />
-        </a>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-20">
+      <div class="flex items-center">
+        <a href="/"><img id="logoImage" src="/static/images/Electrolink transparent.png" alt="ElectroLink" class="w-auto"></a>
       </div>
-
-      <div class="hidden md:flex space-x-8 text-base ml-auto mr-16">
+        <div class="hidden md:flex space-x-8 text-base ml-auto mr-16">
         <a href="/products" class="text-gray-700 dark:text-gray-300 hover:text-primary font-medium transition">Məhsullar</a>
         <a href="/about" class="text-gray-700 dark:text-gray-300 hover:text-primary font-medium transition">Haqqımızda</a>
         <a href="/contact" class="text-gray-700 dark:text-gray-300 hover:text-primary font-medium transition">Əlaqə</a>
       </div>
-
-      <div class="flex items-center space-x-2 sm:space-x-4">
-        <button id="themeToggle" class="p-1.5 sm:p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition">
-          <i id="themeIcon" class="fas fa-moon text-lg sm:text-xl text-gray-700 dark:text-gray-300"></i>
+      <div class="flex items-center space-x-4">
+        <button id="themeToggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+          <i id="themeIcon" class="fas fa-moon text-2xl text-gray-700 dark:text-gray-300"></i>
         </button>
-        <a href="/cart" class="relative p-1">
-          <i class="fas fa-shopping-cart text-xl sm:text-2xl text-gray-700 dark:text-gray-300 hover:text-primary transition"></i>
+        <a href="/cart" class="relative">
+          <i class="fas fa-shopping-cart text-3xl text-gray-700 dark:text-gray-300 hover:text-primary transition"></i>
           <span id="cartCount" class="cart-badge">0</span>
         </a>
-        <button id="mobileMenuBtn" class="md:hidden text-gray-700 dark:text-gray-300 p-1.5">
-          <i class="fas fa-bars text-xl"></i>
-        </button>
+        <button id="mobileMenuBtn" class="md:hidden text-gray-700 dark:text-gray-300"><i class="fas fa-bars text-2xl"></i></button>
       </div>
     </div>
   </div>
@@ -713,19 +706,26 @@ const products = [
     badge: 'Yeni',
     description: '4K Ultra HD TV Box – sürətli və rahat istifadə.',
     highlights: [
-  '4K Ultra HD görüntü',
-  'Sürətli və stabil işləmə',
-  'YouTube, Netflix və tətbiqlər'
-]
-
+      '4K Ultra HD görüntü',
+      'Sürətli və stabil işləmə',
+      'YouTube, Netflix və tətbiqlər'
+    ]
   },
-  { id: 2, name: 'Portativ Qızdırıcı', code: 'EL-QZD01', 
-    price: 49.99, image: '/static/images/RAF qizdirici main.png', 
-    images: ['/static/images/raf fan guc.png', '/static/images/raf fan dayan.png',
-    '/static/images/raf fan.png' ], 
+  { 
+    id: 2, 
+    name: 'Portativ Qızdırıcı', 
+    code: 'EL-QZD01', 
+    price: 49.99, 
+    image: '/static/images/RAF qizdirici main.png', 
+    images: [
+      '/static/images/raf fan guc.png', 
+      '/static/images/raf fan dayan.png',
+      '/static/images/raf fan.png'
+    ], 
     badge: 'Yeni', 
     description: 'Güclü 2000W portativ sürətli qızdırıcı.', 
-    highlights: ['2000W güclü isitmə', 'Avtomatik temperatur', 'Enerji qənaətcil'] },
+    highlights: ['2000W güclü isitmə', 'Avtomatik temperatur', 'Enerji qənaətcil'] 
+  },
   {
     id: 3,
     name: 'Bluetooth Keyboard',
@@ -740,36 +740,64 @@ const products = [
 ];
 
 let currentSlide = 0;
-let cart = JSON.parse(localStorage.getItem('cart')) || [];
 let modalProduct = null;
 
-// Update cart count
-function updateCartCount() {
-  document.getElementById('cartCount').textContent = cart.length;
+// CLEAN CART SYSTEM - Simple and consistent
+function getCart() {
+  const cartData = localStorage.getItem('cart');
+  if (!cartData) return [];
+  
+  try {
+    const cart = JSON.parse(cartData);
+    // Ensure all items have qty property
+    return cart.map(item => ({
+      ...item,
+      qty: item.qty || 1
+    }));
+  } catch (e) {
+    console.error('Cart parsing error:', e);
+    return [];
+  }
 }
-updateCartCount();
 
-// Add to cart
+function saveCart(cart) {
+  localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+function updateCartCount() {
+  const cart = getCart();
+  const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+  document.getElementById('cartCount').textContent = totalQty;
+}
+
 function addToCart(product, qty = 1) {
+  const cart = getCart();
   const existing = cart.find(p => p.id === product.id);
-  if(existing) {
+  
+  if (existing) {
     existing.qty += qty;
   } else {
-    cart.push({...product, qty});
+    cart.push({
+      id: product.id,
+      name: product.name,
+      code: product.code,
+      price: product.price,
+      image: product.image,
+      qty: qty
+    });
   }
-  localStorage.setItem('cart', JSON.stringify(cart));
+  
+  saveCart(cart);
   updateCartCount();
   showNotification();
 }
 
-// Show notification
 function showNotification() {
   const notification = document.getElementById('notification');
   notification.classList.remove('hidden');
   setTimeout(() => notification.classList.add('hidden'), 2500);
 }
 
-// Order now via WhatsApp
 function orderNow(name, code, price) {
   const message = `Salam! Sizdən ${name} (${code}) 1 ədəd sifariş etmək istəyirəm.`;
   window.open(`https://wa.me/994105051615?text=${encodeURIComponent(message)}`, '_blank');
@@ -779,12 +807,11 @@ function orderNow(name, code, price) {
 function renderCarousel() {
   const container = document.getElementById('carouselContainer');
 
+  if (!container) return;
+
   container.innerHTML = products.map((p, index) => `
     <div class="carousel-item ${index === currentSlide ? 'active' : ''}">
       <div class="grid md:grid-cols-2 gap-6 h-full p-6 md:p-10">
-
-
-
         <div class="relative flex items-center justify-center">
           <span class="badge-flash ${p.badge === 'Yeni' ? 'badge-new' : ''}">${p.badge}</span>
           <img 
@@ -793,27 +820,14 @@ function renderCarousel() {
             loading="lazy"
           />
         </div>
-         <div class="text-center md:text-left flex flex-col justify-center h-full">
-
+        <div class="text-center md:text-left flex flex-col justify-center h-full">
           <h3 class="text-xl md:text-3xl font-bold mb-3 text-gray-900 dark:text-white">${p.name}</h3>
           <p class="text-gray-600 dark:text-gray-400 mb-4 text-sm md:text-base">${p.description}</p>
           <p class="text-2xl md:text-4xl font-bold price mb-6">${p.price} AZN</p>
-          </button>
         </div>
       </div>
     </div>
   `).join('');
-
-  dotsContainer.innerHTML = products.map((_, index) => 
-    `<div class="carousel-dot ${index === currentSlide ? 'active' : ''}" data-slide="${index}"></div>`
-  ).join('');
-
-  document.querySelectorAll('.carousel-dot').forEach(dot => {
-    dot.addEventListener('click', () => {
-      currentSlide = parseInt(dot.dataset.slide);
-      renderCarousel();
-    });
-  });
 }
 
 function nextSlide() {
@@ -829,20 +843,21 @@ function prevSlide() {
 let carouselInterval = setInterval(nextSlide, 5000);
 
 const carouselContainer = document.getElementById('carouselContainer');
-carouselContainer.addEventListener('mouseenter', () => clearInterval(carouselInterval));
-carouselContainer.addEventListener('mouseleave', () => {
-  carouselInterval = setInterval(nextSlide, 5000);
-});
+if (carouselContainer) {
+  carouselContainer.addEventListener('mouseenter', () => clearInterval(carouselInterval));
+  carouselContainer.addEventListener('mouseleave', () => {
+    carouselInterval = setInterval(nextSlide, 5000);
+  });
+}
 
-document.getElementById('nextSlide').addEventListener('click', nextSlide);
-document.getElementById('prevSlide').addEventListener('click', prevSlide);
 function renderProducts() {
   const grid = document.getElementById('featuredProducts');
+  if (!grid) return;
 
   grid.innerHTML = products.map(p => `
-    <div class="product-card bg-white dark:bg-navyBox rounded-2xl shadow-lg overflow-hidden relative">
+    <div class="product-card bg-white dark:bg-navyBox rounded-2xl shadow-lg overflow-hidden relative" data-product-id="${p.id}">
       ${p.badge ? `<span class="badge-flash ${p.badge === 'Yeni' ? 'badge-new' : ''}">${p.badge}</span>` : ''}
-      <div class="cursor-pointer" data-product-id="${p.id}">
+      <div class="cursor-pointer product-clickable">
         <div class="product-image">
           <img src="${p.image}" alt="${p.name}" loading="lazy">
         </div>
@@ -854,10 +869,10 @@ function renderProducts() {
       </div>
       <div class="px-3 pb-3 md:px-4 md:pb-4">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-          <button class="order-btn btn-order py-2 md:py-2.5 rounded-lg font-semibold text-xs md:text-sm" data-product-id="${p.id}">
+          <button class="order-btn btn-order py-2 md:py-2.5 rounded-lg font-semibold text-xs md:text-sm">
             <i class="fab fa-whatsapp mr-1"></i>Sifariş Et
           </button>
-          <button class="cart-btn btn-secondary py-2 md:py-2.5 rounded-lg font-semibold text-xs md:text-sm" data-product-id="${p.id}">
+          <button class="cart-btn btn-secondary py-2 md:py-2.5 rounded-lg font-semibold text-xs md:text-sm">
             <i class="fas fa-shopping-cart mr-1"></i>Səbətə
           </button>
         </div>
@@ -865,136 +880,202 @@ function renderProducts() {
     </div>
   `).join('');
 
-  // Add listeners **after DOM is updated**
-  grid.querySelectorAll('.cursor-pointer').forEach(card => {
-    card.addEventListener('click', () => {
-      const product = products.find(p => p.id === parseInt(card.dataset.productId));
-      if(product) openProductModal(product);
-    });
-  });
+  // Attach event listeners
+  attachProductListeners();
+}
 
-  grid.querySelectorAll('.order-btn').forEach(btn => {
-    btn.addEventListener('click', e => {
-      e.stopPropagation();
-      const product = products.find(p => p.id === parseInt(btn.dataset.productId));
-      if(product) orderNow(product.name, product.code, product.price);
-    });
-  });
-
-  grid.querySelectorAll('.cart-btn').forEach(btn => {
-    btn.addEventListener('click', e => {
-      e.stopPropagation();
-      const product = products.find(p => p.id === parseInt(btn.dataset.productId));
-      if(product) addToCart(product);
-    });
+function attachProductListeners() {
+  document.querySelectorAll('.product-card').forEach(card => {
+    const productId = parseInt(card.dataset.productId);
+    const product = products.find(p => p.id === productId);
+    
+    if (!product) return;
+    
+    // Click on card to open modal
+    const clickable = card.querySelector('.product-clickable');
+    if (clickable) {
+      clickable.addEventListener('click', () => openProductModal(product));
+    }
+    
+    // Order button
+    const orderBtn = card.querySelector('.order-btn');
+    if (orderBtn) {
+      orderBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        orderNow(product.name, product.code, product.price);
+      });
+    }
+    
+    // Cart button
+    const cartBtn = card.querySelector('.cart-btn');
+    if (cartBtn) {
+      cartBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        addToCart(product);
+      });
+    }
   });
 }
- document.addEventListener('DOMContentLoaded', () => {
-    renderProducts();
-});
-
 
 // Modal
 function openProductModal(product) {
   modalProduct = product;
   const modal = document.getElementById('productModal');
+  if (!modal) return;
+  
   modal.classList.remove('hidden');
   document.body.style.overflow = 'hidden';
 
   const images = product.images || [product.image];
-  document.getElementById('modalMainImage').src = images[0];
-  document.getElementById('modalName').textContent = product.name;
-  document.getElementById('modalCode').textContent = 'Kod: ' + product.code;
-  document.getElementById('modalPrice').textContent = product.price + ' AZN';
-  document.getElementById('modalDescription').textContent = product.description || '';
-  document.getElementById('modalQty').value = 1;
+  const modalMainImage = document.getElementById('modalMainImage');
+  const modalName = document.getElementById('modalName');
+  const modalCode = document.getElementById('modalCode');
+  const modalPrice = document.getElementById('modalPrice');
+  const modalDescription = document.getElementById('modalDescription');
+  const modalQty = document.getElementById('modalQty');
+
+  if (modalMainImage) modalMainImage.src = images[0];
+  if (modalName) modalName.textContent = product.name;
+  if (modalCode) modalCode.textContent = 'Kod: ' + product.code;
+  if (modalPrice) modalPrice.textContent = product.price + ' AZN';
+  if (modalDescription) modalDescription.textContent = product.description || '';
+  if (modalQty) modalQty.value = 1;
 
   const thumbs = document.getElementById('modalThumbnails');
-  thumbs.innerHTML = '';
-  images.forEach(img => {
-    const t = document.createElement('img');
-    t.src = img;
-    t.className = 'w-16 h-16 object-cover rounded-lg cursor-pointer border-2 border-transparent hover:border-primary transition';
-    t.onclick = () => document.getElementById('modalMainImage').src = img;
-    thumbs.appendChild(t);
-  });
+  if (thumbs) {
+    thumbs.innerHTML = '';
+    images.forEach(img => {
+      const t = document.createElement('img');
+      t.src = img;
+      t.className = 'w-16 h-16 object-cover rounded-lg cursor-pointer border-2 border-transparent hover:border-primary transition';
+      t.onclick = () => {
+        if (modalMainImage) modalMainImage.src = img;
+      };
+      thumbs.appendChild(t);
+    });
+  }
 
   const highlights = product.highlights || [];
   const list = document.getElementById('modalHighlights');
-  list.innerHTML = '';
-  highlights.forEach(h => {
-    list.innerHTML += `<li class="flex items-center gap-2"><i class="fas fa-check-circle text-primary"></i><span>${h}</span></li>`;
-  });
+  if (list) {
+    list.innerHTML = '';
+    highlights.forEach(h => {
+      list.innerHTML += `<li class="flex items-center gap-2"><i class="fas fa-check-circle text-primary"></i><span>${h}</span></li>`;
+    });
+  }
 }
 
 function closeProductModal() {
-  document.getElementById('productModal').classList.add('hidden');
+  const modal = document.getElementById('productModal');
+  if (modal) modal.classList.add('hidden');
   document.body.style.overflow = '';
 }
 
-document.getElementById('closeModalBtn').addEventListener('click', closeProductModal);
-
-document.getElementById('modalQtyMinus').addEventListener('click', () => {
-  const qtyInput = document.getElementById('modalQty');
-  qtyInput.value = Math.max(1, parseInt(qtyInput.value) - 1);
-});
-
-document.getElementById('modalQtyPlus').addEventListener('click', () => {
-  const qtyInput = document.getElementById('modalQty');
-  qtyInput.value = parseInt(qtyInput.value) + 1;
-});
-
-document.getElementById('modalOrderBtn').addEventListener('click', () => {
-  if (modalProduct) orderNow(modalProduct.name, modalProduct.code, modalProduct.price);
-});
-
-document.getElementById('modalCartBtn').addEventListener('click', () => {
-  if (modalProduct) {
-    const qty = parseInt(document.getElementById('modalQty').value);
-    addToCart(modalProduct, qty);
-    closeProductModal();
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', () => {
+  // Initialize cart count
+  updateCartCount();
+  
+  // Render carousel
+  if (document.getElementById('carouselContainer')) {
+    renderCarousel();
   }
-});
+  
+  // Render products
+  renderProducts();
 
-themeToggle.addEventListener('click', () => {
-  if (document.documentElement.classList.contains('dark')) {
-    applyTheme('light');
-  } else {
-    applyTheme('dark');
+  // Carousel controls
+  const nextSlideBtn = document.getElementById('nextSlide');
+  const prevSlideBtn = document.getElementById('prevSlide');
+  if (nextSlideBtn) nextSlideBtn.addEventListener('click', nextSlide);
+  if (prevSlideBtn) prevSlideBtn.addEventListener('click', prevSlide);
+
+  // Close modal button
+  const closeModalBtn = document.getElementById('closeModalBtn');
+  if (closeModalBtn) {
+    closeModalBtn.addEventListener('click', closeProductModal);
   }
-});
 
-// Apply saved theme on load
-const savedTheme = localStorage.getItem('theme') || 'light';
-applyTheme(savedTheme);
+  // Quantity controls
+  const modalQtyMinus = document.getElementById('modalQtyMinus');
+  const modalQtyPlus = document.getElementById('modalQtyPlus');
+  
+  if (modalQtyMinus) {
+    modalQtyMinus.addEventListener('click', () => {
+      const qtyInput = document.getElementById('modalQty');
+      if (qtyInput) qtyInput.value = Math.max(1, parseInt(qtyInput.value) - 1);
+    });
+  }
 
-// Mobile menu
-const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-const mobileMenu = document.getElementById('mobileMenu');
+  if (modalQtyPlus) {
+    modalQtyPlus.addEventListener('click', () => {
+      const qtyInput = document.getElementById('modalQty');
+      if (qtyInput) qtyInput.value = parseInt(qtyInput.value) + 1;
+    });
+  }
 
-mobileMenuBtn.addEventListener('click', () => {
-  mobileMenu.classList.toggle('hidden');
-});
+  // Modal order button
+  const modalOrderBtn = document.getElementById('modalOrderBtn');
+  if (modalOrderBtn) {
+    modalOrderBtn.addEventListener('click', () => {
+      if (modalProduct) orderNow(modalProduct.name, modalProduct.code, modalProduct.price);
+    });
+  }
 
-mobileMenu.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', () => {
-    mobileMenu.classList.add('hidden');
+  // Modal cart button
+  const modalCartBtn = document.getElementById('modalCartBtn');
+  if (modalCartBtn) {
+    modalCartBtn.addEventListener('click', () => {
+      if (modalProduct) {
+        const qtyInput = document.getElementById('modalQty');
+        const qty = qtyInput ? parseInt(qtyInput.value) : 1;
+        addToCart(modalProduct, qty);
+        closeProductModal();
+      }
+    });
+  }
+
+  // Theme toggle
+  const themeToggle = document.getElementById('themeToggle');
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      if (document.documentElement.classList.contains('dark')) {
+        applyTheme('light');
+      } else {
+        applyTheme('dark');
+      }
+    });
+  }
+
+  // Apply saved theme on load
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  applyTheme(savedTheme);
+
+  // Mobile menu
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  if (mobileMenuBtn && mobileMenu) {
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+      });
+    });
+  }
+
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if(target) target.scrollIntoView({ behavior: 'smooth' });
+    });
   });
 });
-
-// Initial render
-renderCarousel();
-renderProducts();
-
-// Smooth scroll for anchor links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function(e) {
-    e.preventDefault();
-    const target = document.querySelector(this.getAttribute('href'));
-    if(target) target.scrollIntoView({ behavior: 'smooth' });
-  });
-});
-
 </script>
 </body>
 </html>

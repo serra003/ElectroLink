@@ -66,21 +66,20 @@
     color: #FF6B35;
   }
 
-  #logoImage {
-  max-height: 42px;  /* Desktop max height */
-  width: auto;       /* Keep aspect ratio */
+/* LOGO */
+#logoImage {
+  height: 42px;
+  max-height: 42px;
+  width: auto;
   object-fit: contain;
 }
- /* ===============================
-   MOBILE LOGO FIX
-=============================== */
-  @media (max-width: 768px) {
-    #logoImage {
-      max-height: 40px !important;
-      width: auto !important;
-      object-fit: contain;
-    }
+
+@media (min-width: 768px) {
+  #logoImage {
+    height: 48px;
+    max-height: 48px;
   }
+}
   </style>
 </head>
 
@@ -102,8 +101,9 @@
       </div>
 
       <div class="flex items-center space-x-2 sm:space-x-4">
-        <button id="themeToggle" class="p-1.5 sm:p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition">
-          <i id="themeIcon" class="fas fa-moon text-lg sm:text-xl text-gray-700 dark:text-gray-300"></i>
+        <button id="themeToggle" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition">
+          <i id="themeIcon" class="fas fa-moon text-2xl text-gray-700 dark:text-gray-300"></i>
+       
         </button>
         <a href="/cart" class="relative p-1">
           <i class="fas fa-shopping-cart text-xl sm:text-2xl text-gray-700 dark:text-gray-300 hover:text-primary transition"></i>
